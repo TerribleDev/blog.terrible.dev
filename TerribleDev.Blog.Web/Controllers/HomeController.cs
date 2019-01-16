@@ -10,16 +10,17 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [Route("/")]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Post()
+        [Route("/{*postName}")]
+        public IActionResult Post(string postName)
         {
-            return View();
+            return View(model: postName);
         }
-
+        [Route("/Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
