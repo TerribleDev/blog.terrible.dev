@@ -41,6 +41,12 @@ body {
     padding-right: 1.2em;
     padding-left: 1.2em;
 }
+.main-content-wrap img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin-bottom: 1.2rem
+}
 blockquote {
     border-left: 2px solid #d1dced;
     padding: .4em 1.2em;
@@ -61,6 +67,7 @@ a {
 }
 a:hover {
     font-weight: 700;
+    color: #5d686f;
 }
 a:visited {
     color: #9c9c9c;

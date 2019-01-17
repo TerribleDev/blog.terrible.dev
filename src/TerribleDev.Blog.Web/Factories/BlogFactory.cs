@@ -34,7 +34,6 @@ namespace TerribleDev.Blog.Web
         }
         public IPost ParsePost(string postText, string fileName)
         {
-            Console.WriteLine(fileName);
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
             var postContent = Markdig.Markdown.ToHtml(string.Join("", splitFile.Skip(1)));
