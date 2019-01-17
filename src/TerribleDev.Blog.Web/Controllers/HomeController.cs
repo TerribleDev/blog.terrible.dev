@@ -19,7 +19,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             return View(postsAsList);
         }
-        [Route("/theme/{*postName}")]
+        [Route("/theme/{postName}")]
         public IActionResult Theme(string postName)
         {
             return View(model: postName);

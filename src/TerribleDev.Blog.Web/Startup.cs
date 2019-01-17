@@ -55,7 +55,7 @@ namespace TerribleDev.Blog.Web
                 FileProvider = new PhysicalFileProvider(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img"))
             });
-            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/])$", "$1/"));
+            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/])$", "$1/", 301));
             app.UseMvc();
         }
     }
