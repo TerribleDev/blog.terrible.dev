@@ -1,0 +1,10 @@
+﻿@model IEnumerable<IPost>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@foreach(var post in Model)
+{
+    <a href="/@post.Url">@post.Title </a> <br />
+}
