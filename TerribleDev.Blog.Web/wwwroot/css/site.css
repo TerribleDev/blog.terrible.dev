@@ -1,12 +1,11 @@
 ﻿html {
-    font-family: Tahoma, Geneva, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
     color: #4A4A4A;
     line-height: 1.45;
     letter-spacing: -.01em;
-    font-family: Arial, Helvetica, sans-serif;
 }
 h1 {
     font-size: 3.3rem;
@@ -27,18 +26,33 @@ h4 {
 h5 {
     font-size: 2rem;
 }
-
-article {
+body {
     text-rendering: optimizeLegibility;
     letter-spacing: -.01em;
     line-height: 1.9rem;
     color: #5d686f;
-}
+    font-size: 1.125rem;
+ }
 
 .main-content-wrap {
     display: block;
     max-width: 750px;
     margin: 0 auto;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 1.2em;
+    padding-left: 1.2em;
+}
+blockquote {
+    border-left: 2px solid #d1dced;
+    padding: .4em 1.2em;
+}
+
+code, pre {
+    font-size: 1.3rem;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 600;
+    border-radius: 3px;
+    background: #f5f5f5;
+    padding: 0 .4em;
+    word-wrap: pre;
+    overflow-x: auto;
 }
