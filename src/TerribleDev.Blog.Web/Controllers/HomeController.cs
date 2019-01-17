@@ -12,7 +12,7 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        static IEnumerable<IPost> postsAsList = new BlogFactory().GetAllPosts();
+        static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
         static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
         [Route("/")]
         public IActionResult Index()
@@ -25,7 +25,7 @@ namespace TerribleDev.Blog.Web.Controllers
             return View(model: postName);
         }
         
-        [Route("/{*postUrl}")]
+        [Route("{postUrl}")]
         public async Task<IActionResult> Post(string postUrl)
         {
             if(!posts.TryGetValue(postUrl, out var currentPost))

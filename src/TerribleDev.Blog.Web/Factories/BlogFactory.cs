@@ -12,14 +12,15 @@ namespace TerribleDev.Blog.Web
 {
     public class BlogFactory
     {
-        public IEnumerable<IPost> GetAllPosts()
+        public List<IPost> GetAllPosts()
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
             var allPosts = posts.AsParallel().Select(a =>
             {
-                var fileText = File.ReadAllText(Path.Combine(a));
-                return ParsePost(fileText, a);
+                var fileInfo = new FileInfo(a);
+                var fileText = File.ReadAllText(fileInfo.FullName);
+                return ParsePost(fileText, fileInfo.Name);
             });
             return allPosts.ToList();
         }
@@ -33,7 +34,7 @@ namespace TerribleDev.Blog.Web
         }
         public IPost ParsePost(string postText, string fileName)
         {
-
+            Console.WriteLine(fileName);
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
             var postContent = Markdig.Markdown.ToHtml(string.Join("", splitFile.Skip(1)));
