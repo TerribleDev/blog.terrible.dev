@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Net.Http.Headers;
 
 namespace TerribleDev.Blog.Web
 {
@@ -49,11 +50,25 @@ namespace TerribleDev.Blog.Web
             }
             app.UseHttpsRedirection();
             app.UseResponseCompression();
-            app.UseStaticFiles();
+            var cacheTimeOneYear =  TimeSpan.FromDays(365).TotalSeconds;
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img"))
+                    OnPrepareResponse = ctx =>
+                    {
+                        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                            "public,max-age=" + cacheTimeOneYear;
+                    }
+            });
+            var cacheTimeOneMonth =  TimeSpan.FromDays(30).TotalSeconds;
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")),
+                    OnPrepareResponse = ctx =>
+                    {
+                        
+                        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                            "public,max-age=" + cacheTimeOneMonth;
+                    }
             });
             app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/])$", "$1/", 301));
             app.UseMvc();
