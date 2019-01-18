@@ -4,6 +4,7 @@
 }
 <cache vary-by-route="postUrl">
     <article class="main-content-wrap" itemprop="blogPost">
+        <a href="/" class="btn">< Home</a>
         <h1 itemprop="headline" class="headline">@Model.Title</h1>
         <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
         @Model.Content

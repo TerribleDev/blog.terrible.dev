@@ -84,9 +84,10 @@ a:visited {
     cursor: pointer;
     color: #5d686f !important;
     border: 1px solid #9eabb3;
-    padding: .25em .5em;
+    padding: .25em .8em;
     text-decoration: none !important;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
 }
     .btn:hover {
         color: #4A4A4A !important;
