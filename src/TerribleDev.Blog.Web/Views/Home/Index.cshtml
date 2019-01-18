@@ -1,12 +1,15 @@
-﻿@model IEnumerable<IPost>
+﻿@model HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <cache vary-by-route="pageNumber">
-    @foreach (var post in Model)
+    @foreach (var post in Model.Posts)
     {
         <a href="/@post.Url">@post.Url </a> <br />
+    }
+    @if(Model.HasNext) {
+        <br /> <br /> <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
     }
 </cache>
 

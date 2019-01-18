@@ -27,7 +27,6 @@ namespace TerribleDev.Blog.Web.Controllers
             return accum;
         });
 
-        //static IDictionary<int, IPost> postsByPage = postsAsList.
         [Route("/")]
         [Route("/page/{pageNumber}")]
         public IActionResult Index(int pageNumber = 1)
@@ -36,7 +35,8 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return NotFound();
             }
-            return View(result);
+            
+            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postsByPage.ContainsKey(pageNumber + 1)  });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
