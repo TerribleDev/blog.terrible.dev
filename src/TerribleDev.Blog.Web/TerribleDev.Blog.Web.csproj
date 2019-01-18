@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="bundleconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json"  CopyToOutputDirectory="Always" />
+    <None Include="bundleconfig.json"  CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 
