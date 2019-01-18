@@ -28,7 +28,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Posts\" />
+    <Content Include="Posts\*.md" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 
