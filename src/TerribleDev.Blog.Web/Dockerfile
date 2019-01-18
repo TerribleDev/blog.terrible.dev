@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ["./TerribleDev.Blog.Web.csproj", "TerribleDev.Blog.Web/"]
 RUN dotnet restore "TerribleDev.Blog.Web/TerribleDev.Blog.Web.csproj"
 COPY . .
-WORKDIR "/src/TerribleDev.Blog.Web"
+WORKDIR "/src"
 RUN dotnet build "TerribleDev.Blog.Web.csproj" -c Release -o /app
 
 FROM build AS publish
