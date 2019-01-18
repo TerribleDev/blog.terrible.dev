@@ -65,7 +65,6 @@ namespace TerribleDev.Blog.Web
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")),
                     OnPrepareResponse = ctx =>
                     {
-                        
                         ctx.Context.Response.Headers[HeaderNames.CacheControl] =
                             "public,max-age=" + cacheTimeOneMonth;
                     }
