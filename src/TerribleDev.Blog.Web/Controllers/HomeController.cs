@@ -43,6 +43,11 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             return View(model: postName);
         }
+        [Route("/offline")]
+        public IActionResult Offline(string postName)
+        {
+            return View();
+        }
         
         [Route("{postUrl}")]
         [ResponseCache(Duration = 3600)]
