@@ -62,12 +62,8 @@ code, pre {
     overflow-x: auto;
 }
 a {
-    color: #5d686f;
+    color: #6fa1c2;
     font-weight: 400;
-}
-a:hover {
-    font-weight: 700;
-    color: #5d686f;
 }
 a:visited {
     color: #9c9c9c;
