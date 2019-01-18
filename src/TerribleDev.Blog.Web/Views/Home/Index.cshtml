@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<cache vary-by-route="pageNumber">
+    @foreach (var post in Model)
+    {
+        <a href="/@post.Url">@post.Url </a> <br />
+    }
+</cache>
 
-@foreach(var post in Model)
-{
-    <a href="/@post.Url">@post.Url </a> <br />
-}

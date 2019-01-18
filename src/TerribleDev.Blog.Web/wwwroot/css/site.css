@@ -47,6 +47,12 @@ body {
     max-width: 100%;
     margin-bottom: 1.2rem
 }
+.headline {
+    margin-bottom: 0;
+}
+.headlineSubtext {
+    font-size: .8em;
+}
 blockquote {
     border-left: 2px solid #d1dced;
     padding: .4em 1.2em;
@@ -68,3 +74,21 @@ a {
 a:visited {
     color: #9c9c9c;
 }
+
+.btn {
+    width: auto;
+    height: auto;
+    background: #fff !important;
+    border-radius: 3px;
+    margin: 0;
+    cursor: pointer;
+    color: #5d686f !important;
+    border: 1px solid #9eabb3;
+    padding: .25em .5em;
+    text-decoration: none !important;
+    font-size: 1.3rem;
+}
+    .btn:hover {
+        color: #4A4A4A !important;
+        border: 1px solid #738691 !important;
+    }

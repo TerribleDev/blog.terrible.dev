@@ -19,6 +19,10 @@ namespace TerribleDev.Blog.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+            .ConfigureKestrel(a =>
+            {
+                a.AddServerHeader = false;
+            });
     }
 }

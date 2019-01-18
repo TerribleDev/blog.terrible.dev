@@ -2,11 +2,10 @@
 @{
     ViewData["Title"] = "Post";
 }
-
-<article class="main-content-wrap" itemprop="blogPost">
-    <h1 itemprop="headline">@Model.Title</h1>
-    <time itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
-</time>
-
-    @Model.Content
-</article>
+<cache vary-by-route="postUrl">
+    <article class="main-content-wrap" itemprop="blogPost">
+        <h1 itemprop="headline" class="headline">@Model.Title</h1>
+        <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
+        @Model.Content
+    </article>
+</cache>

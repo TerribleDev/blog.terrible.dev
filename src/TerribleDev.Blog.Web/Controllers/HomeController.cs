@@ -14,12 +14,31 @@ namespace TerribleDev.Blog.Web.Controllers
     {
         static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
         static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
-        [Route("/")]
-        public IActionResult Index()
+        static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
         {
-            return View(postsAsList);
+            var highestPage = accum.Keys.Max();
+            var current = accum[highestPage].Count;
+            if (current >= 10)
+            {
+                accum[highestPage + 1] = new List<IPost>() { item };
+                return accum;
+            }
+            accum[highestPage].Add(item);
+            return accum;
+        });
+
+        //static IDictionary<int, IPost> postsByPage = postsAsList.
+        [Route("/")]
+        [Route("/page/{pageNumber}")]
+        public IActionResult Index(int pageNumber = 1)
+        {
+            if(!postsByPage.TryGetValue(pageNumber, out var result))
+            {
+                return NotFound();
+            }
+            return View(result);
         }
-        [Route("/theme/{postName}")]
+        [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
         {
             return View(model: postName);

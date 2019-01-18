@@ -31,7 +31,7 @@ namespace TerribleDev.Blog.Web
             {
                 a.EnableForHttps = true;
 
-            }).AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).AddMemoryCache().AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
