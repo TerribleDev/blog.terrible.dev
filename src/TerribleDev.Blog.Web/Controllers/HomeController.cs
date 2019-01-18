@@ -45,6 +45,7 @@ namespace TerribleDev.Blog.Web.Controllers
         }
         
         [Route("{postUrl}")]
+        [ResponseCache(Duration = 3600)]
         public async Task<IActionResult> Post(string postUrl)
         {
             if(!posts.TryGetValue(postUrl, out var currentPost))
