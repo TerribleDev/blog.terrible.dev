@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    ViewData["RenderNav"] = true;
 }
 <cache vary-by-route="pageNumber">
     @foreach (var post in Model.Posts)

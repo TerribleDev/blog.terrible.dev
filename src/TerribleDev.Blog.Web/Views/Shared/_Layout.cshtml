@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta name="author" content="Tommy &quot;TerribleDev&quot; Parnell" />
+    <meta name="theme-color" content="#4A4A4A" />
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link asp-append-version="true" rel="icon" href="~/favicon.ico"> 
-    <title>@ViewData["Title"] - TerribleDev.Blog.Web</title>
+    <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
+    @RenderSection("Head", false)
+    <title>@ViewData["Title"] - The Ramblings of TerribleDev</title>
     <environment names="Development">
         <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -14,6 +19,10 @@
 </head>
 <body>
         <main role="main">
+            <!-- @if(ViewData["RenderNav"] != null) 
+            {
+                <h1>NAV BAR</h1>
+            } -->
             @RenderBody()
         </main>
     @RenderSection("Scripts", required: false)
