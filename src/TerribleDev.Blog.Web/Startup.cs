@@ -39,6 +39,7 @@ namespace TerribleDev.Blog.Web
             .AddCacheTagHelper()
             .AddRazorViewEngine()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddOutputCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +81,8 @@ namespace TerribleDev.Blog.Web
                             "public,max-age=" + cacheTime;
                     }
             });
-            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/])$", "$1/", 301));
+            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml])$", "$1/", 301));
+            app.UseOutputCaching();
             app.UseMvc();
         }
     }

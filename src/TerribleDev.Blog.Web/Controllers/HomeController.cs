@@ -12,9 +12,10 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
-        static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
-        static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
+        public static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
+        public static HashSet<string> totalTags = postsAsList.Where(a=>a.tags != null).SelectMany(a => a.tags).ToHashSet();
+        public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
+        public static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
         {
             var highestPage = accum.Keys.Max();
             var current = accum[highestPage].Count;
@@ -57,6 +58,7 @@ namespace TerribleDev.Blog.Web.Controllers
         }
 
         [Route("{postUrl}")]
+        [OutputCache(Duration = 31536000, VaryByParam = "postUrl")]
         [ResponseCache(Duration = 180)]
         public IActionResult Post(string postUrl)
         {

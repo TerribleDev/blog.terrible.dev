@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TerribleDev.Blog.Web.Extensions
+namespace TerribleDev.Blog.Web
 {
     public static class StringExtension
     {

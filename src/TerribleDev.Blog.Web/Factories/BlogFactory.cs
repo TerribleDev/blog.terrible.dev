@@ -6,7 +6,6 @@ using System.IO;
 using TerribleDev.Blog.Web.Models;
 using YamlDotNet.Serialization;
 using Microsoft.AspNetCore.Html;
-using TerribleDev.Blog.Web.Extensions;
 using Markdig;
 
 namespace TerribleDev.Blog.Web
@@ -40,7 +39,7 @@ namespace TerribleDev.Blog.Web
             var markdownText = string.Join("", splitFile.Skip(1));
             var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
-            var postContentPlain = Markdown.ToPlainText(markdownText, pipeline);
+            var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var summary = postContent.Split("<!-- more -->")[0];

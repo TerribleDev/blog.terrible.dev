@@ -12,7 +12,7 @@ namespace TerribleDev.Blog.Web.Models
         string Url { get; set; }
         string Title { get; set; }
         HtmlString Summary { get; set; }
-        DateTimeOffset PublishDate { get; set; }
+        DateTime PublishDate { get; set; }
         HtmlString Content { get; set; }
         string ContentPlain { get; set; }
         string SummaryPlain { get; set; }
