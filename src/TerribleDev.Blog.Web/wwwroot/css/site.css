@@ -7,6 +7,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.45;
     letter-spacing: -.01em;
 }
+
 h1 {
     font-size: 3.3rem;
 }
@@ -26,13 +27,15 @@ h4 {
 h5 {
     font-size: 2rem;
 }
+
 body {
     text-rendering: optimizeLegibility;
     letter-spacing: -.01em;
     line-height: 1.9rem;
     color: #5d686f;
     font-size: 1.125rem;
- }
+    margin: 0;
+}
 
 .main-content-wrap {
     display: block;
@@ -41,18 +44,27 @@ body {
     padding-right: 1.2em;
     padding-left: 1.2em;
 }
-.main-content-wrap img {
-    display: block;
-    width: auto;
-    max-width: 100%;
-    margin-bottom: 1.2rem
+
+    .main-content-wrap img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        margin-bottom: 1.2rem
+    }
+#main {
+    width: calc(100% - 250px);
+    float: right;
+
 }
+
 .headline {
     margin-bottom: 0;
 }
+
 .headlineSubtext {
     font-size: .8em;
 }
+
 blockquote {
     border-left: 2px solid #d1dced;
     padding: .4em 1.2em;
@@ -67,10 +79,12 @@ code, pre {
     padding: 0 .4em;
     overflow-x: auto;
 }
+
 a {
     color: #6fa1c2;
     font-weight: 400;
 }
+
 a:visited {
     color: #9c9c9c;
 }
@@ -89,32 +103,64 @@ a:visited {
     font-size: 1.1rem;
     text-transform: uppercase;
 }
+
     .btn:hover {
         color: #4A4A4A !important;
         border: 1px solid #738691 !important;
     }
-    @media screen and (max-width: 768px) {
-        html {
-            font-size: 14px;
-        }
-        h1 {
-            font-size: 2.6rem;
-        }
-        
-        h2 {
-            font-size: 2.4rem;
-        }
-        
-        h3 {
-            font-size: 2.2rem;
-        }
-        
-        h4 {
-            font-size: 2.0rem;
-        }
-        
-        h5 {
-            font-size: 1.8rem;
-        }
 
-    } 
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 2.6rem;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+    }
+
+    h3 {
+        font-size: 2.2rem;
+    }
+
+    h4 {
+        font-size: 2.0rem;
+    }
+
+    h5 {
+        font-size: 1.8rem;
+    }
+
+    .navBar {
+        display: none !important;
+    }
+    #main {
+        width: initial;
+        float: initial;
+    }
+}
+
+.link-unstyled {
+    cursor: pointer !important;
+    color: inherit !important;
+    text-decoration: none !important;
+    font-weight: inherit !important;
+}
+
+.btmRule {
+    border-bottom: 1px solid #eef2f8;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    background-color: red;
+    width: 250px;
+}

@@ -44,13 +44,20 @@ namespace TerribleDev.Blog.Web.Controllers
             return View(model: postName);
         }
         [Route("/offline")]
-        public IActionResult Offline(string postName)
+        [ResponseCache(Duration = 3600)]
+        public IActionResult Offline()
         {
             return View();
         }
-        
+        [Route("/debug")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Debug()
+        {
+            return View();
+        }
+
         [Route("{postUrl}")]
-        [ResponseCache(Duration = 3600)]
+        [ResponseCache(Duration = 180)]
         public IActionResult Post(string postUrl)
         {
             if(!posts.TryGetValue(postUrl, out var currentPost))

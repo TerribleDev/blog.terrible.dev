@@ -18,13 +18,22 @@
     </environment>
 </head>
 <body>
+    @if (ViewData["RenderNav"] != null)
+    {
+        <partial name="Nav" />
+    }
+    @if (ViewData["NoWrap"] != null)
+    {
         <main role="main">
-            <!-- @if(ViewData["RenderNav"] != null) 
-            {
-                <h1>NAV BAR</h1>
-            } -->
             @RenderBody()
         </main>
+    }
+    else
+    {
+        <main role="main" class="main-content-wrap">
+            @RenderBody()
+        </main>
+    }
     @RenderSection("Scripts", required: false)
     <environment names="Development">
         <script asp-append-version="true" src="~/js/swi.js" async></script>

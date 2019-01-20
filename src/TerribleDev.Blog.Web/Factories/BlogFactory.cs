@@ -39,13 +39,15 @@ namespace TerribleDev.Blog.Web
             var postContent = Markdig.Markdown.ToHtml(string.Join("", splitFile.Skip(1)));
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
+            var summary = postContent.Split("<!-- more -->")[0];
             return new Post()
             {
                 PublishDate = postSettings.date,
                 tags = postSettings.tags,
                 Title = postSettings.title,
                 Url = resolvedUrl,
-                Content = new HtmlString(postContent)
+                Content = new HtmlString(postContent),
+                Summary = new HtmlString(summary)
             };
         }
 
