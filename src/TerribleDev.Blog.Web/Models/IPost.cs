@@ -14,6 +14,8 @@ namespace TerribleDev.Blog.Web.Models
         HtmlString Summary { get; set; }
         DateTimeOffset PublishDate { get; set; }
         HtmlString Content { get; set; }
+        string ContentPlain { get; set; }
+        string SummaryPlain { get; set; }
         IEnumerable<string> tags { get; set; }
     }
 }

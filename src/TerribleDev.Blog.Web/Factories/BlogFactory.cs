@@ -7,6 +7,7 @@ using TerribleDev.Blog.Web.Models;
 using YamlDotNet.Serialization;
 using Microsoft.AspNetCore.Html;
 using TerribleDev.Blog.Web.Extensions;
+using Markdig;
 
 namespace TerribleDev.Blog.Web
 {
@@ -36,10 +37,14 @@ namespace TerribleDev.Blog.Web
         {
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
-            var postContent = Markdig.Markdown.ToHtml(string.Join("", splitFile.Skip(1)));
+            var markdownText = string.Join("", splitFile.Skip(1));
+            var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+            var postContent = Markdown.ToHtml(markdownText, pipeline);
+            var postContentPlain = Markdown.ToPlainText(markdownText, pipeline);
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var summary = postContent.Split("<!-- more -->")[0];
+            var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
             return new Post()
             {
                 PublishDate = postSettings.date,
@@ -47,7 +52,9 @@ namespace TerribleDev.Blog.Web
                 Title = postSettings.title,
                 Url = resolvedUrl,
                 Content = new HtmlString(postContent),
-                Summary = new HtmlString(summary)
+                Summary = new HtmlString(summary),
+                SummaryPlain = postSummaryPlain,
+                ContentPlain = postContentPlain
             };
         }
 

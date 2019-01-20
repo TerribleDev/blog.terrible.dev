@@ -28,7 +28,7 @@ namespace TerribleDev.Blog.Web.Controllers
         });
 
         [Route("/")]
-        [Route("/page/{pageNumber}")]
+        [Route("/page/{pageNumber?}" )]
         public IActionResult Index(int pageNumber = 1)
         {
             if(!postsByPage.TryGetValue(pageNumber, out var result))
