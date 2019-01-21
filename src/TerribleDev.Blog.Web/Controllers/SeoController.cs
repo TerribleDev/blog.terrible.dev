@@ -48,11 +48,16 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             Response.StatusCode = 200;
             Response.ContentType = "text/xml";
+            var sitewideLinks = new List<SiteMapItem>()
+            {
+                new SiteMapItem() { LastModified = DateTime.UtcNow, Location="https://blog.terribledev.io/all-tags/" }
+            };
             var ser = new XmlSerializer(typeof(SiteMapRoot));
             var sitemap = new SiteMapRoot()
             {
                 Urls = HomeController.postsAsList.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/{a.Url}" }).ToList()
             };
+            sitemap.Urls.AddRange(sitewideLinks);
             ser.Serialize(this.Response.Body, sitemap);
         }
     }

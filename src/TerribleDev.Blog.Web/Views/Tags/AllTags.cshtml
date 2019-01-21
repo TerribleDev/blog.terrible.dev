@@ -4,7 +4,11 @@
     ViewData["RenderNav"] = true;
 }
 <h2>All Tags</h2>
-@foreach(var tag in Model.Keys)
+@foreach (var tag in Model.Keys)
 {
-        <a href="/tag/@tag/" class="btn block">@tag</a>
+    <a href="/tag/@tag/" class="btn block">@tag</a>
+}
+
+@section Head {
+    <partial name="StockMeta" />
 }
