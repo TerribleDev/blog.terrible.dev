@@ -51,7 +51,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!postsByPage.TryGetValue(pageNumber, out var result))
             {
-                return NotFound();
+                return Redirect("/404/");
             }
             return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postsByPage.ContainsKey(pageNumber + 1), HasPrevious = postsByPage.ContainsKey(pageNumber - 1) });
         }
@@ -80,7 +80,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!posts.TryGetValue(postUrl, out var currentPost))
             {
-                return NotFound();
+                return Redirect("/404/");
             }
             return View(model: currentPost);
         }
@@ -88,13 +88,23 @@ namespace TerribleDev.Blog.Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            this.Response.StatusCode = 500;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         [Route("/404")]
+        [Route("{*url}", Order = 999)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult FourOhFour()
         {
+            this.Response.StatusCode = 404;
             return View();
+        }
+        [Route("/404.html")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult FourOhFourCachePage()
+        {
+            //make a route so the service worker can cache a 404 page, but get a valid status code
+            return View(viewName: nameof(FourOhFour));
         }
     }
 }

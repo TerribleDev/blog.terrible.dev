@@ -1,7 +1,7 @@
 //Add this below content to your HTML page, or add the js file to your page at the very top to register sercie worker
-if (navigator.serviceWorker.controller) {
+if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) {
     console.log('[PWA Builder] active service worker found, no need to register')
-} else {
+} else if (navigator && navigator.serviceWorker) {
 
     //Register the ServiceWorker
     navigator.serviceWorker.register('/sw.min.js', {
@@ -56,6 +56,9 @@ attachNavToggle('menuBtn');
 attachNavToggle('closeNav');
 document.addEventListener("readystatechange", function () {
     var nav = document.getElementById('navBar');
+    if (!nav) {
+        return;
+    }
     var computedNav = window.getComputedStyle(nav);
     if (computedNav.width && computedNav.width !== "0px") {
         triggerLazyImages();
