@@ -216,3 +216,9 @@ a {
 .round {
     border-radius: 50%;
 }
+
+.nextPageHome {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: .5rem
+}

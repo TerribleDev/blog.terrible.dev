@@ -12,7 +12,9 @@
     }
     @if (Model.HasNext)
     {
-        <br /> <br /> <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
+        <div class="nextPageHome">
+            <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
+        </div>
     }
 </cache>
 
