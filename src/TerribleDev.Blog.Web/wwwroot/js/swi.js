@@ -6,14 +6,14 @@ if (navigator.serviceWorker.controller) {
     //Register the ServiceWorker
     navigator.serviceWorker.register('/sw.min.js', {
         scope: './'
-    }).then(function(reg) {
-        console.log('Service worker has been registered for scope:'+ reg.scope);
+    }).then(function (reg) {
+        console.log('Service worker has been registered for scope:' + reg.scope);
     });
 }
 var fetched = [];
-if(fetch){
-    document.querySelectorAll('a').forEach( a=> {
-        if(a.href.includes('http') || a.href.includes('https') || a.href.includes('mailto') || a.href.includes('#') || fetched.includes(a.href)) {
+if (fetch) {
+    document.querySelectorAll('a').forEach(a => {
+        if (a.href.includes('http') || a.href.includes('https') || a.href.includes('mailto') || a.href.includes('#') || fetched.includes(a.href)) {
             return;
         }
         fetched.push(item.href);
@@ -21,3 +21,43 @@ if(fetch){
     })
 }
 Promise.resolve(fetched);
+var triggerLazyImages = function () {
+    document.querySelectorAll('.lazy').forEach(a => {
+        var src = a.getAttribute('data-src');
+        if (src) {
+            a.src = src;
+        }
+    });
+}
+
+var toggleNav = function () {
+    var nav = document.getElementById('navBar');
+    if (!nav) {
+        return;
+    }
+    var hidden = nav.classList.contains('hide');
+    if (hidden) {
+        nav.classList.remove('hide');
+        triggerLazyImages();
+    }
+    else {
+        nav.classList.add('hide');
+    }
+}
+function attachNavToggle(elementId) {
+    var menuButton = document.getElementById(elementId);
+    if (menuButton) {
+        menuButton.addEventListener('click', function () {
+            toggleNav();
+        });
+    }
+}
+attachNavToggle('menuBtn');
+attachNavToggle('closeNav');
+document.addEventListener("readystatechange", function () {
+    var nav = document.getElementById('navBar');
+    var computedNav = window.getComputedStyle(nav);
+    if (computedNav.width && computedNav.width !== "0px") {
+        triggerLazyImages();
+    }
+});

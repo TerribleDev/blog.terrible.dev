@@ -1,16 +1,8 @@
 ﻿@{ 
-    var hideNav = ViewData["HideNav"] != null ? "hide" : "";
+    var hideNav = ViewData["HideNav"] != null ? "" : "withBody";
 }
-<nav class="navBar @hideNav">
-    @if (ViewData["HideNav"] != null)
-    {
-        <img src="" data-src="~/content/tommyAvatar3.jpg" class="lazy round" />
-    }
-    else
-    {
-        <img src="~/content/tommyAvatar3.jpg" class="round" />
-    }
-
+<nav class="navBar hide @hideNav" id="navBar">
+    <img src="" data-src="/content/tommyAvatar3.jpg" class="lazy round" />
     <span>Tommy "Terrible Dev" Parnell</span>
     <ul class="sidebarBtns">
         <li><a href="/" class="link-unstyled">Home</a></li>
@@ -19,5 +11,6 @@
         <li><a href="https://github.com/terribledev" target="_blank" class="link-unstyled">Github</a></li>
         <li><a href="https://twitter.com/terribledev" target="_blank" class="link-unstyled">Twitter</a></li>
         <li><a href="mailto:tommy@terribledev.io" class="link-unstyled">Email</a></li>
+        <li><span class="link-unstyled" id="closeNav">Close Navbar</span></li>
     </ul>
 </nav>

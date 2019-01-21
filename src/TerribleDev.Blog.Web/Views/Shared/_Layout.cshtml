@@ -22,39 +22,18 @@
 </head>
 <body>
     <partial name="Nav" />
-    @if (ViewData["DisableHeader"] == null)
-    {
-        <header class="header">
-            <div><a href="/" class="link-unstyled">The Ramblings of TerribleDev</a></div>
-        </header>
-    }
+    <header class="header">
+        <svg id="menuBtn" role="button" xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path d="M4 10h24c1.104 0 2-.896 2-2s-.896-2-2-2H4c-1.104 0-2 .896-2 2s.896 2 2 2zm24 4H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2zm0 8H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2z" /></svg>
+        <div class="headerCallout"><a href="/" class="link-unstyled ">The Ramblings of TerribleDev</a></div>
+    </header>
     @{ 
         var bodyBump =  ViewData["HideNav"] == null ? "bodyWithNav": "";
-        var headerBump = ViewData["DisableHeader"] == null ? "headerBump" : "";
     }
-    <main role="main" class="@bodyBump @headerBump">
+    <main role="main" class="@bodyBump headerBump">
         <div class="main-content-wrap">
             @RenderBody()
         </div>
     </main>
-    @*@if (ViewData["DisableHeader"] != null)
-        {
-
-            <main role="main" class="bodyWithNav">
-                <div class="main-content-wrap">
-                    @RenderBody()
-                </div>
-            </main>
-        }
-        else
-        {
-            <header class="header">
-                <div><a href="/" class="link-unstyled">The Ramblings of TerribleDev</a></div>
-            </header>
-            <main role="main" class="main-content-wrap headerBump">
-                @RenderBody()
-            </main>
-        }*@
     @RenderSection("Scripts", required: false)
     <environment names="Development">
         <script asp-append-version="true" src="~/js/swi.js" async></script>

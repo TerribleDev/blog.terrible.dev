@@ -2,7 +2,6 @@
 @model GetTagViewModel
 @{
     ViewData["Tag:" + Model.Tag] = "GetTag";
-    ViewData["DisableHeader"] = true;
 }
 @foreach (var post in Model.Posts)
 {
