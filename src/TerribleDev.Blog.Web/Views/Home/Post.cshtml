@@ -3,12 +3,7 @@
     ViewData["Title"] = "Post";
 }
 <cache vary-by-route="postUrl">
-    <article itemprop="blogPost">
-        <h1 itemprop="headline" class="headline">@Model.Title</h1>
-        <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
-        @Model.Content
-        <a href="/" class="btn">< Home</a>
-    </article>
+    @Html.DisplayForModel()
 </cache>
 
 @section Head {

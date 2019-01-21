@@ -13,7 +13,23 @@ namespace TerribleDev.Blog.Web.Controllers
     public class HomeController : Controller
     {
         public static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
-        public static HashSet<string> totalTags = postsAsList.Where(a=>a.tags != null).SelectMany(a => a.tags).ToHashSet();
+        public static Dictionary<string, List<IPost>> tagToPost = postsAsList.Where(a=>a.tags != null)
+            .Aggregate(
+             new Dictionary<string, List<IPost>>(),
+            (accum, item) => {
+                foreach(var tag in item.tags)
+                {
+                    if(accum.TryGetValue(tag, out var list))
+                    {
+                        list.Add(item);
+                    }
+                    else
+                    {
+                        accum[tag] = new List<IPost>() { item };
+                    }
+                }
+                return accum;
+            });
         public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
         public static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
         {

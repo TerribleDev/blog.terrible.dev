@@ -8,26 +8,25 @@
     <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
-    @RenderSection("Head", false)
     <title>@ViewData["Title"] - The Ramblings of TerribleDev</title>
     <environment names="Development">
         <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" async />
     </environment>
     <environment names="Production">
-        <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" async/>
+        <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" async />
     </environment>
+    @RenderSection("Head", false)
 </head>
 <body>
     @if (ViewData["RenderNav"] != null)
     {
-        <desktopOnly  user-agent="@this.Context.Request.Headers["User-Agent"]">
+        <desktopOnly user-agent="@this.Context.Request.Headers["User-Agent"]">
             <partial name="Nav" />
         </desktopOnly>
-    }
-    @if (ViewData["NoWrap"] != null)
-    {
-        <main role="main">
-            @RenderBody()
+        <main role="main" class="bodyWithNav">
+            <div class="main-content-wrap">
+                @RenderBody()
+            </div>
         </main>
     }
     else

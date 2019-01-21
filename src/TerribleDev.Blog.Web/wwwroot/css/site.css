@@ -53,7 +53,7 @@ body {
         margin-bottom: 1.2rem
     }
 
-#main {
+.bodyWithNav {
     width: calc(100% - 250px);
     float: right;
 }
@@ -104,6 +104,9 @@ a {
     font-size: 1.1rem;
     text-transform: uppercase;
 }
+/*.btn pad {
+    margin-bottom: 4px;
+}*/
 
     .btn:hover {
         color: #4A4A4A !important;
@@ -139,7 +142,7 @@ a {
         display: none !important;
     }
 
-    #main {
+    .bodyWithNav {
         width: initial;
         float: initial;
     }

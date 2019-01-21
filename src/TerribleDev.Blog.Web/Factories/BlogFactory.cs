@@ -47,7 +47,7 @@ namespace TerribleDev.Blog.Web
             return new Post()
             {
                 PublishDate = postSettings.date,
-                tags = postSettings.tags,
+                tags = postSettings.tags?.Select(a=>a.ToLower()) ?? Enumerable.Empty<string>(),
                 Title = postSettings.title,
                 Url = resolvedUrl,
                 Content = new HtmlString(postContent),

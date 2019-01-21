@@ -3,28 +3,24 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["RenderNav"] = true;
-    ViewData["NoWrap"] = true;
 }
 <cache vary-by-route="pageNumber">
-    <div id="main">
-        <div class="main-content-wrap">
-            @foreach (var post in Model.Posts)
-            {
-                <article class="btmRule">
-                    <h3 itemprop="headline" class="headline"><a href="/@post.Url" class="link-unstyled">@post.Title</a></h3>
-                    <time class="headlineSubtext" itemprop="datePublished" content="@post.PublishDate.ToString()">@post.PublishDate.ToString("D")</time>
-                    <div itemprop="articleBody">
-                        @post.Summary
-                    </div>
-                    <a href="/@post.Url">Continue Reading </a>
-                </article>
 
-            }
-            @if (Model.HasNext)
-            {
-                <br /> <br /> <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
-            }
-        </div>
-    </div>
+    @foreach (var post in Model.Posts)
+    {
+        <article class="btmRule">
+            <h3 itemprop="headline" class="headline"><a href="/@post.Url" class="link-unstyled">@post.Title</a></h3>
+            <time class="headlineSubtext" itemprop="datePublished" content="@post.PublishDate.ToString()">@post.PublishDate.ToString("D")</time>
+            <div itemprop="articleBody">
+                @post.Summary
+            </div>
+            <a href="/@post.Url">Continue Reading </a>
+        </article>
+
+    }
+    @if (Model.HasNext)
+    {
+        <br /> <br /> <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
+    }
 </cache>
 
