@@ -13,6 +13,6 @@ namespace TerribleDev.Blog.Web.Models
         public HtmlString Summary { get; set; }
         public string ContentPlain { get; set; }
         public string SummaryPlain { get; set; }
-        public IEnumerable<string> tags { get; set; }
+        public IList<string> tags { get; set; }
     }
 }

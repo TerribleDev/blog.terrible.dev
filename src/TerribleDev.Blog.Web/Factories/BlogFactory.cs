@@ -24,7 +24,7 @@ namespace TerribleDev.Blog.Web
             });
             return allPosts.ToList();
         }
-        public IEnumerable<string> GetPosts() => Directory.EnumerateFiles("Posts", "*.md", SearchOption.TopDirectoryOnly);
+        public IEnumerable<string> GetPosts() => Directory.EnumerateFiles(Path.Combine(Directory.GetCurrentDirectory(), "Posts"), "*.md", SearchOption.TopDirectoryOnly);
 
         public PostSettings ParseYaml(string ymlText)
         {
@@ -47,7 +47,7 @@ namespace TerribleDev.Blog.Web
             return new Post()
             {
                 PublishDate = postSettings.date,
-                tags = postSettings.tags?.Select(a=>a.ToLower()) ?? Enumerable.Empty<string>(),
+                tags = postSettings.tags?.Select(a=>a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
                 Title = postSettings.title,
                 Url = resolvedUrl,
                 Content = new HtmlString(postContent),

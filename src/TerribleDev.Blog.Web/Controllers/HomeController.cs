@@ -52,8 +52,7 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return NotFound();
             }
-            
-            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postsByPage.ContainsKey(pageNumber + 1)  });
+            return View(new HomeViewModel() { Posts = result, Page = pageNumber });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
@@ -89,6 +88,12 @@ namespace TerribleDev.Blog.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [Route("/404")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult FourOhFour()
+        {
+            return View();
         }
     }
 }

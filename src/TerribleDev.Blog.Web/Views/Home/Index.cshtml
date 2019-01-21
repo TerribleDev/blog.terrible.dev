@@ -8,15 +8,7 @@
 
     @foreach (var post in Model.Posts)
     {
-        <article class="btmRule">
-            <h3 itemprop="headline" class="headline"><a href="/@post.Url" class="link-unstyled">@post.Title</a></h3>
-            <time class="headlineSubtext" itemprop="datePublished" content="@post.PublishDate.ToString()">@post.PublishDate.ToString("D")</time>
-            <div itemprop="articleBody">
-                @post.Summary
-            </div>
-            <a href="/@post.Url">Continue Reading </a>
-        </article>
-
+        <partial name="PostSummary" model="post" />
     }
     @if (Model.HasNext)
     {

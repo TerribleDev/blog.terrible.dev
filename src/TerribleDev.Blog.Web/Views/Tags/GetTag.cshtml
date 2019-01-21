@@ -1,7 +1,10 @@
 ﻿
+@model GetTagViewModel
 @{
-    ViewData["Title"] = "GetTag";
+    ViewData["Tag:" + Model.Tag] = "GetTag";
+    ViewData["RenderNav"] = true;
 }
-
-<h1>GetTag</h1>
-
+@foreach (var post in Model.Posts)
+{
+    <partial name="PostSummary" model="post" />
+}

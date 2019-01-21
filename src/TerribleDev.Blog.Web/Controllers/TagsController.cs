@@ -21,7 +21,7 @@ namespace TerribleDev.Blog.Web.Controllers
                 return NotFound();
             }
             {
-                return View(models);
+                return View(new Models.GetTagViewModel { Tag = tagName, Posts = models });
             }
         }
     }

@@ -6,15 +6,5 @@
 <h2>All Tags</h2>
 @foreach(var tag in Model.Keys)
 {
-        <a href="#" class="btn">@tag</a>
-}
-@section Head {
-    <style>
-        .btn {
-            display: inline-block;
-            margin-bottom: 4px;
-            margin-right: 4px;
-            font-size: .9rem;
-        }
-    </style>
+        <a href="/tag/@tag/" class="btn block">@tag</a>
 }

@@ -10,10 +10,10 @@
     <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
     <title>@ViewData["Title"] - The Ramblings of TerribleDev</title>
     <environment names="Development">
-        <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" async />
+        <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Production">
-        <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" async />
+        <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css"/>
     </environment>
     @RenderSection("Head", false)
 </head>
@@ -31,7 +31,10 @@
     }
     else
     {
-        <main role="main" class="main-content-wrap">
+        <header class="header">
+            <div><a href="/" class="link-unstyled">The Ramblings of TerribleDev</a></div>
+        </header>
+        <main role="main" class="main-content-wrap headerBump">
             @RenderBody()
         </main>
     }

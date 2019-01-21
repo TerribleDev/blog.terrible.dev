@@ -6,6 +6,7 @@ namespace TerribleDev.Blog.Web.Models
     {
         public IEnumerable<IPost> Posts { get; set;}
         public int Page { get; set; }
+        public string NextUrl { get; set; }
         public bool HasNext { get; set; }
     }
 }
