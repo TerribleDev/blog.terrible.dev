@@ -8,7 +8,7 @@ self.addEventListener('install', function (event) {
 
 var preLoad = function () {
     return caches.open('pwabuilder-offline').then(function (cache) {
-        return cache.addAll(['/offline/', '/', '/404/']);
+        return cache.addAll(['/offline/', '/', '/404/', '/index.html']);
     });
 }
 
