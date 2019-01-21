@@ -14,7 +14,7 @@ namespace TerribleDev.Blog.Web
             return new SyndicationItem()
             {
                 Title = x.Title,
-                Description = x.ContentPlain,
+                Description = x.Content.ToString(),
                 Id = $"https://blog.terribledev.io/{x.Url}",
                 Published = x.PublishDate
             };
