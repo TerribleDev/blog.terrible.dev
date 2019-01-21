@@ -4,7 +4,7 @@
     "name": "The Ramblings of TerribleDev",
     "scope": "/",
     "display": "minimal-ui",
-    "start_url": "https://blog2.terribledev.io/",
+    "start_url": "/",
     "short_name": "Terribl",
     "theme_color": "#4A4A4A",
     "background_color": "#FFF",
