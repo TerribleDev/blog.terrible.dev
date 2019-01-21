@@ -14,7 +14,7 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "/content/favicon.ico",
+            "src": "/favicon.ico",
             "sizes": "any"
         }
     ]
