@@ -52,14 +52,9 @@ namespace TerribleDev.Blog.Web
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts(TimeSpan.FromDays(30), false, preload: true);
 
             }
-            app.UseIENoOpen();
-            app.UseNoMimeSniff();
-            app.UseCrossSiteScriptingFilters();
-            app.UseFrameGuard(new FrameGuardOptions(FrameGuardOptions.FrameGuard.SAMEORIGIN));
+
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             
@@ -81,6 +76,11 @@ namespace TerribleDev.Blog.Web
                             "public,max-age=" + cacheTime;
                     }
             });
+            app.UseIENoOpen();
+            app.UseNoMimeSniff();
+            app.UseCrossSiteScriptingFilters();
+            app.UseFrameGuard(new FrameGuardOptions(FrameGuardOptions.FrameGuard.SAMEORIGIN));
+            app.UseHsts(TimeSpan.FromDays(30), false, preload: true);
             app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml|.html])$", "$1/", 301));
             app.UseOutputCaching();
             app.UseMvc();
