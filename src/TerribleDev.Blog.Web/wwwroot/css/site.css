@@ -45,11 +45,8 @@ body {
     padding-left: 1.2em;
     padding-bottom: 1.2em;
 }
-    .main-content-wrap.headerBump {
+    .headerBump {
         padding-top: 3.5rem;
-        padding-right: 1.2em;
-        padding-left: 1.2em;
-        padding-bottom: 1.2em;
     }
 
     .main-content-wrap img {
@@ -149,10 +146,6 @@ a {
         font-size: 1.8rem;
     }
 
-    .navBar {
-        display: none !important;
-    }
-
     .bodyWithNav {
         width: initial;
         float: initial;
@@ -181,7 +174,13 @@ a {
     color: white;
     width: 250px;
     padding-top: 20px;
+    transition: width ease-in .5s;
+    z-index: 100;
 }
+    .navBar.hide {
+        width: 0;
+        overflow: auto;
+    }
 
     .navBar > * {
         max-width: 100%;
@@ -217,8 +216,12 @@ a {
     border-radius: 50%;
 }
 
-.nextPageHome {
+.bottomNavButtons {
     display: flex;
-    flex-direction: row-reverse;
-    margin-top: .5rem
+    flex-direction: row;
+    margin-top: .5rem;
+    width: 100%;
+}
+.spacer {
+    flex-grow: 1;
 }

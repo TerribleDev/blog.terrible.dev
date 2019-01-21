@@ -1,5 +1,16 @@
-﻿<nav class="navBar">
-    <img src="~/content/tommyAvatar3.jpg" class="round" asp-append-version="true" />
+﻿@{ 
+    var hideNav = ViewData["HideNav"] != null ? "hide" : "";
+}
+<nav class="navBar @hideNav">
+    @if (ViewData["HideNav"] != null)
+    {
+        <img src="" data-src="~/content/tommyAvatar3.jpg" class="lazy round" />
+    }
+    else
+    {
+        <img src="~/content/tommyAvatar3.jpg" class="round" />
+    }
+
     <span>Tommy "Terrible Dev" Parnell</span>
     <ul class="sidebarBtns">
         <li><a href="/" class="link-unstyled">Home</a></li>

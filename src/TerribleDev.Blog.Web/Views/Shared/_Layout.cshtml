@@ -21,26 +21,40 @@
     @RenderSection("Head", false)
 </head>
 <body>
-    @if (ViewData["RenderNav"] != null)
-    {
-        <desktopOnly user-agent="@this.Context.Request.Headers["User-Agent"]">
-            <partial name="Nav" />
-        </desktopOnly>
-        <main role="main" class="bodyWithNav">
-            <div class="main-content-wrap">
-                @RenderBody()
-            </div>
-        </main>
-    }
-    else
+    <partial name="Nav" />
+    @if (ViewData["DisableHeader"] == null)
     {
         <header class="header">
             <div><a href="/" class="link-unstyled">The Ramblings of TerribleDev</a></div>
         </header>
-        <main role="main" class="main-content-wrap headerBump">
-            @RenderBody()
-        </main>
     }
+    @{ 
+        var bodyBump =  ViewData["HideNav"] == null ? "bodyWithNav": "";
+        var headerBump = ViewData["DisableHeader"] == null ? "headerBump" : "";
+    }
+    <main role="main" class="@bodyBump @headerBump">
+        <div class="main-content-wrap">
+            @RenderBody()
+        </div>
+    </main>
+    @*@if (ViewData["DisableHeader"] != null)
+        {
+
+            <main role="main" class="bodyWithNav">
+                <div class="main-content-wrap">
+                    @RenderBody()
+                </div>
+            </main>
+        }
+        else
+        {
+            <header class="header">
+                <div><a href="/" class="link-unstyled">The Ramblings of TerribleDev</a></div>
+            </header>
+            <main role="main" class="main-content-wrap headerBump">
+                @RenderBody()
+            </main>
+        }*@
     @RenderSection("Scripts", required: false)
     <environment names="Development">
         <script asp-append-version="true" src="~/js/swi.js" async></script>

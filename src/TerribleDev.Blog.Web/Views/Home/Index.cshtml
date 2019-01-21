@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    ViewData["RenderNav"] = true;
+    ViewData["DisableHeader"] = true;
 }
 <cache vary-by-route="pageNumber">
 
@@ -12,8 +12,10 @@
     }
     @if (Model.HasNext)
     {
-        <div class="nextPageHome">
-            <a href="/page/@(Model.Page + 1)/" class="btn">Next Page -></a>
+        <div class="bottomNavButtons">
+            <a href="/page/@(Model.Page - 1)/" class="btn">&#8592; Previous Page</a>
+            <div class="spacer"></div>
+            <a href="/page/@(Model.Page + 1)/" class="btn">Next Page &#8594;</a>
         </div>
     }
 </cache>

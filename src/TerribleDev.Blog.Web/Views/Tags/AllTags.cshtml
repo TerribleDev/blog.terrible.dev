@@ -1,7 +1,7 @@
 ﻿@model Dictionary<string, List<IPost>>
 @{
     ViewData["Title"] = "all-tags";
-    ViewData["RenderNav"] = true;
+    ViewData["DisableHeader"] = true;
 }
 <h2>All Tags</h2>
 @foreach (var tag in Model.Keys)
