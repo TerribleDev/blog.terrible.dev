@@ -61,6 +61,7 @@ namespace TerribleDev.Blog.Web.Controllers
             return View(model: postName);
         }
         [Route("/offline")]
+        [Route("/offline.html")]
         [ResponseCache(Duration = 3600)]
         public IActionResult Offline()
         {
