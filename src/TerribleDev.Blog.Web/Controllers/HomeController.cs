@@ -45,6 +45,7 @@ namespace TerribleDev.Blog.Web.Controllers
         });
 
         [Route("/")]
+        [Route("/index.html")]
         [Route("/page/{pageNumber?}" )]
         public IActionResult Index(int pageNumber = 1)
         {

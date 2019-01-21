@@ -81,7 +81,7 @@ namespace TerribleDev.Blog.Web
                             "public,max-age=" + cacheTime;
                     }
             });
-            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml])$", "$1/", 301));
+            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml|.html])$", "$1/", 301));
             app.UseOutputCaching();
             app.UseMvc();
         }
