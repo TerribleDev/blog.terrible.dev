@@ -5,7 +5,7 @@
     "scope": "/",
     "display": "browser",
     "start_url": "https://blog2.terribledev.io/",
-    "short_name": "TerribleDev's blog",
+    "short_name": "TerribleDev",
     "theme_color": "#4A4A4A",
     "background_color": "#FFF",
     "description": "My name is Tommy Parnell. I usually go by TerribleDev on the internets. These are just some of my writings and rants about the software space.",
