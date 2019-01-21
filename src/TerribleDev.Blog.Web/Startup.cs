@@ -76,12 +76,12 @@ namespace TerribleDev.Blog.Web
                             "public,max-age=" + cacheTime;
                     }
             });
+            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml|.html])$", "$1/", 301));
             app.UseIENoOpen();
             app.UseNoMimeSniff();
             app.UseCrossSiteScriptingFilters();
             app.UseFrameGuard(new FrameGuardOptions(FrameGuardOptions.FrameGuard.SAMEORIGIN));
             app.UseHsts(TimeSpan.FromDays(30), false, preload: true);
-            app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml|.html])$", "$1/", 301));
             app.UseOutputCaching();
             app.UseMvc();
         }
