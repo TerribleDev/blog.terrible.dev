@@ -8,5 +8,4 @@ I put together [some materials](https://github.com/TerribleDev/intro-to-docker) 
 <br />
 
 <!--more-->
-
-{% youtube 6EGyhDlr8rs %}
+![video](https://www.youtube.com/watch?v=6EGyhDlr8rs)

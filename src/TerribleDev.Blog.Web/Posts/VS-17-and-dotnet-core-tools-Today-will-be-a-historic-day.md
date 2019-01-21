@@ -16,8 +16,7 @@ Today marks the release of Visual Studio 2017, and with it the final release of 
 
 So I bet you are wondering, how is VS2017 improved. When you first boot the vs2017 installer you are immediately hit with a very sleek UI for the installer. The installer actually has reasonable install sizes for scenarios like nodejs only. 
 
-
-{% image "fancybox" vs.PNG "vs 2017 installer" %}
+![vs 2017 installer](vs.PNG)
 
 VS2017 can understand which lines of code are linked to your unit tests. As you alter, or refactor code VS can run the tests. This can allow the editor to show checkmarks or red `x`'s This is huge as it can seemingly provide constant feedback to developers during development.
 

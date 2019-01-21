@@ -37,7 +37,7 @@ namespace TerribleDev.Blog.Web
                 var splitFile = postText.Split("---");
                 var ymlRaw = splitFile[0];
                 var markdownText = string.Join("", splitFile.Skip(1));
-                var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+                var pipeline = new MarkdownPipelineBuilder().UseMediaLinks().UseEmojiAndSmiley().Build();
                 var postContent = Markdown.ToHtml(markdownText, pipeline);
                 var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
                 var postSettings = ParseYaml(ymlRaw);

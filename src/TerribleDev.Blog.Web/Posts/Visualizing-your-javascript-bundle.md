@@ -21,5 +21,4 @@ You get started by `npm install -g source-map-explorer` then just download your 
 
 Here is a great youtube video explaining it in detail!
 
-
-{% youtube 7aY9BoMEpG8 %}
+![video](https://www.youtube.com/watch?v=7aY9BoMEpG8)
