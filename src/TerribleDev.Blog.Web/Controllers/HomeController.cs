@@ -53,7 +53,7 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return NotFound();
             }
-            return View(new HomeViewModel() { Posts = result, Page = pageNumber });
+            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postsByPage.ContainsKey(pageNumber + 1) });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
