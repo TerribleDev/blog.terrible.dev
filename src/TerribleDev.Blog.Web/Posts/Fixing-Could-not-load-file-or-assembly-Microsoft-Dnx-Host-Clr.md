@@ -3,6 +3,7 @@ permalink: fixing-could-not-load-file-or-assembly-microsoft-dnx-host-clr-2
 id: 53
 updated: '2015-09-09 17:34:41'
 date: 2015-09-09 10:08:18
+tags:
 ---
 
 So I recently ran into this error where the latest bits could not load Microsoft.Dnx.Host.Clr here is what I did to fix it.

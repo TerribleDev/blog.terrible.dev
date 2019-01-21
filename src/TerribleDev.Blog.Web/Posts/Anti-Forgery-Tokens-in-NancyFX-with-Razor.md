@@ -3,6 +3,7 @@ permalink: anti-forgery-tokens-in-nancyfx-with-razor
 id: 33
 updated: '2014-06-11 20:00:34'
 date: 2014-06-11 19:34:13
+tags:
 ---
 
 Getting started with anti-forgery tokens in NancyFX with razor views is pretty simple.

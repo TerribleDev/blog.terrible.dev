@@ -34,28 +34,27 @@ namespace TerribleDev.Blog.Web
         }
         public IPost ParsePost(string postText, string fileName)
         {
-            var splitFile = postText.Split("---");
-            var ymlRaw = splitFile[0];
-            var markdownText = string.Join("", splitFile.Skip(1));
-            var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
-            var postContent = Markdown.ToHtml(markdownText, pipeline);
-            var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
-            var postSettings = ParseYaml(ymlRaw);
-            var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
-            var summary = postContent.Split("<!-- more -->")[0];
-            var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
-            return new Post()
-            {
-                PublishDate = postSettings.date,
-                tags = postSettings.tags?.Select(a=>a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
-                Title = postSettings.title,
-                Url = resolvedUrl,
-                Content = new HtmlString(postContent),
-                Summary = new HtmlString(summary),
-                SummaryPlain = postSummaryPlain,
-                ContentPlain = postContentPlain
-            };
+                var splitFile = postText.Split("---");
+                var ymlRaw = splitFile[0];
+                var markdownText = string.Join("", splitFile.Skip(1));
+                var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+                var postContent = Markdown.ToHtml(markdownText, pipeline);
+                var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
+                var postSettings = ParseYaml(ymlRaw);
+                var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
+                var summary = postContent.Split("<!-- more -->")[0];
+                var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
+                return new Post()
+                {
+                    PublishDate = postSettings.date,
+                    tags = postSettings.tags?.Select(a => a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
+                    Title = postSettings.title,
+                    Url = resolvedUrl,
+                    Content = new HtmlString(postContent),
+                    Summary = new HtmlString(summary),
+                    SummaryPlain = postSummaryPlain,
+                    ContentPlain = postContentPlain
+                };
         }
-
     }
 }
