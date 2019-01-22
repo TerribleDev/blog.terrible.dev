@@ -35,7 +35,7 @@ So dotnet is a managed language with a runtime. Microsoft has some [performance 
 * There is a tool called [cross gen](https://github.com/dotnet/coreclr/blob/master/Documentation/building/crossgen.md) which compiles dll's to native code. 
 * Dotnet's garbage collector is really good, but it struggles to collect long living objects. Our objects will need to either be ephemeral, or pinned in memory forever.
 * The garbage collector struggles with large objects, especially large strings. We'll have to avoid large string allocations when possible.
-* dotnet has reference types such as objects, classes, strings, and most other things are value types. [Value types are allocated](https://blog.terribledev.io/c-strings/) on the stack which is far cheaper than the heap
+* dotnet has reference types such as objects, classes, strings, and most other things are value types. [Value types are allocated](/c-strings/) on the stack which is far cheaper than the heap
 * Exceptions are expensive when thrown in dotnet. I'm going to always avoid hitting them.
 * Cache all the things!
 
