@@ -7,7 +7,7 @@ tags:
 - docker
 ---
 
-Here we are, its 2017 dotnet core is out, and finally dotnet has a proper cli. In a previous post [we explored the new cli](http://blog.terribledev.io/Exploring-the-dotnet-cli/). In short you can use the dotnet cli to build, test, package, and publish projects. However sometimes just using the cli is not enough. Sometimes, you land in a place where you have many projects to compile, test, and package. 
+Here we are, its 2017 dotnet core is out, and finally dotnet has a proper cli. In a previous post [we explored the new cli](/Exploring-the-dotnet-cli/). In short you can use the dotnet cli to build, test, package, and publish projects. However sometimes just using the cli is not enough. Sometimes, you land in a place where you have many projects to compile, test, and package. 
 <!-- more -->
 
 You sometimes need a more complex tool to help you manage your versions, and set the right properties as part of your builds. This is where a tasking system like [gulp](http://gulpjs.com/) can help. Now gulp is not the only task engines. There are Rake, Cake, MSBuild, etc. Plenty to pick from. I personally use gulp a lot, because I'm a web developer. I need a JS based system, to help me run the [babels](https://babeljs.io), and [webpacks](https://webpack.github.io/docs/) of the world. 
