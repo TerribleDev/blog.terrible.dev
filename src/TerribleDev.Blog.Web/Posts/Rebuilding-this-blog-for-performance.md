@@ -17,7 +17,7 @@ Ok, so I want a really fast blog, but one that does not sacrifice design. I plan
 
 ## Features
 
-So this blog has a view to read a post. A home page with links to the last 10 blog posts and a pager to go back further in time. A page listing blogs by tags and links for each tag to posts.
+This blog has a view to read a post. A home page with links to the last 10 blog posts and a pager to go back further in time. A page listing blogs by tags and links for each tag to posts.
 
 ## Picking Technologies
 
@@ -49,12 +49,15 @@ So here are my thoughts on the client side of things.
 * Minify all the content
 * Fingerprint all css/js content and set cache headers to maximum time
 * Deliver everything with brotli compression
+* Zopfli and gzip for fallbacks
 * Always use `Woff2` for fonts
 * Avoid expensive css selectors
   * `:nth child`
   * `fixed`
   * partial matching `[class^="wrap"]`
+* Use HTTP/2 for **all requests**
 * Images
+  * Use SVG's when possible
   * Recompile all images in the build to `jpeg 2000, jpeg xr, and webp`
   * Serve `jpeg 2000` to ios
   * `jpeg XR` to ie11 and edge
@@ -65,8 +68,8 @@ So here are my thoughts on the client side of things.
   * Offline support
 * CDN
   * Use Cloudflare to deliver assets faster
-  * Cloudflare's argo improves geo-routing
-  * Throw 301's inside cloudflares own datacenters with workers
+  * Cloudflare's argo improves geo-routing and latency issues
+  * Throw any expected 301's inside cloudflares own datacenters with workers
 
 
 ## Tools 
