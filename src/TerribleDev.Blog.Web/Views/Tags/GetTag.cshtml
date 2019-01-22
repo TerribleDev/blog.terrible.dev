@@ -3,7 +3,9 @@
 @{
     ViewData["Tag:" + Model.Tag] = "GetTag";
 }
+<cache vary-by-route="tagName">
 @foreach (var post in Model.Posts)
 {
     <partial name="PostSummary" model="post" />
 }
+</cache>
