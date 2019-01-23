@@ -1,4 +1,5 @@
-title: How I minify images for my blog
+title: Compressing images with tinypng'g CLI
+date: 2019-01-23 10:50
 tags:
 - javascript
 - tools
