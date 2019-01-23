@@ -1,4 +1,4 @@
-title: Compressing images with tinypng'g CLI
+title: Compressing images with tinypng's CLI
 date: 2019-01-23 10:50
 tags:
 - javascript
