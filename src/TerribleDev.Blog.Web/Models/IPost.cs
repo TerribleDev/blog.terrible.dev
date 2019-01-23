@@ -16,6 +16,7 @@ namespace TerribleDev.Blog.Web.Models
         HtmlString Content { get; set; }
         string ContentPlain { get; set; }
         string SummaryPlain { get; set; }
+        string SummaryPlainShort { get; set; }
         IList<string> tags { get; set; }
     }
 }

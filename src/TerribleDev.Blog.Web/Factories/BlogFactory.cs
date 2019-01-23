@@ -54,6 +54,7 @@ namespace TerribleDev.Blog.Web
                     Content = new HtmlString(postContent),
                     Summary = new HtmlString(summary),
                     SummaryPlain = postSummaryPlain,
+                    SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain: postContentPlain.Substring(0, 146)) + "...",
                     ContentPlain = postContentPlain
                 };
         }
