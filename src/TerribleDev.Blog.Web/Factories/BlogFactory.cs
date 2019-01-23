@@ -35,28 +35,35 @@ namespace TerribleDev.Blog.Web
         }
         public IPost ParsePost(string postText, string fileName)
         {
-                var splitFile = postText.Split("---");
-                var ymlRaw = splitFile[0];
-                var markdownText = string.Join("", splitFile.Skip(1));
-                var pipeline = new MarkdownPipelineBuilder().Use<TargetLinkExtension>().UseMediaLinks().UseEmojiAndSmiley().Build();
-                var postContent = Markdown.ToHtml(markdownText, pipeline);
-                var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
-                var postSettings = ParseYaml(ymlRaw);
-                var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
-                var summary = postContent.Split("<!-- more -->")[0];
-                var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
-                return new Post()
-                {
-                    PublishDate = postSettings.date,
-                    tags = postSettings.tags?.Select(a => a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
-                    Title = postSettings.title,
-                    Url = resolvedUrl,
-                    Content = new HtmlString(postContent),
-                    Summary = new HtmlString(summary),
-                    SummaryPlain = postSummaryPlain,
-                    SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain: postContentPlain.Substring(0, 146)) + "...",
-                    ContentPlain = postContentPlain
-                };
+            var splitFile = postText.Split("---");
+            var ymlRaw = splitFile[0];
+            var markdownText = string.Join("", splitFile.Skip(1));
+            List<string> postImages = new List<string>();
+            var pipeline = new MarkdownPipelineBuilder()
+                                .Use<TargetLinkExtension>()
+                                .Use<ImageRecorder>(new ImageRecorder(postImages))
+                                .UseMediaLinks()
+                                .UseEmojiAndSmiley()
+                                .Build();
+            var postContent = Markdown.ToHtml(markdownText, pipeline);
+            var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
+            var postSettings = ParseYaml(ymlRaw);
+            var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
+            var summary = postContent.Split("<!-- more -->")[0];
+            var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
+            return new Post()
+            {
+                PublishDate = postSettings.date.ToUniversalTime(),
+                tags = postSettings.tags?.Select(a => a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
+                Title = postSettings.title,
+                Url = resolvedUrl,
+                Content = new HtmlString(postContent),
+                Summary = new HtmlString(summary),
+                SummaryPlain = postSummaryPlain,
+                SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
+                ContentPlain = postContentPlain,
+                Images = postImages.Distinct().Select(a => a.StartsWith('/') ? a : $"/{resolvedUrl}/{a}").ToList()
+            };
         }
     }
 }
