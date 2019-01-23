@@ -1,10 +1,10 @@
 ﻿@model IPost
 
 <article class="btmRule">
-    <h3 itemprop="headline" class="headline"><a href="/@Model.Url" class="link-unstyled">@Model.Title</a></h3>
+    <h3 itemprop="headline" class="headline"><a href="/@Model.Url/" class="link-unstyled">@Model.Title</a></h3>
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
     <div itemprop="articleBody">
         @Model.Summary
     </div>
-    <a href="/@Model.Url">Continue Reading </a>
+    <a href="/@Model.Url/">Continue Reading </a>
 </article>
