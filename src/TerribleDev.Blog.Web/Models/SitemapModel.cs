@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace TerribleDev.Blog.Web.Models
 {
-    [XmlRoot("urlset")]
+    [XmlRoot("urlset", Namespace="http://www.sitemaps.org/schemas/sitemap/0.9")]
     public class SiteMapRoot
     {
         [XmlElement("url")]
