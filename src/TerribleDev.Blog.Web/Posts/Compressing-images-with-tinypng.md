@@ -16,4 +16,4 @@ So I figured out they have a cli in npm. Easy to install, just use npm to global
 
 Now you have to call the cli, this is the flags I use `tinypng . -r -k YourKeyHere`. The period tells tinypng to look in the current directory for images, `-r` tells it to look recursively, or essentially to look through child directories as well, and the `-k YourKeyHere` is the key you get by logging in. On the free plan you get 500 compressions a month. Hopefully you will fall into the pit of success like I did!
 
-![an image showing the tiny png results](1.png)
+![an image showing the tiny png results](3.png)
