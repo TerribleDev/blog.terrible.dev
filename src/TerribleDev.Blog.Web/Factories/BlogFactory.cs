@@ -17,14 +17,18 @@ namespace TerribleDev.Blog.Web
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
-            var allPosts = posts.AsParallel().Select(a =>
-            {
-                var fileInfo = new FileInfo(a);
-                var fileText = File.ReadAllText(fileInfo.FullName);
-                return ParsePost(fileText, fileInfo.Name);
-            });
-            return allPosts.ToList();
+            var postsAsText = posts.Select(GetFileText);
+            return Task.WhenAll(postsAsText).Result.AsParallel().Select(b => ParsePost(b.text, b.fileInfo.Name)).ToList();
         }
+
+        private static async Task<(string text, FileInfo fileInfo)> GetFileText(string filePath)
+        {
+            var fileInfo = new FileInfo(filePath);
+            var text = await File.ReadAllTextAsync(fileInfo.FullName);
+            return (text, fileInfo);
+
+        }
+
         public IEnumerable<string> GetPosts() => Directory.EnumerateFiles(Path.Combine(Directory.GetCurrentDirectory(), "Posts"), "*.md", SearchOption.TopDirectoryOnly);
 
         public PostSettings ParseYaml(string ymlText)

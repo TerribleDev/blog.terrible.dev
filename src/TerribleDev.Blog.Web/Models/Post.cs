@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Html;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TerribleDev.Blog.Web.Models
 {
+    [DebuggerDisplay("{Title}")]
     public class Post : IPost
     {
         public string Url { get; set; }
