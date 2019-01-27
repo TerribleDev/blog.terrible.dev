@@ -21,7 +21,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
         public class ImageRecorder : IMarkdownExtension
         {
             private List<string> images = null;
-            public ImageRecorder(List<string> images)
+            public ImageRecorder(ref List<string> images)
             {
                 this.images = images;
             }

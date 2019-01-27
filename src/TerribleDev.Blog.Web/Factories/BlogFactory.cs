@@ -45,7 +45,7 @@ namespace TerribleDev.Blog.Web
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
                                 .Use<TargetLinkExtension>()
-                                .Use<ImageRecorder>(new ImageRecorder(postImages))
+                                .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .UseMediaLinks()
                                 .UseEmojiAndSmiley()
                                 .Build();
