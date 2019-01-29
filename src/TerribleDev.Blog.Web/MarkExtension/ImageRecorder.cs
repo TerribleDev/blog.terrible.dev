@@ -21,7 +21,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
         public class ImageRecorder : IMarkdownExtension
         {
             private List<string> images = null;
-            public ImageRecorder(List<string> images)
+            public ImageRecorder(ref List<string> images)
             {
                 this.images = images;
             }
@@ -49,17 +49,8 @@ namespace TerribleDev.Blog.Web.MarkExtension
                 {
                     return false;
                 }
-                Console.WriteLine(linkInline.Url);
                 this.images.Add(linkInline.Url);
                 return false;
-                // Uri uri;
-                // // Only process relative Uri
-                // if (!Uri.TryCreate(linkInline.Url, UriKind.RelativeOrAbsolute, out uri) || !uri.IsAbsoluteUri)
-                // {
-                    
-                // }
-                
-                // return false;
             }
         }
     }

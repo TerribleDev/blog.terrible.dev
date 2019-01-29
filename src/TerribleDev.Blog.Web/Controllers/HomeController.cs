@@ -30,7 +30,7 @@ namespace TerribleDev.Blog.Web.Controllers
                 }
                 return accum;
             });
-        public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a=>a.Url);
+        public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a => a.Url);
         public static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
         {
             var highestPage = accum.Keys.Max();

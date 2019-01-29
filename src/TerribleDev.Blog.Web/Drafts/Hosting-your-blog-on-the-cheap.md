@@ -9,7 +9,7 @@ A load of people have been asking me lately how I host my blog. Incase its not a
 
 <!-- more -->
 
-Since I make no money, on this my strategy is about cutting costs. My grandfather use to say "take care of the pounds, because the pennies will take care of themselves." Now since my grandfather is in England, and their dollar is known as the pound, he was telling me to focus even on the small amount of currency.
+Since I make no money, on this my strategy is about cutting costs. My grandfather use to say "take care of the pounds, because the pennies will take care of themselves." Now since my grandfather is in England, and their dollar is known as the pound, he was telling me to focus on the bigger picture.
 
 The first big decision for blogs is what "engine" you are going to use, or if you are going to make your own. These usually fall into 2 categories. Static sites, which are usually when blogs are written in text files, and are compiled into static html, or server rendered blogs such as wordpress. When a request is made to blog that has server rendering, the html is dynamically built in time and delivered to the consumer. Static sites, on the other hand are precomputed and thus are just delivered to the browser.
 
