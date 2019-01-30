@@ -39,7 +39,7 @@ let parsePost (postText:string, fileName:FileInfo, postSettings:PostSettings): P
     let postContent = Markdown.ToHtml(markdownText, markdownBuilder);
     let postContentPlain =  Markdown.ToPlainText(markdownText, markdownBuilder).Split("<!-- more -->") |> String.concat ""
     //todo pattern match
-    let resolvedUrl = if not(System.String.IsNullOrWhiteSpace(postSettings.permalink)) then postSettings.permalink else ""
+    let resolvedUrl = if System.String.IsNullOrWhiteSpace(postSettings.permalink) then fileName.Name.Split('.').[0].Replace(' ', '-').WithoutSpecialCharacters() else postSettings.permalink
     let summary = postContent.Split("<!-- more -->").[0];
     let postSummaryPlain = postContentPlain.Split("<!-- more -->").[0];
     let tags = postSettings.tags |> Seq.map fixTagName |> Seq.toList
