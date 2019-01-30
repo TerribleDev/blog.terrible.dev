@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TerribleDev.Blog.MarkdownPlugins\TerribleDev.Blog.MarkdownPlugins.csproj" />
     <ProjectReference Include="..\TerribleDev.Blog.Core\TerribleDev.Blog.Core.fsproj" />
   </ItemGroup>
 </Project>

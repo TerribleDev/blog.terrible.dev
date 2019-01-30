@@ -7,7 +7,7 @@ using TerribleDev.Blog.Web.Models;
 using YamlDotNet.Serialization;
 using Microsoft.AspNetCore.Html;
 using Markdig;
-using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser;
+using TerribleDev.Blog.MarkdownPlugins;
 
 namespace TerribleDev.Blog.Web
 {
