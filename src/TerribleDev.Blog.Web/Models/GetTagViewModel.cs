@@ -7,7 +7,7 @@ namespace TerribleDev.Blog.Web.Models
 {
     public class GetTagViewModel
     {
-        public IEnumerable<IPost> Posts { get; set; }
+        public IEnumerable<TerribleDev.Blog.Core.Models.Post> Posts { get; set; }
         public string Tag { get; set; }
     }
 }

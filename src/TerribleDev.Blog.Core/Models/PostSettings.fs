@@ -2,7 +2,7 @@
 open System;
 open System.Collections.Generic
 
-
+[<CLIMutable>]
 type PostSettings =
     {
         tags: List<string>;

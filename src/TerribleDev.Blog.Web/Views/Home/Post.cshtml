@@ -1,4 +1,4 @@
-﻿@model IPost
+﻿@model TerribleDev.Blog.Core.Models.Post
 @{
     ViewData["Title"] = "Post";
     ViewData["HideNav"] = true;
@@ -23,10 +23,10 @@
     <meta property="og:image" content="https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640" />
     @foreach(var image in Model.Images.Take(6))
     {
-        <meta property="og:image" content="https://blog.terribledev.io@(image)">
+    <meta property="og:image" content="https://blog.terribledev.io@(image)">
     }
     @if(Model.Images.Count > 0)
     {
-        <meta name="twitter:image" content="https://blog.terribledev.io@(Model.Images[0])">
+    <meta name="twitter:image" content="https://blog.terribledev.io@(Model.Images[0])">
     }
 }

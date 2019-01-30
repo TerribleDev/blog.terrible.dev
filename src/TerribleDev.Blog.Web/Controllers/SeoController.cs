@@ -16,7 +16,7 @@ namespace TerribleDev.Blog.Web.Controllers
     public class SeoController : Controller
     {
         public static DateTimeOffset publishDate = DateTimeOffset.UtcNow; // keep publish date in memory so we just return when the server was kicked 
-        public static IEnumerable<SyndicationItem> postsToSyndication = HomeController.postsAsList.Select(a => a.ToSyndicationItem()).ToList();
+        public static IEnumerable<SyndicationItem> postsToSyndication = HomeController.postsAsList.Select(Core.Models.Util.ToSyndicationItem).ToList();
         [Route("/rss")]
         [Route("/rss.xml")]
         [ResponseCache(Duration = 7200)]

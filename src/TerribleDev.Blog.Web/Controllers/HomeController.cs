@@ -12,10 +12,10 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
-        public static Dictionary<string, List<IPost>> tagToPost = postsAsList.Where(a=>a.tags != null)
+        public static List<TerribleDev.Blog.Core.Models.Post> postsAsList = TerribleDev.Blog.Core.Factories.BlogFactory.getAllPosts("Posts").OrderByDescending(a => a.PublishDate).ToList();
+        public static Dictionary<string, List<TerribleDev.Blog.Core.Models.Post>> tagToPost = postsAsList.Where(a=>a.tags != null)
             .Aggregate(
-             new Dictionary<string, List<IPost>>(),
+             new Dictionary<string, List<TerribleDev.Blog.Core.Models.Post>>(),
             (accum, item) => {
                 foreach(var tag in item.tags)
                 {
@@ -25,19 +25,19 @@ namespace TerribleDev.Blog.Web.Controllers
                     }
                     else
                     {
-                        accum[tag] = new List<IPost>() { item };
+                        accum[tag] = new List<TerribleDev.Blog.Core.Models.Post>() { item };
                     }
                 }
                 return accum;
             });
-        public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a => a.Url);
-        public static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
+        public static IDictionary<string, TerribleDev.Blog.Core.Models.Post> posts = postsAsList.ToDictionary(a => a.Url);
+        public static IDictionary<int, List<TerribleDev.Blog.Core.Models.Post>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<TerribleDev.Blog.Core.Models.Post>>() { [1] = new List<TerribleDev.Blog.Core.Models.Post>() }, (accum, item) =>
         {
             var highestPage = accum.Keys.Max();
             var current = accum[highestPage].Count;
             if (current >= 10)
             {
-                accum[highestPage + 1] = new List<IPost>() { item };
+                accum[highestPage + 1] = new List<TerribleDev.Blog.Core.Models.Post>() { item };
                 return accum;
             }
             accum[highestPage].Add(item);
