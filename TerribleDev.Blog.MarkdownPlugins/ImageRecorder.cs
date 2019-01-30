@@ -13,7 +13,7 @@
     public class ImageRecorder : IMarkdownExtension
     {
         private List<string> images;
-        public ImageRecorder(ref List<string> images)
+        public ImageRecorder(List<string> images)
         {
             this.images = images;
         }

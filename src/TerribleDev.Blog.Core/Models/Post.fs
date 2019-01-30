@@ -1,7 +1,6 @@
 ﻿namespace TerribleDev.Blog.Core.Models
 open System;
 open Microsoft.AspNetCore.Html;
-open System.Collections.Generic
 
 type Post =
     {
@@ -13,6 +12,6 @@ type Post =
         ContentPlain: string; 
         SummaryPlain: string; 
         SummaryPlainShort: string; 
-        tags : IList<string>
-        Images: IList<string>
+        tags : List<string>
+        Images: List<string>
     }
