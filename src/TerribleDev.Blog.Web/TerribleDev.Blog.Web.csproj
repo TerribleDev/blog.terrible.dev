@@ -40,4 +40,8 @@
     <ProjectReference Include="..\..\TerribleDev.Blog.MarkdownPlugins\TerribleDev.Blog.MarkdownPlugins.csproj" />
     <ProjectReference Include="..\TerribleDev.Blog.Core\TerribleDev.Blog.Core.fsproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Factories\BlogFactory.cs" />
+    <Compile Remove="Extensions\IPostExtensions.cs" />
+  </ItemGroup>
 </Project>

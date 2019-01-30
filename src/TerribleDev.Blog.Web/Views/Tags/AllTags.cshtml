@@ -1,13 +1,13 @@
-﻿@model Dictionary<string, List<IPost>>
+﻿@model Dictionary<string, List<TerribleDev.Blog.Core.Models.Post>>
 @{
     ViewData["Title"] = "all-tags";
 }
 <h2>All Tags</h2>
 <cache>
-@foreach (var tag in Model.Keys)
-{
-    <a href="/tag/@tag/" class="btn block">@tag</a>
-}
+    @foreach (var tag in Model.Keys)
+    {
+        <a href="/tag/@tag/" class="btn block">@tag</a>
+    }
 </cache>
 @section Head {
     <partial name="StockMeta" />
