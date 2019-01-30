@@ -36,4 +36,7 @@
     <Content Include="Posts\*.md" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TerribleDev.Blog.Core\TerribleDev.Blog.Core.fsproj" />
+  </ItemGroup>
 </Project>
