@@ -10,6 +10,8 @@ module BlogFactory =
     open Microsoft.AspNetCore.Html
     open System.Linq
     open System.Collections.Generic
+    open fs
+    open System
 
     let fixTagName (tag:string) = tag.Replace(' ', '-').WithoutSpecialCharacters().ToLower()
     let mapImgUrlResolver (resolveUrl:string) = 
@@ -17,16 +19,15 @@ module BlogFactory =
      
 
     let getPosts (path) = Directory.EnumerateFiles(path, "*.md", SearchOption.TopDirectoryOnly)
-    let parseYml (postText:string):PostSettings = 
-        postText.Split("---").[0] 
-        |>  DeserializerBuilder().Build().Deserialize
+    let parseYml (postText:string) = 
+        let split = postText.Split("---")
+        match split with
+        | [| _ |] -> raise(Exception("No yml found"))
+        | [| yml; _|] -> DeserializerBuilder().Build().Deserialize(yml)
+        | split when split.Length > 2 -> DeserializerBuilder().Build().Deserialize(split.[0])
+        
 
-    let getFileInfo (filePath:string) = 
-        let fileInfo = FileInfo(filePath)
-        async {
-            let! text = File.ReadAllTextAsync(fileInfo.FullName) |> Async.AwaitTask
-            return (text, fileInfo)
-        }
+
     let getMarkdownBuilder (imgRef) =
         MarkdownPipelineBuilder()
                                 .Use<TargetLinkExtension>()
@@ -55,7 +56,7 @@ module BlogFactory =
         let images = images |> Seq.distinct |> Seq.map mapImgUrlFromResolved |> Seq.toList
         {
             PublishDate = postSettings.date.ToUniversalTime(); 
-            tags = tags |> System.Collections.Generic.List 
+            tags = tags |> Seq.toList
             Title = postSettings.title;
             Url = resolvedUrl;
             Content = HtmlString(postContent);
@@ -63,7 +64,7 @@ module BlogFactory =
             SummaryPlain = postSummaryPlain;
             SummaryPlainShort = summaryPlainShort;
             ContentPlain = postContentPlain;
-            Images = images |> System.Collections.Generic.List
+            Images = images |> Seq.toList
         }
     let getAllPosts path = 
         getPosts path  

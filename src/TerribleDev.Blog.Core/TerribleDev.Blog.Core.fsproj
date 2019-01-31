@@ -3,6 +3,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Util\fs.fs" />
+    <Compile Include="Util\Constants.fs" />
     <Compile Include="Util\Async.fs" />
     <Compile Include="Models\PostSettings.fs" />
     <Compile Include="Models\Post.fs" />

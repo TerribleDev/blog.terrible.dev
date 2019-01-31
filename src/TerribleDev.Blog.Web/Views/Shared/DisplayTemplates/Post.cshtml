@@ -4,7 +4,7 @@
     <h1 itemprop="headline" class="headline">@Model.Title</h1>
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
     @Model.Content
-    @if (Model.tags.Count > 0)
+    @if (Model.tags.Length > 0)
     {
         <div>
             <span>Tagged In:</span><br />

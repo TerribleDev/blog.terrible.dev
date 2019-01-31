@@ -12,6 +12,6 @@ type Post =
         ContentPlain: string; 
         SummaryPlain: string; 
         SummaryPlainShort: string; 
-        tags : System.Collections.Generic.List<string>
-        Images: System.Collections.Generic.List<string>
+        tags : List<string>
+        Images: List<string>
     }
