@@ -112,18 +112,19 @@ a {
     color: white;
     width: 250px;
     padding-top: 20px;
-    transition: width ease-in-out .5s;
+    transition: left ease-in .3s;
+    left: 0;
     z-index: 100;
     overflow: auto;
 }
-    .navBar.withBody > * > * > #closeNav {
+    .navBar.withBody #closeNav {
         display: none;
     }
     .navBar.withBody.hide {
-        width: 250px;
+        left: 0;
     }
     .navBar.hide {
-        width: 0;
+        left: -250px;
     }
 
     .navBar > * {
@@ -237,15 +238,17 @@ a.link-unstyled, div.link-unstyled, span.link-unstyled, svg.link-unstyled {
     h5 {
         font-size: 1.8rem;
     }
-
-    .navBar {
-        width: 100%;
+    .navBar.hide {
+        left: -100vw;
     }
     .navBar.withBody.hide {
-        width: 0;
+        left: -100vw;
     }
     .navBar.withBody > * > * > #closeNav {
         display: unset;
+    }
+    .navBar {
+        width: 100%;
     }
 
     .bodyWithNav {
