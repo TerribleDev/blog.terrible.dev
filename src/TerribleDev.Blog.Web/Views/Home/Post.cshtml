@@ -1,4 +1,5 @@
-﻿@model IPost
+﻿@inject BlogConfiguration config
+@model IPost
 @{
     ViewData["Title"] = "Post";
     ViewData["HideNav"] = true;
@@ -13,7 +14,7 @@
     <meta property="og:type" content="blog">
     <meta property="og:title" content="@Model.Title">
     <meta property="og:url" content="https://blog.terribledev.io/@Model.Url/">
-    <meta property="og:site_name" content="The Ramblings of TerribleDev">
+    <meta property="og:site_name" content="@config.Title">
     <meta property="og:description" content="@Model.SummaryPlainShort">
     <meta property="og:updated_time" content="@Model.PublishDate.ToString("O")">
     <meta name="twitter:card" content="summary">

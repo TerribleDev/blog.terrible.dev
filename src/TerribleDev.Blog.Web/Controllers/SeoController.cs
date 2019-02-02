@@ -15,6 +15,12 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class SeoController : Controller
     {
+        private readonly BlogConfiguration configuration;
+        public SeoController(BlogConfiguration configuration)
+        {
+            this.configuration = configuration;
+
+        }
         public static DateTimeOffset publishDate = DateTimeOffset.UtcNow; // keep publish date in memory so we just return when the server was kicked 
         public static IEnumerable<SyndicationItem> postsToSyndication = HomeController.postsAsList.Select(a => a.ToSyndicationItem()).ToList();
         [Route("/rss")]
@@ -28,8 +34,8 @@ namespace TerribleDev.Blog.Web.Controllers
             using (XmlWriter xmlWriter = XmlWriter.Create(this.Response.Body, new XmlWriterSettings() { Async = true, Indent = false, Encoding = Encoding.UTF8 }))
             {
                 var writer = new RssFeedWriter(xmlWriter);
-                await writer.WriteTitle("The Ramblings of TerribleDev");
-                await writer.WriteValue("link", "https://blog.terribledev.io");
+                await writer.WriteTitle(configuration.Title);
+                await writer.WriteValue("link", configuration.Link);
                 await writer.WriteDescription("My name is Tommy Parnell. I usually go by TerribleDev on the internets. These are just some of my writings and rants about the software space.");
 
                 foreach (var item in postsToSyndication)
@@ -48,7 +54,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             Response.StatusCode = 200;
             Response.ContentType = "text/xml";
-            var sitewideLinks = new List<SiteMapItem>(HomeController.tagToPost.Keys.Select(a=> new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/tag/{a}/"}))
+            var sitewideLinks = new List<SiteMapItem>(HomeController.tagToPost.Keys.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/tag/{a}/" }))
             {
                 new SiteMapItem() { LastModified = DateTime.UtcNow, Location="https://blog.terribledev.io/all-tags/" }
             };

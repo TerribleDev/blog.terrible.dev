@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject BlogConfiguration config
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +13,7 @@
     <link rel="alternate" type="application/atom+xml" async title="RSS" href="/rss.xml">
     <link rel="manifest" href="~/manifest.json" async asp-append-version="true">
     <link asp-append-version="true" rel="icon" async href="~/favicon.ico" />
-    <title>@ViewData["Title"] - The Ramblings of TerribleDev</title>
+    <title>@ViewData["Title"] - @config.Title</title>
     <environment names="Development">
         <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -24,7 +26,7 @@
     <partial name="Nav" />
     <header class="header">
         <svg aria-label="Open Menu" id="menuBtn" role="button" xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path d="M4 10h24c1.104 0 2-.896 2-2s-.896-2-2-2H4c-1.104 0-2 .896-2 2s.896 2 2 2zm24 4H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2zm0 8H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2z" /></svg>
-        <div class="headerCallout"><a href="/" class="link-unstyled ">The Ramblings of TerribleDev</a></div>
+        <div class="headerCallout"><a href="/" class="link-unstyled ">@config.Title</a></div>
     </header>
     @{ 
         var bodyBump =  ViewData["HideNav"] == null ? "bodyWithNav": "";

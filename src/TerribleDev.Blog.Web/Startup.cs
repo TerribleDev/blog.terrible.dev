@@ -15,6 +15,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using HardHat.Middlewares;
 using HardHat;
+using TerribleDev.Blog.Web.Models;
+
 namespace TerribleDev.Blog.Web
 {
     public class Startup
@@ -29,6 +31,9 @@ namespace TerribleDev.Blog.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var blogConfig = new BlogConfiguration();
+            Configuration.GetSection("Blog").Bind(blogConfig);
+            services.AddSingleton(blogConfig);
             services.AddResponseCompression(a =>
             {
                 a.EnableForHttps = true;
