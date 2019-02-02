@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/TerribleDev.Blog.Web/TerribleDev.Blog.Web.csproj"
+                "${workspaceFolder}/src/TerribleDev.Blog.Web/TerribleDev.Blog.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
