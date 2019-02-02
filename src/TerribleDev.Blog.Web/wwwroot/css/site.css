@@ -112,19 +112,18 @@ a {
     color: white;
     width: 250px;
     padding-top: 20px;
-    transition: left ease-in .3s;
-    left: 0;
+    transition: width ease-in-out .5s;
     z-index: 100;
     overflow: auto;
 }
-    .navBar.withBody #closeNav {
+    .navBar.withBody > * > * > #closeNav {
         display: none;
     }
     .navBar.withBody.hide {
-        left: 0;
+        width: 250px;
     }
     .navBar.hide {
-        left: -250px;
+        width: 0;
     }
 
     .navBar > * {
@@ -238,17 +237,15 @@ a.link-unstyled, div.link-unstyled, span.link-unstyled, svg.link-unstyled {
     h5 {
         font-size: 1.8rem;
     }
-    .navBar.hide {
-        left: -100vw;
+
+    .navBar {
+        width: 100%;
     }
     .navBar.withBody.hide {
-        left: -100vw;
+        width: 0;
     }
     .navBar.withBody > * > * > #closeNav {
         display: unset;
-    }
-    .navBar {
-        width: 100%;
     }
 
     .bodyWithNav {
