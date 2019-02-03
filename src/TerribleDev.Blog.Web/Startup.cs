@@ -94,7 +94,7 @@ namespace TerribleDev.Blog.Web
             app.UseNoMimeSniff();
             app.UseCrossSiteScriptingFilters();
             app.UseFrameGuard(new FrameGuardOptions(FrameGuardOptions.FrameGuard.SAMEORIGIN));
-            app.UseHsts(TimeSpan.FromDays(30), false, preload: true);
+            app.UseHsts(TimeSpan.FromDays(160), false, preload: true);
             app.UseOutputCaching();
             app.UseMvc();
         }
