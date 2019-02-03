@@ -26,7 +26,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/rss")]
         [Route("/rss.xml")]
         [ResponseCache(Duration = 7200)]
-        [OutputCache(Duration = 86400)]
+        [OutputCache(Duration = 31536000)]
         public async Task Rss()
         {
             Response.StatusCode = 200;
@@ -49,7 +49,7 @@ namespace TerribleDev.Blog.Web.Controllers
         }
         [Route("/sitemap.xml")]
         [ResponseCache(Duration = 7200)]
-        [OutputCache(Duration = 86400)]
+        [OutputCache(Duration = 31536000)]
         public void SiteMap()
         {
             Response.StatusCode = 200;

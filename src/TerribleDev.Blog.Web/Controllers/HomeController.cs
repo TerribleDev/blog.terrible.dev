@@ -47,6 +47,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/")]
         [Route("/index.html")]
         [Route("/page/{pageNumber?}" )]
+        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
         public IActionResult Index(int pageNumber = 1)
         {
             if(!postsByPage.TryGetValue(pageNumber, out var result))
