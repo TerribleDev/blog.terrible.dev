@@ -15,10 +15,10 @@
     <link asp-append-version="true" rel="icon" async href="~/favicon.ico" />
     <title>@ViewData["Title"] - @config.Title</title>
     <environment names="Development">
-        <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
+        <inline-style href="css/site.css"></inline-style>
     </environment>
     <environment names="Production">
-        <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" />
+        <inline-style href="css/site.min.css"></inline-style>
     </environment>
     @RenderSection("Head", false)
 </head>
