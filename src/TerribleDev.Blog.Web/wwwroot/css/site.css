@@ -29,6 +29,10 @@ h5 {
     font-size: 2rem;
 }
 
+article {
+    margin-top: .5em;
+}
+
 body {
     text-rendering: optimizeLegibility;
     letter-spacing: -.01em;
@@ -47,7 +51,7 @@ body {
     padding-bottom: 1.2em;
 }
     .headerBump {
-        padding-top: 4rem;
+        padding-top: 3.5rem;
     }
 
     .main-content-wrap img {
