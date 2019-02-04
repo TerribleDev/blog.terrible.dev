@@ -19,6 +19,7 @@ namespace TerribleDev.Blog.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .ConfigureKestrel(a =>
                 {
