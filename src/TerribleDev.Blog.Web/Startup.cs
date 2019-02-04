@@ -95,22 +95,22 @@ namespace TerribleDev.Blog.Web
             app.UseCrossSiteScriptingFilters();
             app.UseFrameGuard(new FrameGuardOptions(FrameGuardOptions.FrameGuard.SAMEORIGIN));
             app.UseHsts(TimeSpan.FromDays(365), false, preload: true);
-            app.UseContentSecurityPolicy(
-                new ContentSecurityPolicy()
-                {
-                    DefaultSrc = new HashSet<string>() {
-                       CSPConstants.Self, "https://www.google-analytics.com", "https://www.googletagmanager.com", "https://stats.g.doubleclick.net"
-                    },
-                    ScriptSrc = new HashSet<string>()
-                    {
-                       CSPConstants.Self, CSPConstants.UnsafeInline, "https://www.google-analytics.com", "https://www.googletagmanager.com", "https://stats.g.doubleclick.net"
-                    },
-                    StyleSrc = new HashSet<string>()
-                    {
-                       CSPConstants.Self, CSPConstants.UnsafeInline
-                    },
-                    UpgradeInsecureRequests = true
-                });
+            // app.UseContentSecurityPolicy(
+            //     new ContentSecurityPolicy()
+            //     {
+            //         DefaultSrc = new HashSet<string>() {
+            //            CSPConstants.Self, "https://www.google-analytics.com", "https://www.googletagmanager.com", "https://stats.g.doubleclick.net"
+            //         },
+            //         ScriptSrc = new HashSet<string>()
+            //         {
+            //            CSPConstants.Self, CSPConstants.UnsafeInline, "https://www.google-analytics.com", "https://www.googletagmanager.com", "https://stats.g.doubleclick.net"
+            //         },
+            //         StyleSrc = new HashSet<string>()
+            //         {
+            //            CSPConstants.Self, CSPConstants.UnsafeInline
+            //         },
+            //         UpgradeInsecureRequests = true
+            //     });
             app.UseOutputCaching();
             app.UseMvc();
         }
