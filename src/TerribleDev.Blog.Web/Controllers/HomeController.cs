@@ -48,6 +48,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/index.html")]
         [Route("/page/{pageNumber?}" )]
         [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
+        [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)
         {
             if(!postsByPage.TryGetValue(pageNumber, out var result))
@@ -77,7 +78,7 @@ namespace TerribleDev.Blog.Web.Controllers
 
         [Route("{postUrl}")]
         [OutputCache(Duration = 31536000, VaryByParam = "postUrl")]
-        [ResponseCache(Duration = 180)]
+        [ResponseCache(Duration = 900)]
         public IActionResult Post(string postUrl)
         {
             if(!posts.TryGetValue(postUrl, out var currentPost))
