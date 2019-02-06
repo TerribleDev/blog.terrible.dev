@@ -22,7 +22,13 @@ if (fetch) {
 }
 Promise.resolve(fetched);
 var triggerLazyImages = function () {
-    document.querySelectorAll('.lazy').forEach(a => {
+    document.querySelectorAll('source.lazy').forEach(a => {
+        var src = a.getAttribute('data-src');
+        if (src) {
+            a.srcset = src;
+        }
+    });
+    document.querySelectorAll('img.lazy').forEach(a => {
         var src = a.getAttribute('data-src');
         if (src) {
             a.src = src;
