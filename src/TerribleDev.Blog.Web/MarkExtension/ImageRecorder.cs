@@ -50,7 +50,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
                     return false;
                 }
                 this.images.Add(linkInline.Url);
-                return true;
+                return false;
             }
         }
     }

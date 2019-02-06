@@ -8,6 +8,7 @@ using YamlDotNet.Serialization;
 using Microsoft.AspNetCore.Html;
 using Markdig;
 using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser;
+using TerribleDev.Blog.Web.MarkExtension;
 
 namespace TerribleDev.Blog.Web
 {
@@ -44,8 +45,9 @@ namespace TerribleDev.Blog.Web
             var markdownText = string.Join("", splitFile.Skip(1));
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
+                                .Use<PictureInline>()
                                 .Use<TargetLinkExtension>()
-                                .Use<ImageRecorder>(new ImageRecorder(ref postImages))
+                                // .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .UseMediaLinks()
                                 .UseEmojiAndSmiley()
                                 .Build();
