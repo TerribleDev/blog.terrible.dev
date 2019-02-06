@@ -21,18 +21,18 @@ namespace TerribleDev.Blog.Web.MarkExtension
             renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");
             renderer.Write("\"");
             renderer.WriteAttributes(link);
-            // if (renderer.EnableHtmlForInline)
-            // {
-            //     renderer.Write(" alt=\"");
-            // }
-            // var wasEnableHtmlForInline = renderer.EnableHtmlForInline;
-            // renderer.EnableHtmlForInline = false;
-            // renderer.WriteChildren(link);
-            // renderer.EnableHtmlForInline = wasEnableHtmlForInline;
-            // if (renderer.EnableHtmlForInline)
-            // {
-            //     renderer.Write("\"");
-            // }
+            if (renderer.EnableHtmlForInline)
+            {
+                renderer.Write(" alt=\"");
+            }
+            var wasEnableHtmlForInline = renderer.EnableHtmlForInline;
+            renderer.EnableHtmlForInline = false;
+            renderer.WriteChildren(link);
+            renderer.EnableHtmlForInline = wasEnableHtmlForInline;
+            if (renderer.EnableHtmlForInline)
+            {
+                renderer.Write("\"");
+            }
 
 
             if (renderer.EnableHtmlForInline)
