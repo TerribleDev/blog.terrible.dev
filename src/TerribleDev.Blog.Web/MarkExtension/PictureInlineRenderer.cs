@@ -30,9 +30,9 @@ namespace TerribleDev.Blog.Web.MarkExtension
             {
                 throw new Exception($"Error making link for {escapeUrl} @ {baseUrl}");
             }
-            if(!parsedResult.IsAbsoluteUri && !escapeUrl.StartsWith("/"))
+            if(!escapeUrl.StartsWith("/"))
             {
-                escapeUrl = $"/{baseUrl}/{escapeUrl}";
+                escapeUrl = $"{baseUrl}/{escapeUrl}";
             }
             renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");
             renderer.Write("\"");

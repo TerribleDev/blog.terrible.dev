@@ -62,7 +62,6 @@ namespace TerribleDev.Blog.Web.MarkExtension
 
             private void RenderTargetAttribute(Uri uri, HtmlRenderer renderer, LinkInline linkInline)
             {
-
                 linkInline.SetAttributes(new HtmlAttributes() { Properties = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("target", "_blank"), new KeyValuePair<string, string>("rel", "noopener"),  } });
 
             }
