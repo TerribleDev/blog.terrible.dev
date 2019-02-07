@@ -47,7 +47,7 @@ namespace TerribleDev.Blog.Web
             var pipeline = new MarkdownPipelineBuilder()
                                 .Use<PictureInline>()
                                 .Use<TargetLinkExtension>()
-                                // .Use<ImageRecorder>(new ImageRecorder(ref postImages))
+                                .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .UseMediaLinks()
                                 .UseEmojiAndSmiley()
                                 .Build();
