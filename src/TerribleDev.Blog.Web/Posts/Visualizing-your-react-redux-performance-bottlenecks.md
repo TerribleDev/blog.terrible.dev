@@ -26,6 +26,46 @@ So what I personally like to do is find orange bars that often make up the bulk 
 
 So digging into other blog posts, I found posts showing how to [visualize your redux actions](https://medium.com/@vcarl/performance-profiling-a-redux-app-c85e67bf84ae) using the same performance API mechanisms react uses. That blog post uses redux middleware to add timings to actions.  This narrowed down on our performance problems, but did not point out the exact selector that was slow. Clearly we had an action that was triggering an expensive state update, but the time was still spent in `anonymous function`. Thats when I had the idea to wrap reselect selector functions in a function that can append the timings. [This gist is what I came up with](https://gist.github.com/TerribleDev/db48b2c8e143f9364292161346877f93)
 
+```js
+
+import {createSelector} from 'reselect';
+
+const hasPerformanceApi =
+    window &&
+    window.performance &&
+    window.performance.measure &&
+    window.performance.mark;
+
+const createFuncWithMark = (name, callback) => (...args) => {
+    const startMark = `${name}-Startmark`;
+    const endMark = `${name}-EndMark`;
+    window.performance.mark(startMark);
+    const result = callback(...args);
+    window.performance.mark(endMark);
+    window.performance.measure('♻️ ' + `${name}-Selector`, startMark, endMark);
+    window.performance.clearMarks(startMark);
+    window.performance.clearMarks(endMark);
+    window.performance.clearMeasures(startMark);
+    window.performance.clearMeasures(endMark);
+    return result;
+};
+
+export const createMarkedSelector = (name, ...args) => {
+    if (!hasPerformanceApi) {
+        return createSelector(...args);
+    }
+    if (!name || typeof name !== 'string') {
+        throw new Error('marked selectors must have names');
+    }
+    const callback = args.pop();
+    const funcWithMark = createFuncWithMark(name, callback);
+    args.push(funcWithMark);
+    return createSelector(...args);
+};
+
+```
+
+
 So how does this work exactly? Well its a library that wraps the function you pass to reselect that adds markers to the window to tell you how fast reselect selectors take to run. Combined with the previously mentioned blog post, you can now get timings in chrome's performance tool with selectors! You can also combine this with the [redux middleware](https://medium.com/@vcarl/performance-profiling-a-redux-app-c85e67bf84ae) I previously mentioned to get a deeper insight into how your app is performing
 
 ![a preview of selectors reporting their performance](2.png)
