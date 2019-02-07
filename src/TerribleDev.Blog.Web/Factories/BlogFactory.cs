@@ -9,17 +9,18 @@ using Microsoft.AspNetCore.Html;
 using Markdig;
 using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser;
 using TerribleDev.Blog.Web.MarkExtension;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TerribleDev.Blog.Web
 {
     public class BlogFactory
     {
-        public List<IPost> GetAllPosts()
+        public List<IPost> GetAllPosts(string domain)
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
             var postsAsText = posts.Select(GetFileText);
-            return Task.WhenAll(postsAsText).Result.AsParallel().Select(b => ParsePost(b.text, b.fileInfo.Name)).ToList();
+            return Task.WhenAll(postsAsText).Result.AsParallel().Select(b => ParsePost(b.text, b.fileInfo.Name, domain)).ToList();
         }
 
         private static async Task<(string text, FileInfo fileInfo)> GetFileText(string filePath)
@@ -38,7 +39,7 @@ namespace TerribleDev.Blog.Web
             return serializer.Deserialize<PostSettings>(ymlText);
 
         }
-        public IPost ParsePost(string postText, string fileName)
+        public IPost ParsePost(string postText, string fileName, string domain)
         {
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
@@ -46,8 +47,10 @@ namespace TerribleDev.Blog.Web
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             List<string> postImages = new List<string>();
+            
             var pipeline = new MarkdownPipelineBuilder()
-                                .Use<PictureInline>(new PictureInline(resolvedUrl))
+                                .Use(new AbsoluteLinkConverter(resolvedUrl, domain))
+                                .Use<PictureInline>()
                                 .Use<TargetLinkExtension>()
                                 .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .UseMediaLinks()

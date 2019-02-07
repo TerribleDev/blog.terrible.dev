@@ -1,4 +1,5 @@
-﻿@model Dictionary<string, List<IPost>>
+﻿@using System.Collections.Immutable;
+@model IDictionary<string, ImmutableList<IPost>>
 @{
     ViewData["Title"] = "all-tags";
 }

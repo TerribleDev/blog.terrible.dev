@@ -8,12 +8,6 @@ namespace TerribleDev.Blog.Web.MarkExtension
 {
     public class PictureInline : IMarkdownExtension
     {
-        private readonly string baseUrl;
-        public PictureInline(string baseUrl)
-        {
-            this.baseUrl = baseUrl;
-        }
-
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
         }
@@ -48,16 +42,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
 
             renderer.Write(string.IsNullOrWhiteSpace(type) ? $"<img src=\"" : $"<source type=\"{type}\" srcset=\"");
             var escapeUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url : link.Url;
-            //todo: this should be a seperate plugin
-            // urls that are like "3.png" should resolve to /<postUrl>/3.png mostly for rss readers
-            if(!System.Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out var parsedResult))
-            {
-                throw new Exception($"Error making link for {escapeUrl} @ {baseUrl}");
-            }
-            if(!parsedResult.IsAbsoluteUri && !escapeUrl.StartsWith("/"))
-            {
-                escapeUrl = $"/{baseUrl}/{escapeUrl}";
-            }
+
             renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");
             renderer.Write("\"");
             renderer.WriteAttributes(link);

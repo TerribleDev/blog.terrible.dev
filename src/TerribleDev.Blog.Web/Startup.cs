@@ -16,6 +16,7 @@ using Microsoft.Net.Http.Headers;
 using HardHat.Middlewares;
 using HardHat;
 using TerribleDev.Blog.Web.Models;
+using TerribleDev.Blog.Web.Factories;
 
 namespace TerribleDev.Blog.Web
 {
@@ -42,6 +43,10 @@ namespace TerribleDev.Blog.Web
             {
                 services.AddSingleton(getBlog());
             }
+            services.AddSingleton(i => {
+                var posts = new BlogFactory().GetAllPosts(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terribledev.io");
+                return BlogCacheFactory.ProjectPostCache(posts);
+            });
             services.AddResponseCompression(a =>
             {
                 a.EnableForHttps = true;

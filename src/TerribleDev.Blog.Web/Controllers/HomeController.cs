@@ -12,38 +12,13 @@ namespace TerribleDev.Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public static List<IPost> postsAsList = new BlogFactory().GetAllPosts().OrderByDescending(a=>a.PublishDate).ToList();
-        public static Dictionary<string, List<IPost>> tagToPost = postsAsList.Where(a=>a.tags != null)
-            .Aggregate(
-             new Dictionary<string, List<IPost>>(),
-            (accum, item) => {
-                foreach(var tag in item.tags)
-                {
-                    if(accum.TryGetValue(tag, out var list))
-                    {
-                        list.Add(item);
-                    }
-                    else
-                    {
-                        accum[tag] = new List<IPost>() { item };
-                    }
-                }
-                return accum;
-            });
-        public static IDictionary<string, IPost> posts = postsAsList.ToDictionary(a => a.Url);
-        public static IDictionary<int, List<IPost>> postsByPage = postsAsList.Aggregate(new Dictionary<int, List<IPost>>() { [1] = new List<IPost>() }, (accum, item) =>
-        {
-            var highestPage = accum.Keys.Max();
-            var current = accum[highestPage].Count;
-            if (current >= 10)
-            {
-                accum[highestPage + 1] = new List<IPost>() { item };
-                return accum;
-            }
-            accum[highestPage].Add(item);
-            return accum;
-        });
+        private readonly PostCache postCache;
 
+        public HomeController(PostCache postCache)
+        {
+            this.postCache = postCache;
+        }
+        
         [Route("/")]
         [Route("/index.html")]
         [Route("/page/{pageNumber?}" )]
@@ -51,11 +26,11 @@ namespace TerribleDev.Blog.Web.Controllers
         [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)
         {
-            if(!postsByPage.TryGetValue(pageNumber, out var result))
+            if(!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
             {
                 return Redirect("/404/");
             }
-            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postsByPage.ContainsKey(pageNumber + 1), HasPrevious = postsByPage.ContainsKey(pageNumber - 1) });
+            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1) });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
@@ -81,7 +56,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [ResponseCache(Duration = 900)]
         public IActionResult Post(string postUrl)
         {
-            if(!posts.TryGetValue(postUrl, out var currentPost))
+            if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
                 return Redirect("/404/");
             }

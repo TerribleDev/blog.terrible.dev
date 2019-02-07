@@ -16,13 +16,14 @@ namespace TerribleDev.Blog.Web.Controllers
     public class SeoController : Controller
     {
         private readonly BlogConfiguration configuration;
-        public SeoController(BlogConfiguration configuration)
+        private readonly PostCache postCache;
+
+        public SeoController(BlogConfiguration configuration, PostCache postCache)
         {
             this.configuration = configuration;
-
+            this.postCache = postCache;
         }
         public static DateTimeOffset publishDate = DateTimeOffset.UtcNow; // keep publish date in memory so we just return when the server was kicked 
-        public static IEnumerable<SyndicationItem> postsToSyndication = HomeController.postsAsList.Select(a => a.ToSyndicationItem()).ToList();
         [Route("/rss")]
         [Route("/rss.xml")]
         [ResponseCache(Duration = 7200)]
@@ -38,7 +39,7 @@ namespace TerribleDev.Blog.Web.Controllers
                 await writer.WriteValue("link", configuration.Link);
                 await writer.WriteDescription("My name is Tommy Parnell. I usually go by TerribleDev on the internets. These are just some of my writings and rants about the software space.");
 
-                foreach (var item in postsToSyndication)
+                foreach (var item in postCache.PostsAsSyndication)
                 {
                     await writer.Write(item);
                 }
@@ -54,14 +55,14 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             Response.StatusCode = 200;
             Response.ContentType = "text/xml";
-            var sitewideLinks = new List<SiteMapItem>(HomeController.tagToPost.Keys.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/tag/{a}/" }))
+            var sitewideLinks = new List<SiteMapItem>(postCache.TagsToPosts.Keys.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/tag/{a}/" }))
             {
                 new SiteMapItem() { LastModified = DateTime.UtcNow, Location="https://blog.terribledev.io/all-tags/" }
             };
             var ser = new XmlSerializer(typeof(SiteMapRoot));
             var sitemap = new SiteMapRoot()
             {
-                Urls = HomeController.postsAsList.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/{a.Url}/" }).ToList()
+                Urls = postCache.PostsAsLists.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terribledev.io/{a.Url}/" }).ToList()
             };
             sitemap.Urls.AddRange(sitewideLinks);
             ser.Serialize(this.Response.Body, sitemap);
