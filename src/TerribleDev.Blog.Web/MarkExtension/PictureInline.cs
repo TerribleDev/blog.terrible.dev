@@ -7,8 +7,10 @@ namespace TerribleDev.Blog.Web.MarkExtension
 {
     public class PictureInline : IMarkdownExtension
     {
-        public PictureInline()
+        private readonly string postUrl;
+        public PictureInline(string postUrl)
         {
+            this.postUrl = postUrl;
         }
 
         public void Setup(MarkdownPipelineBuilder pipeline)
@@ -20,7 +22,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
             var htmlRenderer = renderer as HtmlRenderer;
             if (htmlRenderer != null && !htmlRenderer.ObjectRenderers.Contains<PictureInlineRenderer>())
             {
-                htmlRenderer.ObjectRenderers.ReplaceOrAdd<LinkInlineRenderer>(new PictureInlineRenderer());
+                htmlRenderer.ObjectRenderers.ReplaceOrAdd<LinkInlineRenderer>(new PictureInlineRenderer(postUrl));
             }
         }
     }

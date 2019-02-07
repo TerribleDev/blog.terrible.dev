@@ -14,10 +14,26 @@ namespace TerribleDev.Blog.Web.MarkExtension
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.LinkInline}" />
     public class PictureInlineRenderer : LinkInlineRenderer
     {
+        private readonly string baseUrl;
+        public PictureInlineRenderer(string baseUrl)
+        {
+            this.baseUrl = baseUrl;
+
+        }
         private void WriteImageTag(HtmlRenderer renderer, LinkInline link, string suffix, string type = null)
         {
             renderer.Write(string.IsNullOrWhiteSpace(type) ? $"<img src=\"" : $"<source type=\"{type}\" srcset=\"");
             var escapeUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url : link.Url;
+            //todo: this should be a seperate plugin
+            // urls that are like "3.png" should resolve to /<postUrl>/3.png mostly for rss readers
+            if(!System.Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out var parsedResult))
+            {
+                throw new Exception($"Error making link for {escapeUrl} @ {baseUrl}");
+            }
+            if(!parsedResult.IsAbsoluteUri && !escapeUrl.StartsWith("/"))
+            {
+                escapeUrl = $"/{baseUrl}/{escapeUrl}";
+            }
             renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");
             renderer.Write("\"");
             renderer.WriteAttributes(link);
@@ -47,8 +63,8 @@ namespace TerribleDev.Blog.Web.MarkExtension
                 base.Write(renderer, link);
                 return;
             }
-            
-            
+
+
             renderer.Write("<picture>");
             WriteImageTag(renderer, link, ".webp", "image/webp");
             WriteImageTag(renderer, link, string.Empty);

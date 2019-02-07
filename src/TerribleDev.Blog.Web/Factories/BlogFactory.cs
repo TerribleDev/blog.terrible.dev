@@ -43,9 +43,11 @@ namespace TerribleDev.Blog.Web
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
             var markdownText = string.Join("", splitFile.Skip(1));
+            var postSettings = ParseYaml(ymlRaw);
+            var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
-                                .Use<PictureInline>()
+                                .Use<PictureInline>(new PictureInline(resolvedUrl))
                                 .Use<TargetLinkExtension>()
                                 .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .UseMediaLinks()
@@ -53,8 +55,7 @@ namespace TerribleDev.Blog.Web
                                 .Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
             var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
-            var postSettings = ParseYaml(ymlRaw);
-            var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
+            
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
             return new Post()
