@@ -24,14 +24,14 @@ Another extension I find vital to my every day is [import cost](https://marketpl
 
 ![a static image showing off import cost](import-cost.png)
 
-## eslint and prettier
+## ESlint and Prettier
 
-Hopefully both of these will not be new to you. ESLint is a linting tool that looks for potential errors in your code. Prettier is an opinionated style enforcer for your code. The [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions for vscode can automatically show you problems in your code as you type, and can even fix your code on save. 
-
-
+Hopefully both of these will not be new to you. ESLint is a linting tool that looks for potential errors in your code. Prettier is an opinionated style enforcer for your code. The [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions for vscode can automatically show you problems in your code as you type, and can even fix your code on save. What I love about both of these tools, is together they make a great force for improving your code base. Prettier eliminates many debates over code style between team members, and eslint prevents you from shipping many bugs to production. These extensions can call out problems as you type, which decreases the feedback loops, and increases your productivity.
 
 
-## file-size
+
+
+## Filesize
 
 As a web developer I spend a lot of my time looking at file size. Right now file sizes are ever inflating, and are causing pain for bandwidth constrained devices. I often download bundles, and inspect their compiled source, or just have to look at how big a file is on the filesystem. A big tool I have in my belt is [filesize](https://marketplace.visualstudio.com/items?itemName=mkxml.vscode-filesize). This is a crazy simple extension, but one that brings me joy everyday. The premise is simple, print the file size of the current file in the status bar at the bottom. Click on it, and you get a nice output of what its like gzipped, and the mime type. Dirt simple, but saved me a ton of time everyday!
 
