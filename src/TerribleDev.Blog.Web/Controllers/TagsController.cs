@@ -27,7 +27,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!postCache.TagsToPosts.TryGetValue(tagName, out var models))
             {
-                return NotFound();
+                return Redirect($"/404/?from=/tag/{tagName}/");
             }
             {
                 return View(new Models.GetTagViewModel { Tag = tagName, Posts = models });

@@ -28,7 +28,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
             {
-                return Redirect("/404/");
+                return Redirect($"/404/?from=/page/{pageNumber}/");
             }
             return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1) });
         }
@@ -58,7 +58,7 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
-                return Redirect("/404/");
+                return Redirect($"/404/?from={postUrl}");
             }
             return View(model: currentPost);
         }
@@ -72,10 +72,10 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/404")]
         [Route("{*url}", Order = 999)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult FourOhFour()
+        public IActionResult FourOhFour(string from = null)
         {
             this.Response.StatusCode = 404;
-            return View();
+            return View(viewName: nameof(FourOhFour));
         }
         [Route("/404.html")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
