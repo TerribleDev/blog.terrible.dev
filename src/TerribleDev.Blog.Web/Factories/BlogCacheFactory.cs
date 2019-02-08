@@ -15,16 +15,9 @@ namespace TerribleDev.Blog.Web.Factories
             .Aggregate(
              ImmutableDictionary.Create<string, ImmutableList<IPost>>(),
             (accum, item) => {
-                foreach(var tag in item.tags.Select(i => i.ToLower()))
+                foreach(var tag in item.tags.Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => i.ToLower()))
                 {
-                    if(accum.TryGetValue(tag, out var list))
-                    {
-                        accum = accum.SetItem(tag, list.Add(item));
-                    }
-                    else
-                    {
-                        accum = accum.Add(tag, ImmutableList.Create<IPost>(item));
-                    }
+                    accum = accum.TryGetValue(tag, out var list) ? accum.SetItem(tag, list.Add(item)) : accum.Add(tag, ImmutableList.Create(item));
                 }
                 return accum;
             }).ToImmutableSortedDictionary();
