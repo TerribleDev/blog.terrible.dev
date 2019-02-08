@@ -15,7 +15,7 @@ Getting Started:
 
 Ok, so the alexa .net sdk is for the full framework only, and its built for webapi. The best way to get going is in visual studio `file -> new project -> ASP.NET Web Application .net framework` A dialog comes up, and I picked `Azure API App`.
 
-![dialog picker](dialog.png)
+![dialog picker](dialog.PNG)
 
 Now you have an empty webapi project. We don't need swashbuckle/swagger so lets get rid of that
 
