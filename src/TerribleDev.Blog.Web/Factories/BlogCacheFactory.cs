@@ -15,7 +15,7 @@ namespace TerribleDev.Blog.Web.Factories
             .Aggregate(
              ImmutableDictionary.Create<string, ImmutableList<IPost>>(),
             (accum, item) => {
-                foreach(var tag in item.tags)
+                foreach(var tag in item.tags.Select(i => i.ToLower()))
                 {
                     if(accum.TryGetValue(tag, out var list))
                     {

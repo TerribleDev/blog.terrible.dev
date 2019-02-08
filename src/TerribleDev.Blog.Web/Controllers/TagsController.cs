@@ -25,7 +25,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
         public IActionResult GetTag(string tagName)
         {
-            if(!postCache.TagsToPosts.TryGetValue(tagName, out var models))
+            if(!postCache.TagsToPosts.TryGetValue(tagName.ToLower(), out var models))
             {
                 return Redirect($"/404/?from=/tag/{tagName}/");
             }
