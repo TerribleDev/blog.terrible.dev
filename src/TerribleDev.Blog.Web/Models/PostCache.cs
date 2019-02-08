@@ -10,6 +10,7 @@ namespace TerribleDev.Blog.Web.Models
         public ImmutableDictionary<string, IPost> UrlToPost { get; set; }
         public  ImmutableDictionary<int, ImmutableList<IPost>> PostsByPage { get; set; }
         public ImmutableList<SyndicationItem> PostsAsSyndication { get; set; }
-        
+        public ImmutableDictionary<IPost, int> PostToPosition { get; set; }
+
     }
 }

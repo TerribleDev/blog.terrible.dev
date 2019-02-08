@@ -46,6 +46,7 @@ namespace TerribleDev.Blog.Web.Factories
                 return accum.SetItem(highestPage, current.Add(item));
             }).ToImmutableDictionary();
             var syndicationPosts = posts.Select(i => i.ToSyndicationItem()).ToImmutableList();
+            var postsToPosition = posts.Select((item, index) => (item, index)).ToImmutableDictionary(i => i.item, i => i.index);
             return new PostCache()
             {
                 PostsAsLists = posts,
