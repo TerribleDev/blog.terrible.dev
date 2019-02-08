@@ -37,7 +37,6 @@ namespace TerribleDev.Blog.Web.MarkExtension
                     var inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
                     if (inlineRenderer != null)
                     {
-                        inlineRenderer.TryWriters.Remove(TryLinkInlineRenderer);
                         inlineRenderer.TryWriters.Add(TryLinkInlineRenderer);
                     }
                 }
@@ -49,7 +48,8 @@ namespace TerribleDev.Blog.Web.MarkExtension
                 {
                     return false;
                 }
-                this.images.Add(linkInline.Url);
+                var url = linkInline.GetDynamicUrl != null ? linkInline.GetDynamicUrl(): linkInline.Url;
+                this.images.Add(url);
                 return false;
             }
         }

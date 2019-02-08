@@ -10,6 +10,7 @@ using Markdig;
 using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser;
 using TerribleDev.Blog.Web.MarkExtension;
 using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics;
 
 namespace TerribleDev.Blog.Web
 {
@@ -20,7 +21,7 @@ namespace TerribleDev.Blog.Web
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
             var postsAsText = posts.Select(GetFileText);
-            return Task.WhenAll(postsAsText).Result.AsParallel().Select(b => ParsePost(b.text, b.fileInfo.Name, domain)).ToList();
+            return Task.WhenAll(postsAsText).Result.Select(b => ParsePost(b.text, b.fileInfo.Name, domain)).ToList();
         }
 
         private static async Task<(string text, FileInfo fileInfo)> GetFileText(string filePath)
@@ -47,12 +48,11 @@ namespace TerribleDev.Blog.Web
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             List<string> postImages = new List<string>();
-            
             var pipeline = new MarkdownPipelineBuilder()
                                 .Use(new AbsoluteLinkConverter(resolvedUrl, domain))
-                                .Use<PictureInline>()
-                                .Use<TargetLinkExtension>()
                                 .Use<ImageRecorder>(new ImageRecorder(ref postImages))
+                                .Use<TargetLinkExtension>()
+                                .Use<PictureInline>()
                                 .UseMediaLinks()
                                 .UseEmojiAndSmiley()
                                 .Build();
@@ -61,6 +61,7 @@ namespace TerribleDev.Blog.Web
             
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
+            
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -72,7 +73,7 @@ namespace TerribleDev.Blog.Web
                 SummaryPlain = postSummaryPlain,
                 SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                 ContentPlain = postContentPlain,
-                Images = postImages.Distinct().Select(a => a.StartsWith('/') ? a : $"/{resolvedUrl}/{a}").ToList()
+                Images = postImages.Distinct().ToList()
             };
         }
     }
