@@ -18,5 +18,6 @@ namespace TerribleDev.Blog.Web.Models
         public string SummaryPlainShort { get; set; }
         public IList<string> tags { get; set; }
         public IList<string> Images { get; set;}
+        public bool HasCode { get; set; }
     }
 }
