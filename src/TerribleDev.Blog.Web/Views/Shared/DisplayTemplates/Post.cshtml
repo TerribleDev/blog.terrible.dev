@@ -1,4 +1,5 @@
-﻿@model IPost
+﻿@using Newtonsoft.Json
+@model IPost
 
 <article itemprop="blogPost">
     <h1 itemprop="headline" class="headline">@Model.Title</h1>
@@ -14,5 +15,13 @@
             }
         </div>
     }
+
+    <environment names="Development">
+        <pre>
+            <code>
+                @JsonConvert.SerializeObject(Model, Formatting.Indented)
+            </code>
+        </pre>
+    </environment>
 
 </article>

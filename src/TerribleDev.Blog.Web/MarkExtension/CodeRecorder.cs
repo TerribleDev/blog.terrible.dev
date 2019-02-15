@@ -1,16 +1,20 @@
+using System;
+using System.Collections.Generic;
 using Markdig;
 using Markdig.Renderers;
+using Markdig.Renderers.Html;
+using Markdig.Syntax;
 
 namespace TerribleDev.Blog.Web.MarkExtension
 {
     public class CodeRecorder : IMarkdownExtension
     {
-        public CodeRecorder (ref bool hasCode)
+        public CodeRecorder(ref List<string> codeLanguages)
         {
-            HasCode = hasCode;
+            CodeLanguages = codeLanguages;
         }
 
-        private bool HasCode;
+        public List<string> CodeLanguages { get; }
 
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
@@ -21,12 +25,23 @@ namespace TerribleDev.Blog.Web.MarkExtension
             var htmlRenderer = renderer as HtmlRenderer;
             if (htmlRenderer != null)
             {
-                var inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<Markdig.Syntax.CodeBlock>();
+                var inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<CodeBlockRenderer>();
                 if (inlineRenderer != null)
                 {
-                    inlineRenderer.TryWriters.Add(TryLinkInlineRenderer);
+                    inlineRenderer.TryWriters.Add(TryWriter);
                 }
             }
+        }
+
+        private bool TryWriter(HtmlRenderer renderer, CodeBlock block)
+        {
+            var fencedBlock = block as FencedCodeBlock;
+            if(fencedBlock == null || fencedBlock.Info == null)
+            {
+                return false;
+            }
+            CodeLanguages.Add(fencedBlock.Info ?? "");
+            return false;
         }
     }
 }

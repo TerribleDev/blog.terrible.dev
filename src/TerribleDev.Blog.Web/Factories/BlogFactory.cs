@@ -11,11 +11,13 @@ using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser
 using TerribleDev.Blog.Web.MarkExtension;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
+using TerribleDev.Blog.Web.Factories;
 
 namespace TerribleDev.Blog.Web
 {
     public class BlogFactory
     {
+        private HighlightFactory highlightFactory = new HighlightFactory();
         public List<IPost> GetAllPosts(string domain)
         {
             // why didn't I use f# I'd have a pipe operator by now
@@ -47,16 +49,19 @@ namespace TerribleDev.Blog.Web
             var markdownText = string.Join("", splitFile.Skip(1));
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
+            var codeBlocks = new List<string>();
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
                                 .Use(new AbsoluteLinkConverter(resolvedUrl, domain))
                                 .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .Use<TargetLinkExtension>()
                                 .Use<PictureInline>()
+                                .Use(new CodeRecorder(ref codeBlocks))
                                 .UseMediaLinks()
                                 .UseEmojiAndSmiley()
                                 .Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
+            var postContentHighlighted = highlightFactory.Highlight(postContent);
             var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
             
             var summary = postContent.Split("<!-- more -->")[0];
@@ -73,7 +78,8 @@ namespace TerribleDev.Blog.Web
                 SummaryPlain = postSummaryPlain,
                 SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                 ContentPlain = postContentPlain,
-                Images = postImages.Distinct().ToList()
+                Images = postImages.Distinct().ToList(),
+                CodeBlockLangs = codeBlocks
             };
         }
     }

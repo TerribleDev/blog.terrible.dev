@@ -19,6 +19,6 @@ namespace TerribleDev.Blog.Web.Models
         string SummaryPlainShort { get; set; }
         IList<string> tags { get; set; }
         IList<string> Images { get; set;}
-        bool HasCode { get; set; }
+        IList<string> CodeBlockLangs { get; set; }
     }
 }
