@@ -52,8 +52,8 @@ namespace TerribleDev.Blog.Web
                                 .Use(new AbsoluteLinkConverter(resolvedUrl, domain))
                                 .Use<ImageRecorder>(new ImageRecorder(ref postImages))
                                 .Use<TargetLinkExtension>()
-                                .Use<PictureInline>()
                                 .UseMediaLinks()
+                                .Use<PictureInline>()
                                 .UseEmojiAndSmiley()
                                 .Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
