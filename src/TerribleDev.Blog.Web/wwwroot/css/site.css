@@ -217,6 +217,10 @@ a.link-unstyled, div.link-unstyled, span.link-unstyled, svg.link-unstyled {
     font-weight: inherit;
 }
 
+.navHero {
+    min-height: 210px;
+}
+
 @media screen and (max-width: 768px) {
     html {
         font-size: 14px;
