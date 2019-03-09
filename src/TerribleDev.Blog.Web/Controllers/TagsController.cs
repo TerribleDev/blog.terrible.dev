@@ -21,6 +21,16 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             return View(postCache.TagsToPosts);
         }
+        [Route("/tags/{tagName}")]
+        [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
+        public IActionResult TagPluralRedirect(string tagName) 
+        {
+            if(string.IsNullOrEmpty(tagName))
+            {
+                return Redirect($"/404/?from=/tags/emptyString/");
+            }
+            return Redirect($"/tag/{tagName}/");
+        }
         [Route("/tag/{tagName}")]
         [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
         public IActionResult GetTag(string tagName)
