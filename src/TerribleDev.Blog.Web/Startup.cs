@@ -44,7 +44,7 @@ namespace TerribleDev.Blog.Web
                 services.AddSingleton(getBlog());
             }
             services.AddSingleton(i => {
-                var posts = new BlogFactory().GetAllPosts(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terribledev.io");
+                var posts = new BlogFactory().GetAllPosts(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev");
                 return BlogCacheFactory.ProjectPostCache(posts);
             });
             services.AddResponseCompression(a =>

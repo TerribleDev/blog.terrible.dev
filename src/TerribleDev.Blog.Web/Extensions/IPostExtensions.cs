@@ -11,7 +11,7 @@ namespace TerribleDev.Blog.Web
     {
         public static SyndicationItem ToSyndicationItem(this IPost x)
         {
-            Uri.TryCreate($"https://blog.terribledev.io/{x.Url}/", UriKind.Absolute, out var url);
+            Uri.TryCreate($"https://blog.terrible.dev/{x.Url}/", UriKind.Absolute, out var url);
             var syn = new SyndicationItem()
             {
                 Title = x.Title,

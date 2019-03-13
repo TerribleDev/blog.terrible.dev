@@ -43,7 +43,7 @@ Essentially I add the routing package to the container, and then have have the a
                 foreach(var route in Routes.RoutesDictionary)
                 {
                     a.MapGet("docker101", handler: async b=>{
-                        b.Response.Redirect("https://blog.terribledev.io/Getting-started-with-docker-containers/", true);
+                        b.Response.Redirect("https://blog.terrible.dev/Getting-started-with-docker-containers/", true);
                     });
                 }
             });
