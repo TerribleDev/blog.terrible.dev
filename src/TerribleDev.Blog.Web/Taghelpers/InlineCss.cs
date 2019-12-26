@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,12 +15,12 @@ namespace TerribleDev.Blog.Web.Taghelpers
         [HtmlAttributeName("href")]
         public string Href { get; set; }
 
-        private IHostingEnvironment HostingEnvironment { get; }
+        private IWebHostEnvironment HostingEnvironment { get; }
         private IMemoryCache Cache { get; }
 
  
 
-        public InlineStyleTagHelper(IHostingEnvironment hostingEnvironment, IMemoryCache cache)
+        public InlineStyleTagHelper(IWebHostEnvironment hostingEnvironment, IMemoryCache cache)
         {
             HostingEnvironment = hostingEnvironment;
             Cache = cache;

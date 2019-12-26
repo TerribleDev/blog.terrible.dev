@@ -1,35 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
-using HardHat.Middlewares;
 using HardHat;
 using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
+using Microsoft.Extensions.Hosting;
 
 namespace TerribleDev.Blog.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Env { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -47,21 +42,19 @@ namespace TerribleDev.Blog.Web
                 var posts = new BlogFactory().GetAllPosts(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev");
                 return BlogCacheFactory.ProjectPostCache(posts);
             });
+            services.AddApplicationInsightsTelemetry();
+            services.AddControllersWithViews();
             services.AddResponseCompression(a =>
             {
                 a.EnableForHttps = true;
 
             })
             .AddMemoryCache()
-            .AddMvcCore()
-            .AddCacheTagHelper()
-            .AddRazorViewEngine()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddOutputCaching();
+            .AddOutputCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -75,7 +68,6 @@ namespace TerribleDev.Blog.Web
 
             app.UseHttpsRedirection();
             app.UseResponseCompression();
-
             var cacheTime = env.IsDevelopment() ? 0 : 31536000;
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -117,7 +109,11 @@ namespace TerribleDev.Blog.Web
                     UpgradeInsecureRequests = true
                 });
             app.UseOutputCaching();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
