@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Markdig" Version="0.15.7" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="UriBuilder.Fluent" Version="1.5.2" />
