@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/TerribleDev.Blog.Web/bin/Debug/netcoreapp2.2/TerribleDev.Blog.Web.dll",
+            "program": "${workspaceFolder}/src/TerribleDev.Blog.Web/bin/Debug/netcoreapp3.1/TerribleDev.Blog.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/TerribleDev.Blog.Web",
             "stopAtEntry": false,

@@ -9,7 +9,9 @@ namespace TerribleDev.Blog.Web.Models
 {
     public interface IPost
     {
-        string Url { get; set; }
+        string CanonicalUrl { get; set; }
+        string UrlWithoutPath { get; set; }
+        string RelativeUrl { get; set; }
         string Title { get; set; }
         HtmlString Summary { get; set; }
         DateTime PublishDate { get; set; }

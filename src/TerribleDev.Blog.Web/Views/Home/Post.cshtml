@@ -13,7 +13,7 @@
     <meta name="description" content="@Model.SummaryPlainShort" />
     <meta property="og:type" content="blog">
     <meta property="og:title" content="@Model.Title">
-    <meta property="og:url" content="https://blog.terrible.dev/@Model.Url/">
+    <meta property="og:url" content="@Model.CanonicalUrl">
     <meta property="og:site_name" content="@config.Title">
     <meta property="og:description" content="@Model.SummaryPlainShort">
     <meta property="og:updated_time" content="@Model.PublishDate.ToString("O")">
@@ -22,6 +22,7 @@
     <meta name="twitter:description" content="@Model.SummaryPlainShort">
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
+    <link rel="canonical" href="@Model.CanonicalUrl" />
     @foreach(var image in Model.Images.Take(6))
     {
         <meta property="og:image" content="@image">

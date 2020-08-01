@@ -9,3 +9,9 @@
     <partial name="PostSummary" model="post" />
 }
 </cache>
+
+@section Head {
+  @if(!String.IsNullOrEmpty(Model.CanonicalUrl)) {
+    <link rel="canonical" href="@Model.CanonicalUrl" />
+  }
+}

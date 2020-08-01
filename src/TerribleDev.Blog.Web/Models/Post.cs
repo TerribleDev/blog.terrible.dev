@@ -8,7 +8,9 @@ namespace TerribleDev.Blog.Web.Models
     [DebuggerDisplay("{Title}")]
     public class Post : IPost
     {
-        public string Url { get; set; }
+        public string CanonicalUrl { get; set; }
+        public string UrlWithoutPath { get; set; }
+        public string RelativeUrl { get; set; }
         public string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public HtmlString Content { get; set; }

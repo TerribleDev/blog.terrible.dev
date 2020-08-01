@@ -58,16 +58,18 @@ namespace TerribleDev.Blog.Web
                                 .Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
             var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
-            
+
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
-            
+
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
                 tags = postSettings.tags?.Select(a => a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
                 Title = postSettings.title,
-                Url = resolvedUrl,
+                RelativeUrl = $"/{resolvedUrl}/",
+                CanonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/",
+                UrlWithoutPath = resolvedUrl,
                 Content = new HtmlString(postContent),
                 Summary = new HtmlString(summary),
                 SummaryPlain = postSummaryPlain,

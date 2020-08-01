@@ -23,7 +23,7 @@ namespace TerribleDev.Blog.Web.Controllers
             this.configuration = configuration;
             this.postCache = postCache;
         }
-        public static DateTimeOffset publishDate = DateTimeOffset.UtcNow; // keep publish date in memory so we just return when the server was kicked 
+        public static DateTimeOffset publishDate = DateTimeOffset.UtcNow; // keep publish date in memory so we just return when the server was kicked
         [Route("/rss")]
         [Route("/rss.xml")]
         [ResponseCache(Duration = 7200)]
@@ -62,7 +62,7 @@ namespace TerribleDev.Blog.Web.Controllers
             var ser = new XmlSerializer(typeof(SiteMapRoot));
             var sitemap = new SiteMapRoot()
             {
-                Urls = postCache.PostsAsLists.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terrible.dev/{a.Url}/" }).ToList()
+                Urls = postCache.PostsAsLists.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = a.CanonicalUrl }).ToList()
             };
             sitemap.Urls.AddRange(sitewideLinks);
             ser.Serialize(this.Response.Body, sitemap);

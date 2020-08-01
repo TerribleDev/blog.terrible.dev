@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using HardHat.Middlewares;
 using HardHat;
 using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
@@ -22,14 +22,14 @@ namespace TerribleDev.Blog.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Env { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -53,15 +53,17 @@ namespace TerribleDev.Blog.Web
 
             })
             .AddMemoryCache()
-            .AddMvcCore()
+            .AddMvcCore(a => {
+              a.EnableEndpointRouting = false;
+            })
             .AddCacheTagHelper()
             .AddRazorViewEngine()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddOutputCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

@@ -23,7 +23,7 @@ namespace TerribleDev.Blog.Web.Controllers
         }
         [Route("/tags/{tagName}")]
         [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
-        public IActionResult TagPluralRedirect(string tagName) 
+        public IActionResult TagPluralRedirect(string tagName)
         {
             if(string.IsNullOrEmpty(tagName))
             {
@@ -40,7 +40,7 @@ namespace TerribleDev.Blog.Web.Controllers
                 return Redirect($"/404/?from=/tag/{tagName}/");
             }
             {
-                return View(new Models.GetTagViewModel { Tag = tagName, Posts = models });
+                return View(new Models.GetTagViewModel { Tag = tagName, Posts = models, CanonicalUrl = $"https://blog.terrible.dev/tag/{tagName.ToLower()}/" });
             }
         }
     }

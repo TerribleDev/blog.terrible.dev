@@ -9,5 +9,6 @@ namespace TerribleDev.Blog.Web.Models
     {
         public IEnumerable<IPost> Posts { get; set; }
         public string Tag { get; set; }
+        public string CanonicalUrl { get; set; }
     }
 }

@@ -28,11 +28,11 @@ namespace TerribleDev.Blog.Web.Factories
                 }
                 return accum;
             }).ToImmutableSortedDictionary();
-            var urlToPosts = posts.ToImmutableDictionary(a => a.Url);
-            var postsByPage = 
+            var urlToPosts = posts.ToImmutableDictionary(a => a.UrlWithoutPath);
+            var postsByPage =
             posts.Aggregate(ImmutableDictionary.Create<int, ImmutableList<IPost>>(), (accum, item) =>
             {
-                if(!accum.Keys.Any()) 
+                if(!accum.Keys.Any())
                 {
                     accum = accum.SetItem(1, ImmutableList.Create<IPost>());
                 }
