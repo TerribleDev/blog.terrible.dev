@@ -10,31 +10,6 @@ if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) 
         console.log('Service worker has been registered for scope:' + reg.scope);
     });
 }
-var fetched = [];
-if (fetch) {
-    document.querySelectorAll('a').forEach(a => {
-        if (a.href.includes('http') || a.href.includes('https') || a.href.includes('mailto') || a.href.includes('#') || fetched.includes(a.href)) {
-            return;
-        }
-        fetched.push(item.href);
-        fetch(item.href);
-    })
-}
-Promise.resolve(fetched);
-var triggerLazyImages = function () {
-    document.querySelectorAll('source.lazy').forEach(a => {
-        var src = a.getAttribute('data-src');
-        if (src) {
-            a.srcset = src;
-        }
-    });
-    document.querySelectorAll('img.lazy').forEach(a => {
-        var src = a.getAttribute('data-src');
-        if (src) {
-            a.src = src;
-        }
-    });
-}
 
 var toggleNav = function () {
     var nav = document.getElementById('navBar');
@@ -44,7 +19,6 @@ var toggleNav = function () {
     var hidden = nav.classList.contains('hide');
     if (hidden) {
         nav.classList.remove('hide');
-        triggerLazyImages();
     }
     else {
         nav.classList.add('hide');
@@ -60,13 +34,37 @@ function attachNavToggle(elementId) {
 }
 attachNavToggle('menuBtn');
 attachNavToggle('closeNav');
-document.addEventListener("readystatechange", function () {
-    var nav = document.getElementById('navBar');
-    if (!nav) {
-        return;
-    }
-    var computedNav = window.getComputedStyle(nav);
-    if (computedNav.width && computedNav.width !== "0px") {
-        triggerLazyImages();
-    }
-});
+
+if(window.IntersectionObserver) {
+  var lazyImages = [].slice.call(document.querySelectorAll(".lazy"));
+    var lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var lazyImage = entry.target;
+          if(lazyImage.dataset.src) {
+            lazyImage.src = lazyImage.dataset.src;
+          }
+          if(lazyImage.dataset.srcset) {
+            lazyImage.srcset = lazyImage.dataset.srcset;
+          }
+
+          lazyImage.classList.remove("lazy");
+          lazyImageObserver.unobserve(lazyImage);
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage);
+    });
+} else {
+    var lazyImages = [].slice.call(document.querySelectorAll(".lazy"));
+    lazyImages.forEach(function(image) {
+        if(image.dataset.srcset) {
+          image.srcset = image.dataset.srcset;
+        }
+        if(image.dataset.src) {
+          image.src = image.dataset.src;
+        }
+    });
+}

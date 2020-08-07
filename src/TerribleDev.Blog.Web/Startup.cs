@@ -43,7 +43,13 @@ namespace TerribleDev.Blog.Web
                 return BlogCacheFactory.ProjectPostCache(posts);
             });
             services.AddApplicationInsightsTelemetry();
-            services.AddControllersWithViews();
+            var controllerBuilder = services.AddControllersWithViews();
+#if DEBUG
+            if (Env.IsDevelopment())
+            {
+                controllerBuilder.AddRazorRuntimeCompilation();
+            }
+#endif
             services.AddResponseCompression(a =>
             {
                 a.EnableForHttps = true;

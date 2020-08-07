@@ -1,8 +1,7 @@
 ﻿@inject BlogConfiguration config
 @model IPost
 @{
-    ViewData["Title"] = "Post";
-    ViewData["HideNav"] = true;
+    ViewData["Title"] = @Model.Title;
 }
 
 <cache vary-by-route="postUrl">
