@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Content Include="Posts\*.md" CopyToOutputDirectory="Always" />
+    <Watch Include="Posts\*.md" />
   </ItemGroup>
 
 
@@ -43,4 +44,7 @@
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BackgroundWorker\" />
+  </ItemGroup>
 </Project>

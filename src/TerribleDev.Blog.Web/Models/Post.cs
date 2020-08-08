@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TerribleDev.Blog.Web.Models
 {
@@ -19,6 +20,6 @@ namespace TerribleDev.Blog.Web.Models
         public string SummaryPlain { get; set; }
         public string SummaryPlainShort { get; set; }
         public IList<string> tags { get; set; }
-        public IList<string> Images { get; set;}
+        public IList<string> Images { get; set; }
     }
 }

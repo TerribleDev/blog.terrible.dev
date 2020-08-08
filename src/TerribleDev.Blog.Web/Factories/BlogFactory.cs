@@ -11,23 +11,29 @@ using TerribleDev.Blog.Web.MarkExtension.TerribleDev.Blog.Web.ExternalLinkParser
 using TerribleDev.Blog.Web.MarkExtension;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace TerribleDev.Blog.Web
 {
     public class BlogFactory
     {
-        public List<IPost> GetAllPosts(string domain)
+        public IEnumerable<IPost> GetAllPosts(string domain)
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
-            var postsAsText = posts.Select(GetFileText);
-            return Task.WhenAll(postsAsText).Result.Select(b => ParsePost(b.text, b.fileInfo.Name, domain)).ToList();
+            var list = new ConcurrentBag<IPost>();
+            Parallel.ForEach(posts, post =>
+            {
+                var (text, fileInfo) = GetFileText(post);
+                list.Add(ParsePost(text, fileInfo.Name, domain));
+            });
+            return list;
         }
 
-        private static async Task<(string text, FileInfo fileInfo)> GetFileText(string filePath)
+        private static (string text, FileInfo fileInfo) GetFileText(string filePath)
         {
             var fileInfo = new FileInfo(filePath);
-            var text = await File.ReadAllTextAsync(fileInfo.FullName);
+            var text = File.ReadAllText(fileInfo.FullName);
             return (text, fileInfo);
 
         }

@@ -3,49 +3,58 @@ using TerribleDev.Blog.Web.Models;
 using System.Linq;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System;
+using Microsoft.SyndicationFeed;
 
 namespace TerribleDev.Blog.Web.Factories
 {
     public static class BlogCacheFactory
     {
+        
         public static PostCache ProjectPostCache(IEnumerable<IPost> rawPosts)
         {
-            var posts = rawPosts.OrderByDescending(a => a.PublishDate).ToImmutableList();
-            var tagsToPost = posts.Where(a=>a.tags != null)
-            .Aggregate(
-             ImmutableDictionary.Create<string, ImmutableList<IPost>>(),
-            (accum, item) => {
-                foreach(var tag in item.tags.Select(i => i.ToLower()))
+            var orderedPosts = rawPosts.OrderByDescending(a => a.PublishDate);
+            var posts = new List<IPost>();
+            var urlToPosts = new Dictionary<string, IPost>();
+            var tagsToPost = new Dictionary<string, IList<IPost>>();
+            var postsByPage = new Dictionary<int, IList<IPost>>();
+            var syndicationPosts = new List<SyndicationItem>();
+            foreach(var post in orderedPosts)
+            {
+                posts.Add(post);
+                urlToPosts.Add(post.UrlWithoutPath, post);
+                syndicationPosts.Add(post.ToSyndicationItem());
+                foreach(var tag in post.ToNormalizedTagList())
                 {
-                    if(accum.TryGetValue(tag, out var list))
+                    if(tagsToPost.TryGetValue(tag, out var list))
                     {
-                        accum = accum.SetItem(tag, list.Add(item));
+                        list.Add(post);
                     }
                     else
                     {
-                        accum = accum.Add(tag, ImmutableList.Create<IPost>(item));
+                        tagsToPost.Add(tag, new List<IPost>() { post });
                     }
                 }
-                return accum;
-            }).ToImmutableSortedDictionary();
-            var urlToPosts = posts.ToImmutableDictionary(a => a.UrlWithoutPath);
-            var postsByPage =
-            posts.Aggregate(ImmutableDictionary.Create<int, ImmutableList<IPost>>(), (accum, item) =>
-            {
-                if(!accum.Keys.Any())
+                if(postsByPage.Keys.Count < 1)
                 {
-                    accum = accum.SetItem(1, ImmutableList.Create<IPost>());
+                    postsByPage.Add(1, new List<IPost>() { post });
                 }
-                var highestPage = accum.Keys.Any() ? accum.Keys.Max() : 1;
-                var current = accum[highestPage];
-                if (current.Count >= 10)
+                else
                 {
-                    return accum.Add(highestPage + 1, ImmutableList.Create(item));
+                    var highestPageKey = postsByPage.Keys.Max();
+                    var highestPage = postsByPage[highestPageKey];
+                    if(highestPage.Count < 10)
+                    {
+                        highestPage.Add(post);
+                        
+                    }
+                    else
+                    {
+                        postsByPage.Add(highestPageKey + 1, new List<IPost>() { post });
+                    }
                 }
-
-                return accum.SetItem(highestPage, current.Add(item));
-            }).ToImmutableDictionary();
-            var syndicationPosts = posts.Select(i => i.ToSyndicationItem()).ToImmutableList();
+            }
+            
             return new PostCache()
             {
                 PostsAsLists = posts,

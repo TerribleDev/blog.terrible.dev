@@ -80,7 +80,7 @@ blockquote {
   padding: 0.4em 1.2em;
 }
 
-code,
+code, 
 pre {
   font-size: 1rem;
   font-family: "Courier New", Courier, monospace;
@@ -90,6 +90,11 @@ pre {
   padding: 0 0.4em;
   overflow-x: auto;
 }
+
+/* fix a bug where a code block (not inline) would have extra padding) */ 
+pre > code { 
+  padding: 0;
+ }
 
 a {
   color: #00558d;
