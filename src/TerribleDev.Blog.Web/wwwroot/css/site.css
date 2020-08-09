@@ -162,10 +162,10 @@ a:visited {
   position: fixed;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 3.5rem;
   top: 0;
-  border: 1px solid var(--horizontal-rule);
+  border-bottom: 1px solid var(--horizontal-rule);
   color: var(--headline);
   background-color: var(--primary-background);
   z-index: 20;
