@@ -96,7 +96,7 @@ const debouncedClick = debounce(onclick, 500); // 500 milliseconds before the fu
 ```
 ## The result
 
-So the result of all this is a function that listens to changes in the HTML document, waits 1 second for all the changes to finish applying, then scans the page for failing elements and uses The Shadow DOM to apply a red border around those elements. You can see a basic version of the code at [this Github Gist](https://gist.code.cargurus.com/tparnell/4fd6c878dbe64ce2dc2f67d3fc02bd10).
+So the result of all this is a function that listens to changes in the HTML document, waits 1 second for all the changes to finish applying, then scans the page for failing elements and uses The Shadow DOM to apply a red border around those elements. You can see a basic version of the code at [this Github Gist](https://gist.github.com/TerribleDev/51049146e00b36b0d8643f5e09d21ea8).
 
 We log the Deque error object to the console which includes links to the failing elements. The result is whenever anyone develops new UI at CarGurus a giant ugly red border surrounds elements they don't write as accessible. This provides **immediate** feedback during the development process and prevents huge categories of accessibility issues from reaching production.
 
