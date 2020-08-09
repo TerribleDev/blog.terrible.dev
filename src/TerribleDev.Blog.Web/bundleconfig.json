@@ -6,6 +6,18 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/css/site.desktop.min.css",
+      "inputFiles": [
+        "wwwroot/css/site.desktop.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/site.mobile.min.css",
+      "inputFiles": [
+        "wwwroot/css/site.mobile.css"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/swi.js"

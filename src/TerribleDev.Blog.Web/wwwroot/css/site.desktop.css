@@ -1,0 +1,19 @@
+@media screen and (min-width: 769px) {
+    .rootbox {
+      display: flex;
+      flex-direction: row;
+    }
+    .navBar {
+      min-width: 270px;
+      max-width: 270px;
+      height: auto;
+      position: relative;
+      box-shadow: none;
+    }
+    .navBar.hide {
+      display: flex;
+    }
+    #closeNav {
+      display: none;
+    }
+  }
