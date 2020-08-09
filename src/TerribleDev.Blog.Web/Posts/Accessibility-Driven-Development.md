@@ -13,7 +13,7 @@ Knowledge gaps aside CarGurus has a multitude of technologies UI are build with.
 > Our first approach was to teach accessibility. At the same time we worked with our brand marketing team to ensure our color pallet would be accessible from the start.
 
 
-After identifying advocates on every team we set out to streamline identifying accessibility issues. One approach I decided to take was to show borders around failing elements during development. I first heard of this idea years ago when GitHub released something it called [accessibilityjs](https://github.com/github/accessibilityjs). This script Github included in its pages and put a giant ugly red border around failing elements. 
+After identifying advocates on every team we set out to streamline identifying accessibility issues. One approach I decided to take was to show borders around failing elements during development. I first heard of this idea years ago when GitHub released something it called [accessibilityjs](https://github.com/github/accessibilityjs). This script Github included in its pages and put a giant ugly red border around failing elements. I thought this was a really slick idea to point out issues during development.
 
 > I was going to use accessibility JS until I found axe-core
 
