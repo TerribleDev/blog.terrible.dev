@@ -80,7 +80,7 @@ blockquote {
   padding: 0.4em 1.2em;
 }
 
-code, 
+code,
 pre {
   font-size: 1rem;
   font-family: "Courier New", Courier, monospace;
@@ -91,8 +91,8 @@ pre {
   overflow-x: auto;
 }
 
-/* fix a bug where a code block (not inline) would have extra padding) */ 
-pre > code { 
+/* fix a bug where a code block (not inline) would have extra padding) */
+pre > code {
   padding: 0;
  }
 
@@ -122,31 +122,6 @@ a:visited {
   height: 100vh;
   z-index: 40;
   box-shadow: 0.5rem 0px 3rem black;
-}
-
-@media screen and (max-width: 768px) {
-  .navBar {
-    width: 100vw;
-  }
-  h1 {
-    font-size: 2.6rem;
-  }
-
-  h2 {
-    font-size: 2.4rem;
-  }
-
-  h3 {
-    font-size: 2.2rem;
-  }
-
-  h4 {
-    font-size: 2rem;
-  }
-
-  h5 {
-    font-size: 1.8rem;
-  }
 }
 
 .navBar.hide {
@@ -239,4 +214,52 @@ svg.link-unstyled {
 
 .navHero {
   min-height: 210px;
+  display: block;
+}
+
+
+
+@media screen and (min-width: 769px) {
+  .rootbox {
+    display: flex;
+    flex-direction: row;
+  }
+  .navBar {
+    min-width: 270px;
+    max-width: 270px;
+    height: auto;
+    position: relative;
+    box-shadow: none;
+  }
+  .navBar.hide {
+    display: flex;
+  }
+  #closeNav {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navBar {
+    width: 100vw;
+  }
+  h1 {
+    font-size: 2.6rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    font-size: 2.2rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+  }
+
+  h5 {
+    font-size: 1.8rem;
+  }
 }
