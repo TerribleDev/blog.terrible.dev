@@ -1,15 +1,15 @@
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using Microsoft.SyndicationFeed;
 
 namespace TerribleDev.Blog.Web.Models
 {
     public class PostCache
     {
-        public ImmutableList<IPost> PostsAsLists { get; set;}
-        public ImmutableSortedDictionary<string, ImmutableList<IPost>> TagsToPosts { get; set; }
-        public ImmutableDictionary<string, IPost> UrlToPost { get; set; }
-        public  ImmutableDictionary<int, ImmutableList<IPost>> PostsByPage { get; set; }
-        public ImmutableList<SyndicationItem> PostsAsSyndication { get; set; }
+        public IList<IPost> PostsAsLists { get; set;}
+        public IDictionary<string, IList<IPost>> TagsToPosts { get; set; }
+        public IDictionary<string, IPost> UrlToPost { get; set; }
+        public IDictionary<int, IList<IPost>> PostsByPage { get; set; }
+        public IList<SyndicationItem> PostsAsSyndication { get; set; }
         
     }
 }

@@ -22,5 +22,13 @@ namespace TerribleDev.Blog.Web
             syn.AddLink(new SyndicationLink(url));
             return syn;
         }
+        public static ISet<string> ToNormalizedTagList(this IPost x)
+        {
+            if(x.tags == null)
+            {
+                return new HashSet<string>();
+            }
+            return new HashSet<string>(x.tags.Where(a => !string.IsNullOrWhiteSpace(a)).Select(a => a.ToLower()));
+        }
     }
 }
