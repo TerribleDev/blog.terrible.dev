@@ -84,6 +84,7 @@ body {
   padding-left: 1.2em;
   padding-bottom: 1.2em;
   margin: 0 auto;
+  grid-area: c
 }
 .headerBump {
   padding-top: 3.5rem;
@@ -118,7 +119,7 @@ pre {
   border-radius: 3px;
   background: var(--code-block-background-color);
   padding: 0 0.4em;
-  overflow-x: auto;
+  overflow-x: scroll;
 }
 
 /* fix a bug where a code block (not inline) would have extra padding) */
@@ -143,15 +144,13 @@ a:visited {
 .navBar {
   display: flex;
   flex-direction: column;
-  position: fixed;
   align-items: center;
   background: var(--nav-bar-background);
   color: var(--nav-bar-text-color);
   padding-top: 20px;
-  width: 30vw;
   height: 100vh;
   z-index: 40;
-  box-shadow: 0.5rem 0px 3rem black;
+  grid-area: b;
 }
 
 .navBar.hide {
@@ -159,10 +158,8 @@ a:visited {
 }
 
 .header {
-  position: fixed;
   display: flex;
   align-items: center;
-  width: 100vw;
   height: 3.5rem;
   top: 0;
   border-bottom: 1px solid var(--horizontal-rule);
@@ -171,6 +168,7 @@ a:visited {
   z-index: 20;
   padding: 0;
   margin: 0;
+  grid-area: a;
 }
 .headerCallout {
   margin: auto;

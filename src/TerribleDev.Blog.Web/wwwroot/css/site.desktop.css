@@ -1,15 +1,18 @@
 @media screen and (min-width: 769px) {
     .rootbox {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 0;
+      grid-template:
+      "b b a"
+      "b b c"
+      "b b c";
+      grid-template-columns: .25fr .75fr;
     }
     .navBar {
-      min-width: 270px;
-      max-width: 270px;
       height: auto;
       position: relative;
-      box-shadow: none;
     }
     .navContent {
       position: sticky;
@@ -19,6 +22,9 @@
       display: flex;
     }
     #closeNav {
+      display: none;
+    }
+    #menuBtn {
       display: none;
     }
   }
