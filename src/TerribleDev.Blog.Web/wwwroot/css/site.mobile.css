@@ -21,12 +21,14 @@
   .rootbox {
     display: grid;
     grid-template-areas: "a" "c";
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
-    grid-gap: 0;
+    grid-template-rows: 3.5rem minmax(calc(100vh - 3.5rem), auto);
+    grid-template-columns: auto;
   }
   .navBar {
     position: fixed;
     width: 100vw;
+  }
+  .main-content-wrap {
+    max-width: calc(100vw - 4rem);
   }
 }

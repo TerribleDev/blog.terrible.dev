@@ -24,6 +24,7 @@
       "b a"
       "b c";
     grid-template-columns: minmax(auto, 270px) 1fr;
+    grid-template-rows: 3.5rem minmax(calc(100vh - 3.5rem), auto);
     gap: 0;
   }
   .navBar {
@@ -41,5 +42,8 @@
   }
   #menuBtn {
     display: none;
+  }
+  .main-content-wrap {
+    max-width: 750px;
   }
 }

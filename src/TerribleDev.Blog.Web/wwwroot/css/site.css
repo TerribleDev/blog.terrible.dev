@@ -59,7 +59,6 @@ body {
 
 .main-content-wrap {
   display: block;
-  max-width: 750px;
   padding-right: 1.2em;
   padding-left: 1.2em;
   padding-bottom: 1.2em;
@@ -141,8 +140,6 @@ a:visited {
 .header {
   display: flex;
   align-items: center;
-  height: 3.5rem;
-  top: 0;
   border-bottom: 1px solid var(--horizontal-rule);
   color: var(--headline);
   background-color: var(--primary-background);
