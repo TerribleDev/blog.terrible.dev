@@ -44,7 +44,7 @@
   <div class="rootbox">
       <header class="header">
           <svg aria-label="Open Menu" id="menuBtn" role="button" xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path d="M4 10h24c1.104 0 2-.896 2-2s-.896-2-2-2H4c-1.104 0-2 .896-2 2s.896 2 2 2zm24 4H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2zm0 8H4c-1.104 0-2 .896-2 2s.896 2 2 2h24c1.104 0 2-.896 2-2s-.896-2-2-2z" /></svg>
-          <div class="headerCallout"><a href="/" class="link-unstyled ">@config.Title</a></div>
+          <div class="headerCallout"><a asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(null)" class="link-unstyled ">@config.Title</a></div>
       </header>
       <partial name="Nav" />
           <main class="headerBump main-content-wrap">

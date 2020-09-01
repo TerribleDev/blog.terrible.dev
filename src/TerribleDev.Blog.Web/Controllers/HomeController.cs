@@ -18,10 +18,11 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             this.postCache = postCache;
         }
-        
+
+
+        [Route("/index.html", Order = 2)]
+        [Route("/page/{pageNumber:int}", Order = -1 )]
         [Route("/")]
-        [Route("/index.html")]
-        [Route("/page/{pageNumber?}" )]
         [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
         [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)

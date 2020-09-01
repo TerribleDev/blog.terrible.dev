@@ -12,6 +12,7 @@ using HardHat;
 using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Routing;
 
 namespace TerribleDev.Blog.Web
 {
@@ -44,6 +45,9 @@ namespace TerribleDev.Blog.Web
             });
             services.AddApplicationInsightsTelemetry();
             var controllerBuilder = services.AddControllersWithViews();
+            services.Configure<RouteOptions>(a => {
+              a.AppendTrailingSlash = true;
+            });
 #if DEBUG
             if (Env.IsDevelopment())
             {

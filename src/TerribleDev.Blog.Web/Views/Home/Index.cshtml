@@ -12,12 +12,12 @@
         <div class="bottomNavButtons">
             @if (Model.HasPrevious)
             {
-                <a href="/page/@(Model.Page - 1)/" class="btn">&#8592; Previous Page</a>
+                <a asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.Page - 1)" class="btn">&#8592; Previous Page</a>
             }
             <div class="spacer"></div>
             @if (Model.HasNext)
             {
-                <a href="/page/@(Model.Page + 1)/" class="btn">Next Page &#8594;</a>
+                <a asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.Page + 1)" class="btn">Next Page &#8594;</a>
             }
         </div>
 </cache>

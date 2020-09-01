@@ -10,7 +10,7 @@
             <span>Tagged In:</span><br />
             @foreach (var tag in Model.tags)
             {
-                <a href="/tag/@tag/" class="btn block">@tag</a>
+                <a asp-controller="Tags" asp-action="GetTag" asp-route-tagName="@tag" class="btn block">@tag</a>
             }
         </div>
     }

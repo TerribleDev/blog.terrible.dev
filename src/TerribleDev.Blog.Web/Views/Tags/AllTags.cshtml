@@ -6,7 +6,7 @@
 <cache>
 @foreach (var tag in Model.Keys)
 {
-    <a href="/tag/@tag/" class="btn block">@tag</a>
+    <a asp-controller="Tags" asp-action="GetTag" asp-route-tagName="@tag" class="btn block">@tag</a>
 }
 </cache>
 @section Head {
