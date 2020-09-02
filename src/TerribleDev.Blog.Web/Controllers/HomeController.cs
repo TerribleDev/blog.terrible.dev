@@ -18,10 +18,12 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             this.postCache = postCache;
         }
-        
+
+
+
+        [Route("/index.html", Order = 2)]
         [Route("/")]
-        [Route("/index.html")]
-        [Route("/page/{pageNumber?}" )]
+        [Route("/page/{pageNumber:required:int:min(1)}")]
         [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
         [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)
@@ -58,7 +60,8 @@ namespace TerribleDev.Blog.Web.Controllers
         {
             if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
-                return Redirect($"/404/?from={postUrl}");
+                this.StatusCode(404);
+                return View(nameof(FourOhFour));
             }
             return View(model: currentPost);
         }
@@ -69,6 +72,7 @@ namespace TerribleDev.Blog.Web.Controllers
             this.Response.StatusCode = 500;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [Route("/404")]
         [Route("{*url}", Order = 999)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
