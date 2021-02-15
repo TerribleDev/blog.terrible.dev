@@ -189,8 +189,8 @@ a:visited {
   border-radius: 3px;
   margin: 0;
   cursor: pointer;
-  color: var(--border-color);
-  border: 1px solid var(--border-color);
+  color: var(--body-text-color);
+  border: 1px solid var(--body-text-color);
   padding: 0.3em 0.2em;
   text-decoration: none;
   font-size: 1.1rem;
@@ -209,12 +209,6 @@ a:visited {
   font-size: 0.9rem;
 }
 
-.btn:hover {
-  color: var(--body-text-color);
-  border: 1px solid var(--body-text-color);
-
-}
-
 a.link-unstyled,
 div.link-unstyled,
 span.link-unstyled,
@@ -231,3 +225,23 @@ svg.link-unstyled {
 }
 
 
+a.skip-main {
+  left:-999px;
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  z-index:-999;
+}
+a.skip-main:focus, a.skip-main:active {
+  position: relative;
+  left: initial;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  border-radius: 15px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.2em;
+  display: inline-block;
+}
