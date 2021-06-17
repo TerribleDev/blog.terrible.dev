@@ -8,3 +8,5 @@ find . -iname '*.gif' -exec  gif2webp -mixed '{}' -o '{}'.webp \;
 ## resize image
 
 find . -iname '*' -exec  convert '{}' -resize 750 '{}' \;
+
+
