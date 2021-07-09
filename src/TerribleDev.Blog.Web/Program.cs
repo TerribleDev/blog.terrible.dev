@@ -17,12 +17,18 @@ namespace TerribleDev.Blog.Web
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
+            var builder = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .ConfigureKestrel(a =>
                 {
                     a.AddServerHeader = false;
                 });
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if(!String.IsNullOrWhiteSpace(port)) {
+                builder.UseUrls("http://*:" + port);
+            }
+            return builder;
+        }
     }
 }
