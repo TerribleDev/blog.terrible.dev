@@ -8,7 +8,7 @@ tags:
 ---
 
 
-I've been getting back into building scrappy little web apps for my friends. Ontop of this, I recently joined [a startup](https://quala.io) and getting away from Enterprise class software has made me make a huge mindshift. In the recent past when I wanted to build apps I was thinking Kubernetes, Helm Charts, etc. However, in small app, and startup land reducing the barriers to ship is very important.
+I've been getting back into building scrappy little web apps for my friends. On top of this, I recently joined [a startup](https://quala.io) and getting away from Enterprise class software has made me make a huge mind-shift. In the recent past when I wanted to build apps I was thinking Kubernetes, Helm Charts, etc. However, in small app, and startup land reducing the barriers to ship is very important.
 
 <!-- more -->
 
@@ -20,7 +20,7 @@ To host apps on Heroku, you must know the basic *rules of Heroku*
 2. Postgres is free (to a point), redis is free, most other things cost money.
 3. Logs must go to `stdout` which works well for us since that's the default behavior of asp.net core!
 4. In dotnet core authentication cookies are encrypted and the key is usually placed in your profile, but in Heroku your app could be moved at any moment
-5. Heroku gives you your postgres connection string as `postgres://<username>:<password>@<host>:<port>/<database>`
+5. Heroku gives you your Postgres connection string as `postgres://<username>:<password>@<host>:<port>/<database>`
 
 
 
@@ -57,7 +57,7 @@ This configures your app to use SqlLite as a DB, we need to switch this. Luckily
 
 `dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL`
 
-Then simply swap the previous code block for the following, which will parse the database url from Heroku and setup a postgres connection. You can use the following docker-compose file and `appsettings.Development.json` for local development.
+Then simply swap the previous code block for the following, which will parse the database url from Heroku and setup a Postgres connection. You can use the following docker-compose file and `appsettings.Development.json` for local development.
 
 ```csharp
             var databaseUrl = Configuration.GetValue<string>("DATABASE_URL");
@@ -156,7 +156,7 @@ ENTRYPOINT ["dotnet", "MyApp.dll"]
 
 ```
 
-I then found someone had made a *build a docker image and push to Heroku* github action. All I had to do is make this a file in `.github/deployContainerToHeroku.yml`, turn on Github actions, and register my Heroku API key as a secret in github
+I then found someone had made a *build a docker image and push to Heroku* GitHub action. All I had to do is make this a file in `.github/deployContainerToHeroku.yml`, turn on Github actions, and register my Heroku API key as a secret in GitHub
 
 
 ```yml
