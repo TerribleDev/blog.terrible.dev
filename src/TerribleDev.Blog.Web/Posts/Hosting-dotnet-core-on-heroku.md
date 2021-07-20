@@ -19,7 +19,7 @@ To host apps on Heroku, you must know the basic *rules of Heroku*
 1. Your app must listen on `$PORT` or `%PORT%` if you come from windows. Basically, any http listeners must listen to the port defined as an environment variable.
 2. Postgres is free (to a point), redis is free, most other things cost money.
 3. Logs must go to `stdout` which works well for us since that's the default behavior of asp.net core!
-4. In dotnet core authentication cookies are encrypted and the key is usually placed in your profile, but in Heroku your app could be moved at any moment
+4. In dotnet core authentication cookies are encrypted and the key is usually placed in your home directory, but in Heroku your app could be moved to any machine at any moment. The filesystem needs to be stateless
 5. Heroku gives you your Postgres connection string as `postgres://<username>:<password>@<host>:<port>/<database>`
 
 
