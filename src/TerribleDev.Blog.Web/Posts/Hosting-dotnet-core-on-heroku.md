@@ -110,7 +110,7 @@ services.AddDataProtection().PersistKeysToDbContext<ApplicationDbContext>();
 
 ## Database Migrations
 
-There are several ways to handle database migrations. For simple webapps you can configure your app to do a migration on startup. More complex apps should shell into the `ef` command line.
+There are several ways to handle database migrations. For simple webapps you can configure your app to do a migration on startup. More complex apps should shell into the `ef` command line using [Heroku's procfile](https://devcenter.heroku.com/articles/release-phase)
 
 ```csharp
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
