@@ -101,7 +101,7 @@ services:
 
 ## Encryption keys
 
-Ok so you've got the basics running, but you need to store your encryption keys. We can store them in the database using entity framework! Add this to your `startup.cs` `ConfigureServices` Method. Make sure you `dotnet add package Microsoft.AspNetCore.DataProtection.EntityFrameworkCore`
+Ok so you've got the basics running, but you need to store your encryption keys. We can store them in the database using entity framework! Add this to your `startup.cs` `ConfigureServices` Method. Make sure you `dotnet add package Microsoft.AspNetCore.DataProtection.EntityFrameworkCore`. You'll also need to make sure your dbContext implements `IDataProtectionKeyContext`
 
 ```cs
 
