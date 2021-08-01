@@ -70,7 +70,8 @@ Then simply swap the previous code block for the following, which will parse the
                 Port = databaseUri.Port,
                 Username = userInfo[0],
                 Password = userInfo[1],
-                Database = databaseUri.LocalPath.TrimStart('/')
+                Database = databaseUri.LocalPath.TrimStart('/'),
+                TrustServerCertificate = true
             };
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(builder.ToString()));
@@ -123,6 +124,17 @@ There are several ways to handle database migrations. For simple webapps you can
             }
         }
 
+```
+
+## Forwarded protocol
+
+Heroku sends an `X-Forwarded-Proto` header to tell your app what protocol a user is using. You'll want to add this to your `Configure` block before all other middleware 
+
+```csharp
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto
+            });
 ```
 
 ## Getting your app in Heroku with containers
