@@ -23,7 +23,7 @@ root/
         utils
 ```
 
-In my quick example we can pretend that an express app in in server, and some background workers are in workers. However both apps need to share code. One stratergy would be to version `data`, and `utils`, or we could use these mono-repo technologies so that `import utils from 'utils'` just works without the need for complex orchestration of packages. However when resolving node modules the following can occur
+In my quick example we can pretend that an express app in in server, and some background workers are in workers. However both apps need to share code. One strategy would be to version the `data`, and `utils`, packages and ship them to a private NPM registry, or we could use these mono-repo technologies so that `import utils from 'utils'` just works without the need for a remote package store. When installing node modules into a JS workspace the following can occur
 
 
 ```
