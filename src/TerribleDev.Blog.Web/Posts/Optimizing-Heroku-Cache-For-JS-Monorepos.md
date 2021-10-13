@@ -73,4 +73,4 @@ I wired up the script on the post install process of the install lifecycle. Basi
 }
 ```
 
-Now every time a develper runs `yarn install` they will compute the cache directories. When we push changes to prod we get much better cache hits across our yarn workspace
+Now every time a developer runs `yarn install` they will compute the cache directories. When we push changes to prod we get much better cache hits across our yarn workspace
