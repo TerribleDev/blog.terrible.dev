@@ -13,14 +13,9 @@ namespace TerribleDev.Blog.Web.Models
         string UrlWithoutPath { get; set; }
         string RelativeUrl { get; set; }
         string Title { get; set; }
-        HtmlString Summary { get; set; }
         DateTime PublishDate { get; set; }
-        HtmlString Content { get; set; }
-        string ContentPlain { get; set; }
-        string SummaryPlain { get; set; }
-        string SummaryPlainShort { get; set; }
         IList<string> tags { get; set; }
-        IList<string> Images { get; set;}
+        Lazy<IPostContent> Content { get; set; }
     }
 
 }

@@ -14,7 +14,7 @@ namespace TerribleDev.Blog.Web.Factories
         public static PostCache ProjectPostCache(IEnumerable<IPost> rawPosts)
         {
             var orderedPosts = rawPosts.OrderByDescending(a => a.PublishDate);
-            var posts = new List<IPost>();
+            var posts = new List<IPost>(orderedPosts);
             var urlToPosts = new Dictionary<string, IPost>();
             var tagsToPost = new Dictionary<string, IList<IPost>>();
             var postsByPage = new Dictionary<int, IList<IPost>>();

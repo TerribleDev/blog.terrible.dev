@@ -4,7 +4,7 @@
     <h3 itemprop="headline" class="headline"><a href="@Model.RelativeUrl" class="link-unstyled">@Model.Title</a></h3>
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
     <div itemprop="articleBody">
-        @Model.Summary
+        @Model.Content.Value.Summary
     </div>
     <a href="@Model.RelativeUrl">Continue Reading </a>
 </article>

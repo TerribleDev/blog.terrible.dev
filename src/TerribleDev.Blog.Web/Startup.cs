@@ -39,8 +39,16 @@ namespace TerribleDev.Blog.Web
                 services.AddSingleton(getBlog());
             }
             services.AddSingleton((i) => {
-                var posts = new BlogFactory().GetAllPosts(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev");
-                return BlogCacheFactory.ProjectPostCache(posts);
+                var posts = new BlogFactory().GetAllPostsAsync(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev").Result;
+                var postCache = BlogCacheFactory.ProjectPostCache(posts);
+                if(Env.IsProduction()) {
+                    foreach(var post in postCache.PostsAsLists) 
+                    {
+                        // if we are in production turn off lazy loading
+                        var value = post.Content.Value;
+                    }
+                }
+                return postCache;
             });
             services.AddApplicationInsightsTelemetry();
             var controllerBuilder = services.AddControllersWithViews();
