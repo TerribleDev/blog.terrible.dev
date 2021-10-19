@@ -6,11 +6,11 @@ namespace TerribleDev.Blog.Web.Models
 {
     public interface IPostContent
     {
-        Lazy<HtmlString> Content { get; set; }
-        Lazy<HtmlString> Summary { get; set; }
-        Lazy<string> ContentPlain { get; set; }
-        Lazy<string> SummaryPlain { get; set; }
-        Lazy<string> SummaryPlainShort { get; set; }
-        Lazy<IList<string>> Images { get; set; }
+        HtmlString Content { get; set; }
+        HtmlString Summary { get; set; }
+        string ContentPlain { get; set; }
+        string SummaryPlain { get; set; }
+        string SummaryPlainShort { get; set; }
+        IList<string> Images { get; set; }
     }
 }

@@ -9,26 +9,26 @@
 </cache>
 
 @section Head {
-    <meta name="description" content="@Model.SummaryPlainShort" />
+    <meta name="description" content="@Model.Content.Value.SummaryPlainShort" />
     <meta property="og:type" content="blog">
     <meta property="og:title" content="@Model.Title">
     <meta property="og:url" content="@Model.CanonicalUrl">
     <meta property="og:site_name" content="@config.Title">
-    <meta property="og:description" content="@Model.SummaryPlainShort">
+    <meta property="og:description" content="@Model.Content.Value.SummaryPlainShort">
     <meta property="og:updated_time" content="@Model.PublishDate.ToString("O")">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="@Model.Title">
-    <meta name="twitter:description" content="@Model.SummaryPlainShort">
+    <meta name="twitter:description" content="@Model.Content.Value.SummaryPlainShort">
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
     <link rel="canonical" href="@Model.CanonicalUrl" />
-    @foreach(var image in Model.Images.Take(6))
+    @foreach(var image in Model.Content.Value.Images.Take(6))
     {
         <meta property="og:image" content="@image">
     }
-    @if(Model.Images.Count > 0)
+    @if(Model.Content.Value.Images.Count > 0)
     {
-        <meta name="twitter:image" content="@(Model.Images[0])">
+        <meta name="twitter:image" content="@(Model.Content.Value.Images[0])">
     }
     <meta property="og:image" content="https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640" />
 }
