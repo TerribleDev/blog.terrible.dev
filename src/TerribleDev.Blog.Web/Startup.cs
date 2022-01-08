@@ -28,15 +28,19 @@ namespace TerribleDev.Blog.Web
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            Func<BlogConfiguration> getBlog = () => Configuration.GetSection("Blog").Get<BlogConfiguration>();
+        {    
+            var blogConfiguration = new BlogConfiguration() {
+                Link = "https://blog.terrible.dev",
+                Title = "The Ramblings of TerribleDev"
+            };
+            // Func<BlogConfiguration> getBlog = () => Configuration.GetSection("Blog").Get<BlogConfiguration>();
             if (Env.IsDevelopment())
             {
-                services.AddTransient(a => getBlog());
+                services.AddTransient(a => blogConfiguration);
             }
             else
             {
-                services.AddSingleton(getBlog());
+                services.AddSingleton(blogConfiguration);
             }
             services.AddSingleton((i) => {
                 var posts = new BlogFactory().GetAllPostsAsync(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev").Result;
@@ -50,7 +54,6 @@ namespace TerribleDev.Blog.Web
                 }
                 return postCache;
             });
-            services.AddApplicationInsightsTelemetry();
             var controllerBuilder = services.AddControllersWithViews();
 #if DEBUG
             if (Env.IsDevelopment())

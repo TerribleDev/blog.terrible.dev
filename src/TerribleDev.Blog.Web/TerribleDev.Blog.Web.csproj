@@ -23,28 +23,17 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Markdig" Version="0.15.7" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
     <PackageReference Include="UriBuilder.Fluent" Version="1.5.2" />
     <PackageReference Include="YamlDotNet" Version="5.3.0" />
     <PackageReference Include="HardHat" Version="2.1.1" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="WebEssentials.AspNetCore.OutputCaching" Version="1.0.16" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.1" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Content Include="Posts\*.md" CopyToOutputDirectory="Always" />
     <Watch Include="Posts\*.md" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="BackgroundWorker\" />
   </ItemGroup>
 </Project>
