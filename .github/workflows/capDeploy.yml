@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  CapDeploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout Github Action' 
+      uses: actions/checkout@master
+      uses: AlexxNB/caprover-action@v1
+      with:
+        server: '${{ secrets.CAPROVER_SERVER}}'
+        password: '${{ secrets.CAPROVER_PASSWORD }}'
+        appname: 'blog'
