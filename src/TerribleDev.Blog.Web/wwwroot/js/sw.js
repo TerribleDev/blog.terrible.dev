@@ -42,7 +42,9 @@ var addToCache = function (request) {
 
 var returnFromCache = function (request) {
     return caches.open('pwabuilder-offline').then(function (cache) {
-        return cache.match(request).then(function (matching) {
+        return cache.match(request, {
+            ignoreSearch: true
+        }).then(function (matching) {
             if (!matching) {
                 return cache.match('/offline/')
             } else if (matching.status == 404) {
