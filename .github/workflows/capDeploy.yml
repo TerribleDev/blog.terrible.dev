@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: 'Checkout Github Action' 
       uses: actions/checkout@master
+    - name: 'Deploy to Caprover' 
       uses: AlexxNB/caprover-action@v1
       with:
         server: '${{ secrets.CAPROVER_SERVER}}'
