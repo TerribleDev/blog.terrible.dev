@@ -6,6 +6,7 @@ tags:
     - Turborepo
     - Devops
     - Build
+    - node.js
 ---
 
 
@@ -43,7 +44,7 @@ GET: /v2/teams
 When turborepo sends requests it appends the `Authorization` header which will contain our token. Ideally you would add to your server a way to auth a user and give them this token. In the below example we have a single token that comes from an environment variable. You really should have per user auth.
 
 
-```
+```go
 	app.Use(func(c *fiber.Ctx) error {
 		authHeader := c.Get("Authorization")
 		if authHeader != "Bearer "+token {
@@ -61,21 +62,16 @@ The API pretty much breaks down like this.
 `PUT: /v8/artifacts/:hash` will send a file that you must write somewhere. Some people opt for sending it to S3, I decided to use a persistent disk, and save on the disk. I wanted the fastest responses for the caches. Heck if I'm going to remote cache something that would still be kinda quick on an M1, it better perform. 
 
 ```go
-
 	app.Put("/v8/artifacts/:hash", func(c *fiber.Ctx) error {
 		fmt.Println(string(c.Request().URI().QueryString()))
 		return os.WriteFile("./cache/"+c.Params("hash"), c.Request().Body(), 0644)
 	})
-
-
 ```
 
 The same URL but on a get is simple. Retrieve a file and serve it up, or return a 404
 
 ```go
 	app.Get("/v8/artifacts/:hash", func(c *fiber.Ctx) error {
-		// log hello world
-		// serialize query params to
 		fmt.Println(string(c.Request().URI().QueryString()))
 		return c.SendFile("./cache/" + c.Params("hash"))
 	})
@@ -91,7 +87,6 @@ The last two honesty you don't need to make things work. You can just return a 2
 	app.Get("/v2/user", func(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusOK)
 	})
-
 ```
 
 The `/v2/user` API is supposed to return information about the current user in the following shape. I'm pretty sure (not positive) created at is an [epoch](https://en.wikipedia.org/wiki/Unix_time) of the time the user was created. I'm guessing its largely used for Vercel.
