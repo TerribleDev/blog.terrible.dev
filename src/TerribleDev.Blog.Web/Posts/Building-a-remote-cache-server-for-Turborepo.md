@@ -9,6 +9,7 @@ tags:
     - Build
 ---
 
+
 [Turborepo](https://turborepo.org/) is a tool that came across my virtual desk recently. Monorepo develoment has been around for a long time. This is a strategy where all of your code remains in one repository regardless of services. A lot of people use monorepo's even for microservices. The huge upside is to keep everything in one place, which allows for development efficiency, such as grepping an entire codebase for specific keywords. A quick example would be a top level directory which has child directories that each contain an npm package, unlike publishing these packages, you access them locally as though they were published.
 <!-- more -->
 
@@ -130,3 +131,7 @@ The team api is supposed to look something like the following.
 > What about the --team flag?
 
 So when requests are made with `--team` a query string `?slug=team` is added to the request. You can use this to ensure a particular user is in the given team, and you can fragment your caches by team. I ommitted that code from the above example, but the easiest way would be to have `./cache/${team}/${hash}` directory structure for the caches on disk. Note, on the GET requests you should auth the token against the team ID, and return a 404 if the user is not in the team. I wouldn't opt to return a Unauthorized header, as that can be used by bad actors to cycle through tokens to know which one will work to cause harm.
+
+## The Result
+
+An extremely minimal server [is in this github repo](https://github.com/TerribleDev/turbogo) (although you shouldn't probably use it without building it out more). 
