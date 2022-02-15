@@ -129,7 +129,7 @@ The team api is supposed to look something like the following.
 
 > What about the --team flag?
 
-So when requests are made with `--team` a query string `?slug=team` is added to the request. You can use this to ensure a particular user is in the given team, and you can fragment your caches by team. I ommitted that code from the above example, but the easiest way would be to have `./cache/${team}/${hash}` directory structure for the caches on disk. Note, on the GET requests you should auth the token against the team ID, and return a 404 if the user is not in the team. I wouldn't opt to return a Unauthorized header, as that can be used by bad actors to cycle through tokens to know which one will work to cause harm.
+So when requests are made with `--team` a query string `?slug=team` is added to the request. You can use this to ensure a particular user is in the given team, and you can fragment your caches by team. I ommitted that code from the above example, but the easiest way would be to have `./cache/${team}/${hash}` directory structure for the caches on disk. Note, on the GET requests you should auth the token against the team ID, and return a 404 if the user is not in the team. **I would not opt to return a Unauthorized header**, as that can be used by bad actors to cycle through tokens to know which one will work to cause harm.
 
 ## The Result
 
