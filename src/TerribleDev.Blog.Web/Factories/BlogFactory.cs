@@ -54,7 +54,6 @@ namespace TerribleDev.Blog.Web
                                 .Build();
             var postContent = Markdown.ToHtml(markdownText, pipeline);
             var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
-
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
             return (postContent, postContentPlain, summary, postSummaryPlain, postImages);
@@ -80,7 +79,7 @@ namespace TerribleDev.Blog.Web
                     return new PostContent() {
                         Content = new HtmlString(postContent),
                         Images = postImages,
-                        ContentPlain = postContent,
+                        ContentPlain = postContentPlain,
                         Summary = new HtmlString(summary),
                         SummaryPlain = postSummaryPlain,
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "..." 

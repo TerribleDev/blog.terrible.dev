@@ -15,7 +15,7 @@ namespace TerribleDev.Blog.Web
             var syn = new SyndicationItem()
             {
                 Title = x.Title,
-                Description = x.Content.ToString(),
+                Description = x.Content.Value.Content.Value.ToString(),
                 Id = url.ToString(),
                 Published = x.PublishDate
             };
