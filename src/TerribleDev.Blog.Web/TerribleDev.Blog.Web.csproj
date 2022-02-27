@@ -4,9 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <UserSecretsId>9a1f51b6-f4d9-4df7-a0af-e345176e9927</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/088a81c7-d703-41c9-a1d0-476bce11df60/resourcegroups/WebResourceGroup/providers/microsoft.insights/components/tparnellblognew</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/088a81c7-d703-41c9-a1d0-476bce11df60/resourcegroups/WebResourceGroup/providers/microsoft.insights/components/tparnellblognew</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
