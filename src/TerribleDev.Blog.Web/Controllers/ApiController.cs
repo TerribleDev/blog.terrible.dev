@@ -17,11 +17,7 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("all")]
         public ActionResult<IEnumerable<IPost>> PostCount(string key) 
         {
-            if(string.Equals(key, "tommyisawesome")) 
-            {
-                return this.Ok(this.postCache.PostsAsLists);
-            }
-            return this.StatusCode(403);
+            return this.Ok(true);
         }
     }
 }
