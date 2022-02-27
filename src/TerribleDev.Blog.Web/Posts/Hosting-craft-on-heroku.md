@@ -136,4 +136,4 @@ client_max_body_size 20M;
 
 ## Anything else?
 
-Nope, not really. You need to be aware that you need to treat craft's configuration as entirely immutable. Any changes to configuration such as plugins, twig templates, etc. Will need to be changed in dev and pushed to Heroku. Nothing can be mutated in production, other than the authoring of the site. 
+Nope, not really. You need to be aware that you need to treat craft's configuration as entirely immutable. Any changes to configuration such as plugins, twig templates, etc. Will need to be changed in dev and pushed to Heroku. Nothing can be mutated in production, other than the authoring of the site. Even file uploads! 
