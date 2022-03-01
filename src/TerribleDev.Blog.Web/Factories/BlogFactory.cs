@@ -65,24 +65,36 @@ namespace TerribleDev.Blog.Web
             var markdownText = string.Join("", splitFile.Skip(1));
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
-
+            var canonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/";
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
+                UpdatedDate = postSettings.updated?.ToUniversalTime() ?? null,
                 tags = postSettings.tags?.Select(a => a.Replace(' ', '-').WithoutSpecialCharacters().ToLower()).ToList() ?? new List<string>(),
                 Title = postSettings.title,
                 RelativeUrl = $"/{resolvedUrl}/",
-                CanonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/",
+                CanonicalUrl = canonicalUrl,
                 UrlWithoutPath = resolvedUrl,
                 Content = new Lazy<IPostContent>(() => {
                     (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
+                    var ld = new Schema.NET.BlogPosting() 
+                    {
+                        Headline = postSettings.title,
+                        DatePublished = postSettings.date,
+                        DateModified = postSettings.updated ?? postSettings.date,
+                        WordCount = postContentPlain.Split(' ').Length,
+                        ArticleBody = new Schema.NET.OneOrMany<string>(new HtmlString(postContentPlain).Value),
+                        Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev" },
+                        Url = new Uri(canonicalUrl)
+                    };
                     return new PostContent() {
                         Content = new HtmlString(postContent),
                         Images = postImages,
                         ContentPlain = postContentPlain,
                         Summary = new HtmlString(summary),
                         SummaryPlain = postSummaryPlain,
-                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "..." 
+                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "..." ,
+                        JsonLD = ld
                     };
                 }),
             };

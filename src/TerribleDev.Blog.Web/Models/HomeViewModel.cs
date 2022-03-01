@@ -10,5 +10,7 @@ namespace TerribleDev.Blog.Web.Models
         public string PreviousUrl { get; set; }
         public bool HasNext { get; set; }
         public bool HasPrevious { get; set; }
+
+        public Schema.NET.Blog BlogLD { get; set; }
     }
 }

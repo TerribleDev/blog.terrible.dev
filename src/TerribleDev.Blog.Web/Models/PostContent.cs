@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
+using Schema.NET;
 
 namespace TerribleDev.Blog.Web.Models
 {
@@ -13,5 +14,6 @@ namespace TerribleDev.Blog.Web.Models
         public string SummaryPlain { get; set; }
         public string SummaryPlainShort { get; set; }
         public IList<string> Images { get; set; }
+        public BlogPosting JsonLD { get; set; }
     }
 }

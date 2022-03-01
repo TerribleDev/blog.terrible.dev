@@ -9,7 +9,7 @@ namespace TerribleDev.Blog.Web.Models
         public string title { get; set; }
         public string permalink { get; set; }
         public DateTime date { get; set; }
-        public DateTime updated { get; set; }
+        public DateTime? updated { get; set; }
         public string id { get; set; }
         public string thumbnail_image { get; set; }
         public string thumbnailImage { get; set; }

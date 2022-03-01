@@ -10,6 +10,8 @@ namespace TerribleDev.Blog.Web.Models
         public IDictionary<string, IPost> UrlToPost { get; set; }
         public IDictionary<int, IList<IPost>> PostsByPage { get; set; }
         public IList<SyndicationItem> PostsAsSyndication { get; set; }
+
+        public Schema.NET.Blog BlogLD { get; set; }
         
     }
 }

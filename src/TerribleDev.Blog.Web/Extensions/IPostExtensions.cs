@@ -17,7 +17,7 @@ namespace TerribleDev.Blog.Web
                 Title = x.Title,
                 Description = x.Content.Value.Content.Value.ToString(),
                 Id = url.ToString(),
-                Published = x.PublishDate
+                Published = x.PublishDate,
             };
             syn.AddLink(new SyndicationLink(url));
             return syn;

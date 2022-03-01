@@ -19,11 +19,14 @@ namespace TerribleDev.Blog.Web.Factories
             var tagsToPost = new Dictionary<string, IList<IPost>>();
             var postsByPage = new Dictionary<int, IList<IPost>>();
             var syndicationPosts = new List<SyndicationItem>();
+
+            var blogPostsLD = new List<Schema.NET.IBlogPosting>();
             foreach(var post in orderedPosts)
             {
                 posts.Add(post);
                 urlToPosts.Add(post.UrlWithoutPath, post);
                 syndicationPosts.Add(post.ToSyndicationItem());
+                blogPostsLD.Add(post.Content.Value.JsonLD);
                 foreach(var tag in post.ToNormalizedTagList())
                 {
                     if(tagsToPost.TryGetValue(tag, out var list))
@@ -54,14 +57,24 @@ namespace TerribleDev.Blog.Web.Factories
                     }
                 }
             }
-            
+            var ld = new Schema.NET.Blog() 
+            {
+                Name = "TerribleDev.Blog",
+                Description = "TerribleDev.Blog",
+                Author = new Schema.NET.Person() { Name = "TerribleDev" },
+                Image = new Schema.NET.ImageObject() { Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/content/tommyAvatar4.jpg")) },
+                Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/" )),
+                SameAs = new Schema.NET.OneOrMany<Uri>(new Uri("https://twitter.com/terribledev")),
+                BlogPost = new Schema.NET.OneOrMany<Schema.NET.IBlogPosting>(blogPostsLD),
+            };
             return new PostCache()
             {
                 PostsAsLists = posts,
                 TagsToPosts = tagsToPost,
                 UrlToPost = urlToPosts,
                 PostsByPage = postsByPage,
-                PostsAsSyndication = syndicationPosts
+                PostsAsSyndication = syndicationPosts,
+                BlogLD = ld
 
             };
         }

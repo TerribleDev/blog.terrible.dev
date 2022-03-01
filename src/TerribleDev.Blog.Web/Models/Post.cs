@@ -14,6 +14,7 @@ namespace TerribleDev.Blog.Web.Models
         public string RelativeUrl { get; set; }
         public string Title { get; set; }
         public DateTime PublishDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public IList<string> tags { get; set; }
         public Lazy<IPostContent> Content { get; set; }
     }

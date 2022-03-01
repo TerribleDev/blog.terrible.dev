@@ -24,4 +24,7 @@
 
 @section Head {
     <partial name="StockMeta" />
+    <script type="application/ld+json">
+        @Html.Raw(Model.BlogLD.ToHtmlEscapedString())
+    </script>
 }
