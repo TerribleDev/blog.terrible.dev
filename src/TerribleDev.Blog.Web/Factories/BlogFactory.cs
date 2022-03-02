@@ -84,7 +84,7 @@ namespace TerribleDev.Blog.Web
                         DateModified = postSettings.updated ?? postSettings.date,
                         WordCount = postContentPlain.Split(' ').Length,
                         ArticleBody = new Schema.NET.OneOrMany<string>(new HtmlString(postContentPlain).Value),
-                        Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev" },
+                        Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev", Url = new Uri("https://blog.terrible.dev") },
                         Url = new Uri(canonicalUrl)
                     };
                     return new PostContent() {
