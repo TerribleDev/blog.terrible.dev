@@ -82,7 +82,7 @@ namespace TerribleDev.Blog.Web.Factories
                         {
                             UrlTemplate = new Schema.NET.OneOrMany<string>(@"https://blog.terrible.dev/search?q={search-term}")
                         },
-                        QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("search-term")
+                        QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("required name=search-term")
                     }
                 )
             };
