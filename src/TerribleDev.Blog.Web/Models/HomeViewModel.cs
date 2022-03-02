@@ -12,5 +12,6 @@ namespace TerribleDev.Blog.Web.Models
         public bool HasPrevious { get; set; }
 
         public Schema.NET.Blog BlogLD { get; set; }
+        public Schema.NET.WebSite SiteLD { get; set; }
     }
 }

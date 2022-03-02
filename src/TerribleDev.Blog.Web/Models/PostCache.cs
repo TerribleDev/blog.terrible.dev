@@ -12,6 +12,7 @@ namespace TerribleDev.Blog.Web.Models
         public IList<SyndicationItem> PostsAsSyndication { get; set; }
 
         public Schema.NET.Blog BlogLD { get; set; }
+        public Schema.NET.WebSite SiteLD { get; set; }
         
     }
 }

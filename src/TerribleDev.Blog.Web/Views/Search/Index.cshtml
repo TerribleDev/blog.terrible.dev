@@ -1,0 +1,17 @@
+@model SearchViewModel
+
+@{
+    ViewData["Title"] = $"Search ${Model.SearchTerm}";
+}
+@if(Model.Posts.Count == 0) {
+    <div>
+        No posts found.
+    </div>
+} 
+else 
+{
+    @foreach (var post in Model.Posts)
+    {
+        <partial name="PostSummary" model="post" />
+    }
+}

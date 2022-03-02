@@ -23,7 +23,6 @@ namespace TerribleDev.Blog.Web.Factories
             var blogPostsLD = new List<Schema.NET.IBlogPosting>();
             foreach(var post in orderedPosts)
             {
-                posts.Add(post);
                 urlToPosts.Add(post.UrlWithoutPath, post);
                 syndicationPosts.Add(post.ToSyndicationItem());
                 blogPostsLD.Add(post.Content.Value.JsonLD);
@@ -67,6 +66,26 @@ namespace TerribleDev.Blog.Web.Factories
                 SameAs = new Schema.NET.OneOrMany<Uri>(new Uri("https://twitter.com/terribledev")),
                 BlogPost = new Schema.NET.OneOrMany<Schema.NET.IBlogPosting>(blogPostsLD),
             };
+            var website = new Schema.NET.WebSite()
+            {
+                Name = "TerribleDev.Blog",
+                Description = "TerribleDev.Blog",
+                Author = new Schema.NET.Person() { Name = "TerribleDev" },
+                Image = new Schema.NET.ImageObject() { Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/content/tommyAvatar4.jpg")) },
+                Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/" )),
+                SameAs = new Schema.NET.OneOrMany<Uri>(new Uri("https://twitter.com/terribledev")),
+                PotentialAction = new Schema.NET.OneOrMany<Schema.NET.IAction>(
+                    // search action
+                    new Schema.NET.SearchAction()
+                    {
+                        Target = new Schema.NET.EntryPoint()
+                        {
+                            UrlTemplate = new Schema.NET.OneOrMany<string>(@"https://blog.terrible.dev/search?q={search-term}")
+                        },
+                        QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("search-term")
+                    }
+                )
+            };
             return new PostCache()
             {
                 PostsAsLists = posts,
@@ -74,7 +93,8 @@ namespace TerribleDev.Blog.Web.Factories
                 UrlToPost = urlToPosts,
                 PostsByPage = postsByPage,
                 PostsAsSyndication = syndicationPosts,
-                BlogLD = ld
+                BlogLD = ld,
+                SiteLD = website
 
             };
         }
