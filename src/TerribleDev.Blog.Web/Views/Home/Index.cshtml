@@ -28,7 +28,7 @@
         @Html.Raw(Model.BlogLD.ToHtmlEscapedString())
     </script>
     <script type="application/ld+json">
-        @Html.Raw(Model.SiteLD.ToHtmlEscapedString())
+        @Html.Raw(Model.SiteLD.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"))
     </script>
 
 }

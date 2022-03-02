@@ -76,13 +76,16 @@ namespace TerribleDev.Blog.Web.Factories
                 SameAs = new Schema.NET.OneOrMany<Uri>(new Uri("https://twitter.com/terribledev")),
                 PotentialAction = new Schema.NET.OneOrMany<Schema.NET.IAction>(
                     // search action
-                    new Schema.NET.SearchAction()
+                    new List<Schema.NET.SearchAction>() 
                     {
-                        Target = new Schema.NET.EntryPoint()
+                        new Schema.NET.SearchAction()
                         {
-                            UrlTemplate = new Schema.NET.OneOrMany<string>(@"https://blog.terrible.dev/search?q={search-term}")
-                        },
-                        QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("required name=search-term")
+                            Target = new Schema.NET.EntryPoint()
+                            {
+                                UrlTemplate = new Schema.NET.OneOrMany<string>(@"https://blog.terrible.dev/search?q={search-term}")
+                            },
+                            QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("required name=search-term")
+                        }
                     }
                 )
             };
