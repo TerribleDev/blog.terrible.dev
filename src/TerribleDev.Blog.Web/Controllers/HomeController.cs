@@ -32,7 +32,10 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return Redirect($"/404/?from=/page/{pageNumber}/");
             }
-            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1), BlogLD = postCache.BlogLD, SiteLD = postCache.SiteLD });
+            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1), 
+            BlogLD = postCache.BlogLD, 
+            SiteLD = postCache.SiteLD,
+            BlogLDString = postCache.BlogLDString, SiteLDString = postCache.SiteLDString });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)

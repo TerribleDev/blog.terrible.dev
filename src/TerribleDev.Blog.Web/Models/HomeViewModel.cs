@@ -13,5 +13,7 @@ namespace TerribleDev.Blog.Web.Models
 
         public Schema.NET.Blog BlogLD { get; set; }
         public Schema.NET.WebSite SiteLD { get; set; }
+        public string BlogLDString { get; set; }
+        public string SiteLDString { get; set; }
     }
 }

@@ -97,7 +97,9 @@ namespace TerribleDev.Blog.Web.Factories
                 PostsByPage = postsByPage,
                 PostsAsSyndication = syndicationPosts,
                 BlogLD = ld,
-                SiteLD = website
+                SiteLD = website,
+                BlogLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                SiteLDString = website.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true")
 
             };
         }

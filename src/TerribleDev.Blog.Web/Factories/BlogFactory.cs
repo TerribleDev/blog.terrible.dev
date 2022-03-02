@@ -94,7 +94,8 @@ namespace TerribleDev.Blog.Web
                         Summary = new HtmlString(summary),
                         SummaryPlain = postSummaryPlain,
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "..." ,
-                        JsonLD = ld
+                        JsonLD = ld,
+                        JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true")
                     };
                 }),
             };

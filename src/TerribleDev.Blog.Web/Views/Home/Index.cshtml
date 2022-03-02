@@ -25,10 +25,10 @@
 @section Head {
     <partial name="StockMeta" />
     <script type="application/ld+json">
-        @Html.Raw(Model.BlogLD.ToHtmlEscapedString())
+        @Html.Raw(Model.BlogLDString)
     </script>
     <script type="application/ld+json">
-        @Html.Raw(Model.SiteLD.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"))
+        @Html.Raw(Model.SiteLDString)
     </script>
 
 }
