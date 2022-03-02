@@ -58,8 +58,8 @@ namespace TerribleDev.Blog.Web.Factories
             }
             var ld = new Schema.NET.Blog() 
             {
-                Name = "TerribleDev.Blog",
-                Description = "TerribleDev.Blog",
+                Name = "TerribleDev Blog",
+                Description = "The blog of Tommy Parnell",
                 Author = new Schema.NET.Person() { Name = "TerribleDev" },
                 Image = new Schema.NET.ImageObject() { Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/content/tommyAvatar4.jpg")) },
                 Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/" )),
@@ -68,8 +68,8 @@ namespace TerribleDev.Blog.Web.Factories
             };
             var website = new Schema.NET.WebSite()
             {
-                Name = "TerribleDev.Blog",
-                Description = "TerribleDev.Blog",
+                Name = "TerribleDev Blog",
+                Description = "The blog of Tommy Parnell",
                 Author = new Schema.NET.Person() { Name = "TerribleDev" },
                 Image = new Schema.NET.ImageObject() { Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/content/tommyAvatar4.jpg")) },
                 Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/" )),
