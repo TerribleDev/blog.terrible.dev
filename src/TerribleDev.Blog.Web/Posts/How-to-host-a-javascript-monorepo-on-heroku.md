@@ -7,6 +7,8 @@ tags:
 
 So I've been using monorepos for some time, and recently I've gotten a lot of questions about how to host them on Heroku. I figured I'd give you the simple guide. There are two basic scenarios. The root of your git repo has your yarn/npm workspace, or you have a folder inside of a gitrepo you wish to use. 
 
+<!-- more -->
+
 ## Scenario 1: yarn/npm workspace
 
 In this case, create a Heroku app with the official nodejs buildpack. Add `heroku-postbuild: "YourBuildCommand"` to your scripts section of the root package.json. This will run after the npm install, and can be used to run any build commands you need (such as compiling typescript). Then use [the multi-procfile buildpack](https://github.com/heroku/heroku-buildpack-multi-procfile) which will grab a procfile from any directory and copy it to the root to boot your app. That way your monorepo can have a `server/package.json` package that contains your web app and in there you can have the procfile `server/Procfile`.
