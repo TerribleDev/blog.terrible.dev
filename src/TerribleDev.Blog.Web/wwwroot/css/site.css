@@ -18,7 +18,7 @@
     --headline: #f0f0f0;
     --body-text-color: #ffffff;
     --block-quote-left-border: #d1dced;
-    --code-block-background-color: #727171;
+    --code-block-background-color: #4a4a4a;
     --primary-background: #323131;
     --link-color: #3faff9;
     /* --link-visited: #d8dbde; */
@@ -100,6 +100,7 @@ pre {
   background: var(--code-block-background-color);
   padding: 0 0.4em;
   overflow-x: scroll;
+  letter-spacing: .02em;
 }
 
 /* fix a bug where a code block (not inline) would have extra padding) */
