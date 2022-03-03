@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System;
 using Microsoft.SyndicationFeed;
+using Schema.NET;
 
 namespace TerribleDev.Blog.Web.Factories
 {
@@ -84,7 +85,17 @@ namespace TerribleDev.Blog.Web.Factories
                             {
                                 UrlTemplate = new Schema.NET.OneOrMany<string>(@"https://blog.terrible.dev/search?q={search-term}")
                             },
-                            QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>("required name=search-term")
+                            QueryInput = new Schema.NET.Values<string, Schema.NET.PropertyValueSpecification>(
+                                new OneOrMany<PropertyValueSpecification>(
+                                    new PropertyValueSpecification()
+                                    {
+                                        ValueName = "search-term",
+                                        ValueRequired = true,
+                                        ValueMinLength = 1,
+                                        ValueMaxLength = 500,
+                                    }
+                                )
+                            ) 
                         }
                     }
                 )

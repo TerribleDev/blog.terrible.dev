@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TerribleDev.Blog.Web.Models;
@@ -16,9 +17,13 @@ namespace TerribleDev.Blog.Web.Controllers
             this.postCache = postCache;
         }
         [Route("/search")]
-        public IActionResult Index(string q)
+        public IActionResult Index([Required] [MinLength(1)] [MaxLength(500)] string q)
         {
             if (string.IsNullOrEmpty(q))
+            {
+                return Redirect("/404/?from=/search/");
+            }
+            if(!ModelState.IsValid) 
             {
                 return Redirect("/404/?from=/search/");
             }
