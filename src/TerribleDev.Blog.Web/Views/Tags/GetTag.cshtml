@@ -2,6 +2,7 @@
 @model GetTagViewModel
 @{
     ViewData["Tag:" + Model.Tag] = "GetTag";
+    ViewData["Title"] = @Model.Title;
 }
 <cache vary-by-route="tagName">
 @foreach (var post in Model.Posts)
@@ -14,4 +15,7 @@
   @if(!String.IsNullOrEmpty(Model.CanonicalUrl)) {
     <link rel="canonical" href="@Model.CanonicalUrl" />
   }
+   <script type="application/ld+json">
+        @Html.Raw(Model.ldJson())
+  </script> 
 }

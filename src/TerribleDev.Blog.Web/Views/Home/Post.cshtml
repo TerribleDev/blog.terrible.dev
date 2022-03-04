@@ -34,4 +34,7 @@
     <script type="application/ld+json">
         @Html.Raw(Model.Content.Value.JsonLDString)
     </script>
+    <script type="application/ld+json">
+        @Html.Raw(Model.Content.Value.JsonLDBreadcrumbString)
+    </script>
 }

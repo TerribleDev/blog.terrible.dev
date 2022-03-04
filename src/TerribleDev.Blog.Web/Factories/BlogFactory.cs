@@ -12,6 +12,7 @@ using TerribleDev.Blog.Web.MarkExtension;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
 using System.Collections.Concurrent;
+using Schema.NET;
 
 namespace TerribleDev.Blog.Web
 {
@@ -21,7 +22,8 @@ namespace TerribleDev.Blog.Web
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
-            return await Task.WhenAll(posts.Select(async (post) => {
+            return await Task.WhenAll(posts.Select(async (post) =>
+            {
                 var (text, fileInfo) = await GetFileText(post);
                 return ParsePost(text, fileInfo.Name, domain);
             }));
@@ -42,7 +44,8 @@ namespace TerribleDev.Blog.Web
             return serializer.Deserialize<PostSettings>(ymlText);
 
         }
-        public (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain) {
+        public (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain)
+        {
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
                                 .Use(new AbsoluteLinkConverter(resolvedUrl, domain))
@@ -75,9 +78,10 @@ namespace TerribleDev.Blog.Web
                 RelativeUrl = $"/{resolvedUrl}/",
                 CanonicalUrl = canonicalUrl,
                 UrlWithoutPath = resolvedUrl,
-                Content = new Lazy<IPostContent>(() => {
+                Content = new Lazy<IPostContent>(() =>
+                {
                     (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
-                    var ld = new Schema.NET.BlogPosting() 
+                    var ld = new Schema.NET.BlogPosting()
                     {
                         Headline = postSettings.title,
                         DatePublished = postSettings.date,
@@ -87,15 +91,34 @@ namespace TerribleDev.Blog.Web
                         Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev", Url = new Uri("https://blog.terrible.dev") },
                         Url = new Uri(canonicalUrl)
                     };
-                    return new PostContent() {
+                    var breadcrumb = new Schema.NET.BreadcrumbList()
+                    {
+                        ItemListElement = new List<IListItem>() // Required
+                        {
+                            new ListItem() // Required
+                            {
+                                Position = 1, // Required
+                                Url = new Uri("https://blog.terrible.dev/") // Required
+                            },
+                            new ListItem()
+                            {
+                                Position = 2,
+                                Name = postSettings.title,
+                            },
+                        },
+                    };
+                    return new PostContent()
+                    {
                         Content = new HtmlString(postContent),
                         Images = postImages,
                         ContentPlain = postContentPlain,
                         Summary = new HtmlString(summary),
                         SummaryPlain = postSummaryPlain,
-                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "..." ,
+                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                         JsonLD = ld,
-                        JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true")
+                        JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                        JsonLDBreadcrumb = breadcrumb,
+                        JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                     };
                 }),
             };

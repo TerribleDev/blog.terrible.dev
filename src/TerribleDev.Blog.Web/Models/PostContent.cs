@@ -16,5 +16,7 @@ namespace TerribleDev.Blog.Web.Models
         public IList<string> Images { get; set; }
         public BlogPosting JsonLD { get; set; }
         public string JsonLDString { get; set; }
+        public BreadcrumbList JsonLDBreadcrumb { get; set; }
+        public string JsonLDBreadcrumbString { get; set; }
     }
 }
