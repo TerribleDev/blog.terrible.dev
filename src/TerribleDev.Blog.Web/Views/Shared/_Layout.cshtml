@@ -16,12 +16,34 @@
     <link rel="manifest" href="~/manifest.json" asp-append-version="true">
     <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
     <title>@ViewData["Title"] - @config.Title</title>
-
     @if(amp) 
     {
         @Html.Raw(boilerplate);
         <inline-style amp-custom href="css/site.css,css/site.desktop.css,css/site.mobile.css"></inline-style>
-
+        @* <environment names="Development">
+            <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
+        </environment>
+        <environment names="Production">
+            <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" />
+        </environment>
+            <environment names="Development">
+            <link asp-append-version="true" media="screen and (min-width: 769px)" rel="stylesheet" href="~/css/site.desktop.css" />
+        </environment>
+        <environment names="Production">
+            <link asp-append-version="true" media="screen and (min-width: 769px)" rel="stylesheet" href="~/css/site.desktop.min.css" />
+        </environment>
+        <environment names="Development">
+            <link asp-append-version="true" media="screen and (max-width: 768px)" rel="stylesheet" href="~/css/site.mobile.css" />
+        </environment>
+        <environment names="Production">
+            <link asp-append-version="true" media="screen and (max-width: 768px)" rel="stylesheet" href="~/css/site.mobile.min.css" />
+        </environment>
+        <environment names="Development">
+            <link asp-append-version="true" rel="preload" as="script" href="~/js/swi.js" />
+        </environment>
+        <environment names="Production">
+            <link asp-append-version="true" rel="preload" as="script" href="~/js/site.min.js" />
+        </environment> *@
         
 
     }
