@@ -110,12 +110,11 @@ namespace TerribleDev.Blog.Web
                             },
                         },
                     };
-                    // regex remove picture and source tags
-                    var regex = new Regex(@"<source[^>]*>|</source>|<picture[^>]*>|</picture>", RegexOptions.IgnoreCase);
-                    var ampContent = regex.Replace(postContent, "");
+                    // regex remove picture and source tags but not the child elements
+                    var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
                     return new PostContent()
                     {
-                        AmpContent = new HtmlString(ampContent),
+                        AmpContent = new HtmlString(postContentClean),
                         Content = new HtmlString(postContent),
                         Images = postImages,
                         ContentPlain = postContentPlain,

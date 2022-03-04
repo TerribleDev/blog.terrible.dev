@@ -56,30 +56,23 @@ namespace TerribleDev.Blog.Web.Controllers
             return View();
         }
 
-        [Route("{postUrl}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "postUrl")]
+        [Route("{postUrl}/{amp?}")]
+        [OutputCache(Duration = 31536000, VaryByParam = "postUrl,amp")]
         [ResponseCache(Duration = 900)]
-        public IActionResult Post(string postUrl)
+        public IActionResult Post(string postUrl, string amp = "")
         {
+            if(!String.IsNullOrEmpty(amp) && amp != "amp")
+            {
+                return Redirect($"/404/?from=/{postUrl}/{amp}/");
+            }
             if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
                 this.StatusCode(404);
                 return View(nameof(FourOhFour));
             }
-            return View("Post",  model: new PostViewModel() { Post = currentPost, IsAmp = false });
+            return View("Post",  model: new PostViewModel() { Post = currentPost, IsAmp = amp == "amp" });
         }
-        [Route("{postUrl}/amp")]
-        [OutputCache(Duration = 31536000, VaryByParam = "postUrl")]
-        [ResponseCache(Duration = 900)]
-        public IActionResult PostAmp(string postUrl)
-        {
-            if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
-            {
-                this.StatusCode(404);
-                return View(nameof(FourOhFour));
-            }
-            return View("Post", model: new PostViewModel() { Post = currentPost, IsAmp = true });
-        }
+
         [Route("/Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

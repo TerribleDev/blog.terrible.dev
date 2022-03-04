@@ -20,31 +20,6 @@
     {
         @Html.Raw(boilerplate);
         <inline-style amp-custom href="css/site.css,css/site.desktop.css,css/site.mobile.css"></inline-style>
-        @* <environment names="Development">
-            <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
-        </environment>
-        <environment names="Production">
-            <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" />
-        </environment>
-            <environment names="Development">
-            <link asp-append-version="true" media="screen and (min-width: 769px)" rel="stylesheet" href="~/css/site.desktop.css" />
-        </environment>
-        <environment names="Production">
-            <link asp-append-version="true" media="screen and (min-width: 769px)" rel="stylesheet" href="~/css/site.desktop.min.css" />
-        </environment>
-        <environment names="Development">
-            <link asp-append-version="true" media="screen and (max-width: 768px)" rel="stylesheet" href="~/css/site.mobile.css" />
-        </environment>
-        <environment names="Production">
-            <link asp-append-version="true" media="screen and (max-width: 768px)" rel="stylesheet" href="~/css/site.mobile.min.css" />
-        </environment>
-        <environment names="Development">
-            <link asp-append-version="true" rel="preload" as="script" href="~/js/swi.js" />
-        </environment>
-        <environment names="Production">
-            <link asp-append-version="true" rel="preload" as="script" href="~/js/site.min.js" />
-        </environment> *@
-        
 
     }
     else 
@@ -80,6 +55,7 @@
     {
         Html.Raw("<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>");
         <script async src="https://cdn.ampproject.org/v0.js"></script>
+        <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     }
     @RenderSection("Head", false)
 </head>
@@ -111,6 +87,12 @@
         </environment>
         <environment names="Production">
             <script asp-append-version="true" src="~/js/site.min.js" async></script>
+        </environment>
+    }
+    else
+    {
+        <environment names="Development">
+            <partial name="Gtm" />
         </environment>
     }
 
