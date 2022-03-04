@@ -1,9 +1,18 @@
 ﻿@model IPost
-
+@{
+    var amp = ViewData["amp"] as bool? ?? false;
+}
 <article itemprop="blogPost">
     <h1 itemprop="headline" class="headline">@Model.Title</h1>
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
-    @Model.Content.Value.Content
+    @if(amp)
+    {
+        @Model.Content.Value.AmpContent
+    }
+    else
+    {
+        @Model.Content.Value.Content
+    }
     @if (Model.tags.Count > 0)
     {
         <div>

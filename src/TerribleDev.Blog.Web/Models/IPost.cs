@@ -9,6 +9,7 @@ namespace TerribleDev.Blog.Web.Models
 {
     public interface IPost
     {
+        string AMPUrl { get; set; }
         string CanonicalUrl { get; set; }
         string UrlWithoutPath { get; set; }
         string RelativeUrl { get; set; }

@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace TerribleDev.Blog.Web.Taghelpers
 {
-    [HtmlTargetElement("inline-style")]
-    public class InlineStyleTagHelper : TagHelper
+    [HtmlTargetElement("inline-script")]
+    public class InlineScriptTagHelper : TagHelper
     {
-        [HtmlAttributeName("href")]
-        public string Href { get; set; }
+        [HtmlAttributeName("src")]
+        public string Src { get; set; }
 
         private IWebHostEnvironment HostingEnvironment { get; }
         private IMemoryCache Cache { get; }
 
 
 
-        public InlineStyleTagHelper(IWebHostEnvironment hostingEnvironment, IMemoryCache cache)
+        public InlineScriptTagHelper(IWebHostEnvironment hostingEnvironment, IMemoryCache cache)
         {
             HostingEnvironment = hostingEnvironment;
             Cache = cache;
@@ -31,10 +31,10 @@ namespace TerribleDev.Blog.Web.Taghelpers
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var paths = Href.Split(',');
+            var paths = Src.Split(',');
 
             // Get the value from the cache, or compute the value and add it to the cache
-            var fileContent = await Cache.GetOrCreateAsync("InlineStyleTagHelper-" + paths, async entry =>
+            var fileContent = await Cache.GetOrCreateAsync("InlineScriptTagHelper-" + paths, async entry =>
             {
                 var fileProvider = HostingEnvironment.WebRootFileProvider;
                 var result = paths.Select(async path => {
@@ -62,7 +62,7 @@ namespace TerribleDev.Blog.Web.Taghelpers
                 return;
             }
 
-            output.TagName = "style";
+            output.TagName = "script";
             output.Attributes.RemoveAll("href");
             output.Content.AppendHtml(fileContent);
         }

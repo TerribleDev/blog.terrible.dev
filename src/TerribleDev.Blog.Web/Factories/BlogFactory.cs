@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 using Schema.NET;
+using System.Text.RegularExpressions;
 
 namespace TerribleDev.Blog.Web
 {
@@ -69,6 +70,7 @@ namespace TerribleDev.Blog.Web
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var canonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/";
+            var ampUrl = $"https://blog.terrible.dev/{resolvedUrl}/amp/";
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -77,6 +79,7 @@ namespace TerribleDev.Blog.Web
                 Title = postSettings.title,
                 RelativeUrl = $"/{resolvedUrl}/",
                 CanonicalUrl = canonicalUrl,
+                AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 Content = new Lazy<IPostContent>(() =>
                 {
@@ -107,8 +110,12 @@ namespace TerribleDev.Blog.Web
                             },
                         },
                     };
+                    // regex remove picture and source tags
+                    var regex = new Regex(@"<source[^>]*>|</source>|<picture[^>]*>|</picture>", RegexOptions.IgnoreCase);
+                    var ampContent = regex.Replace(postContent, "");
                     return new PostContent()
                     {
+                        AmpContent = new HtmlString(ampContent),
                         Content = new HtmlString(postContent),
                         Images = postImages,
                         ContentPlain = postContentPlain,

@@ -8,6 +8,7 @@ namespace TerribleDev.Blog.Web.Models
 
     public class PostContent : IPostContent
     {
+        public HtmlString AmpContent { get; set; }
         public HtmlString Content { get; set; }
         public HtmlString Summary { get; set; }
         public string ContentPlain { get; set; }

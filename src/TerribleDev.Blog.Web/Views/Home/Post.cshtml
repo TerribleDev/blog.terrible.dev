@@ -1,40 +1,43 @@
 ﻿@inject BlogConfiguration config
-@model IPost
+@model PostViewModel
 @{
-    ViewData["Title"] = @Model.Title;
+    ViewData["Title"] = Model.Post.Title;
+    ViewData["amp"] = Model.IsAmp;
 }
 
 <cache vary-by-route="postUrl">
-    @Html.DisplayForModel()
+    @Html.DisplayFor(m => m.Post, "Post")
 </cache>
 
 @section Head {
-    <meta name="description" content="@Model.Content.Value.SummaryPlainShort" />
+    <meta name="description" content="@Model.Post.Content.Value.SummaryPlainShort" />
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="@Model.Title">
-    <meta property="og:url" content="@Model.CanonicalUrl">
+    <meta property="og:title" content="@Model.Post.Title">
+    <meta property="og:url" content="@Model.Post.CanonicalUrl">
     <meta property="og:site_name" content="@config.Title">
-    <meta property="og:description" content="@Model.Content.Value.SummaryPlainShort">
-    <meta property="og:updated_time" content="@Model.PublishDate.ToString("O")">
+    <meta property="og:description" content="@Model.Post.Content.Value.SummaryPlainShort">
+    <meta property="og:updated_time" content="@Model.Post.PublishDate.ToString("O")">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="@Model.Title">
-    <meta name="twitter:description" content="@Model.Content.Value.SummaryPlainShort">
+    <meta name="twitter:title" content="@Model.Post.Title">
+    <meta name="twitter:description" content="@Model.Post.Content.Value.SummaryPlainShort">
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
-    <link rel="canonical" href="@Model.CanonicalUrl" />
-    @foreach(var image in Model.Content.Value.Images.Take(6))
+    <link rel="canonical" href="@Model.Post.CanonicalUrl" />
+    <link rel="amphtml" href="@Model.Post.AMPUrl">
+    @foreach(var image in Model.Post.Content.Value.Images.Take(6))
     {
         <meta property="og:image" content="@image">
     }
-    @if(Model.Content.Value.Images.Count > 0)
+    @if(Model.Post.Content.Value.Images.Count > 0)
     {
-        <meta name="twitter:image" content="@(Model.Content.Value.Images[0])">
+        <meta name="twitter:image" content="@(Model.Post.Content.Value.Images[0])">
     }
     <meta property="og:image" content="https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640" />
     <script type="application/ld+json">
-        @Html.Raw(Model.Content.Value.JsonLDString)
+        @Html.Raw(Model.Post.Content.Value.JsonLDString)
     </script>
     <script type="application/ld+json">
-        @Html.Raw(Model.Content.Value.JsonLDBreadcrumbString)
+        @Html.Raw(Model.Post.Content.Value.JsonLDBreadcrumbString)
     </script>
 }
+

@@ -65,6 +65,7 @@ namespace TerribleDev.Blog.Web.Controllers
                 Urls = postCache.PostsAsLists.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = a.CanonicalUrl }).ToList()
             };
             sitemap.Urls.AddRange(sitewideLinks);
+            sitemap.Urls.AddRange(postCache.PostsAsLists.Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = a.AMPUrl }).ToList());
             ser.Serialize(this.Response.Body, sitemap);
         }
     }
