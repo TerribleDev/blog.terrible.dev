@@ -4,7 +4,7 @@
     var amp = ViewData["amp"] as bool? ?? false;
 }
 
-@if(amp)
+@if(!amp)
 {
     <script>
         window.dataLayer = window.dataLayer || [];
