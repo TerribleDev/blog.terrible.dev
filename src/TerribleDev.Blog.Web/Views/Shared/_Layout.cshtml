@@ -15,7 +15,7 @@
     <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     <link rel="manifest" href="~/manifest.json" asp-append-version="true">
     <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
-    <title>@ViewData["Title"] - @config.Title</title>
+    <title>@ViewData["Title"] | @config.Title</title>
     @if(amp) 
     {
         @Html.Raw(boilerplate);
