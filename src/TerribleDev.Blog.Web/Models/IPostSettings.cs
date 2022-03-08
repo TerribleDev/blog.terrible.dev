@@ -12,5 +12,6 @@ namespace TerribleDev.Blog.Web.Models
         string thumbnailImage { get; set; }
         DateTimeOffset date { get; set; }
         DateTimeOffset updated { get; set; }
+        bool isLanding { get; set; }
     }
 }

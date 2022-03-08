@@ -15,5 +15,7 @@ namespace TerribleDev.Blog.Web.Models
         public string thumbnailImage { get; set; }
         public string thumbnail_image_position { get; set; }
         public string layout { get; set; }
+
+        public bool isLanding { get; set; } = false;
     }
 }

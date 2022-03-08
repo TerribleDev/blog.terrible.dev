@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Html;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace TerribleDev.Blog.Web.Models
 {
     [DebuggerDisplay("{Title}")]
-    public class Post : IPost
+    public class LandingPage : IPost
     {
         public string AMPUrl { get; set; }
         public string CanonicalUrl { get; set; }
@@ -16,7 +16,6 @@ namespace TerribleDev.Blog.Web.Models
         public string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public IList<string> tags { get; set; }
         public Lazy<IPostContent> Content { get; set; }
 
         public bool isLanding { get; set; } = false;

@@ -71,6 +71,11 @@ namespace TerribleDev.Blog.Web
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var canonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/";
             var ampUrl = $"https://blog.terrible.dev/{resolvedUrl}/amp/";
+            return postSettings.isLanding ? BuildLandingPage(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl) : BuildPost(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl);
+        }
+
+        private Post BuildPost(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        {
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -81,6 +86,7 @@ namespace TerribleDev.Blog.Web
                 CanonicalUrl = canonicalUrl,
                 AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
+                isLanding = postSettings.isLanding,
                 Content = new Lazy<IPostContent>(() =>
                 {
                     (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
@@ -123,6 +129,54 @@ namespace TerribleDev.Blog.Web
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                         JsonLD = ld,
                         JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                        JsonLDBreadcrumb = breadcrumb,
+                        JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                    };
+                }),
+            };
+        }
+        private LandingPage BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        {
+            return new LandingPage()
+            {
+                PublishDate = postSettings.date.ToUniversalTime(),
+                UpdatedDate = postSettings.updated?.ToUniversalTime() ?? null,
+                Title = postSettings.title,
+                RelativeUrl = $"/{resolvedUrl}/",
+                CanonicalUrl = canonicalUrl,
+                AMPUrl = ampUrl,
+                UrlWithoutPath = resolvedUrl,
+                isLanding = postSettings.isLanding,
+                Content = new Lazy<IPostContent>(() =>
+                {
+                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
+                    var breadcrumb = new Schema.NET.BreadcrumbList()
+                    {
+                        ItemListElement = new List<IListItem>() // Required
+                        {
+                            new ListItem() // Required
+                            {
+                                Position = 1, // Required
+                                Url = new Uri("https://blog.terrible.dev/") // Required
+                            },
+                            new ListItem()
+                            {
+                                Position = 2,
+                                Name = postSettings.title,
+                            },
+                        },
+                    };
+                    // regex remove picture and source tags but not the child elements
+                    var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
+                    return new PostContent()
+                    {
+                        AmpContent = new HtmlString(postContentClean),
+                        Content = new HtmlString(postContent),
+                        Images = postImages,
+                        ContentPlain = postContentPlain,
+                        Summary = new HtmlString(summary),
+                        SummaryPlain = postSummaryPlain,
+                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                         JsonLDBreadcrumb = breadcrumb,
                         JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                     };

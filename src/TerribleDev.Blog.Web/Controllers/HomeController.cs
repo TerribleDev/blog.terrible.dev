@@ -65,12 +65,17 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return Redirect($"/404/?from=/{postUrl}/{amp}/");
             }
-            if(!postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
+            if(postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
-                this.StatusCode(404);
-                return View(nameof(FourOhFour));
+                return View("Post",  model: new PostViewModel() { Post = currentPost, IsAmp = amp == "amp" });
             }
-            return View("Post",  model: new PostViewModel() { Post = currentPost, IsAmp = amp == "amp" });
+            if(postCache.LandingPagesUrl.TryGetValue(postUrl, out var landingPage))
+            {
+                return View("Post",  model: new PostViewModel() { Post = landingPage, IsAmp = amp == "amp" });
+            }
+            
+            this.StatusCode(404);
+            return View(nameof(FourOhFour));
         }
 
         [Route("/Error")]

@@ -6,7 +6,7 @@
 }
 
 <cache vary-by-route="postUrl,amp">
-    @Html.DisplayFor(m => m.Post, "Post")
+    @await Html.PartialAsync("SharedPost", Model.Post)
 </cache>
 
 @section Head {

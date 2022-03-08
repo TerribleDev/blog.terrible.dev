@@ -34,5 +34,3 @@ Eventually we bit the bullet and decided to sign our requests to the cluster. Un
 This project totally saved my bacon. Brandon's library plugged right into the .NET sdk, and auth'd our requests to aws without us having to figure out all that crypo. Within moments of finding it I filed an [issue](https://github.com/bcuff/elasticsearch-net-aws/issues/1) thanking Brandon as it really helped me out.
 
 The Elasticsearch service offering by Amazon is pretty awesome. Like any platform its less flexible then hosting the instances yourself. You have to live with the plugins they ship, but on the plus side you get a full cluster, with monitoring, and a knob to turn up instances, or storage space without having to worry about the details.
-
-<script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

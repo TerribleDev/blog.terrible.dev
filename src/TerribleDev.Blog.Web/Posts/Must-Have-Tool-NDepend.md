@@ -80,7 +80,7 @@ So the major feature I was blown away by with NDepend was how clean, and organiz
  The code quality rules, uses the NDepends querying engine to get your code. When you click on a rule the Linq query used will be displayed in a separate window. You can use this window to create your own rules, using the same querying engine. The following is a query to find code that should not be declared public.
 
 <pre>
- //<Name>Avoid public methods not publicly visible</Name>
+ //Avoid public methods not publicly visible
 // Matched methods are declared public but are not publicly visible by assemblies consumers.
 // Their visibility level must be decreased.
 

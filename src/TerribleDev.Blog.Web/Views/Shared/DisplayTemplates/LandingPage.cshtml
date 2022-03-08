@@ -1,8 +1,8 @@
-﻿@model Post
+﻿@model LandingPage
 @{
     var amp = ViewData["amp"] as bool? ?? false;
 }
-<article itemprop="blogPost">
+<article>
     <h1 itemprop="headline" class="headline">@Model.Title</h1>
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
     @if(amp)
@@ -12,16 +12,6 @@
     else
     {
         @Model.Content.Value.Content
-    }
-    @if (Model.tags.Count > 0)
-    {
-        <div>
-            <span>Tagged In:</span><br />
-            @foreach (var tag in Model.tags)
-            {
-                <a href="/tag/@tag/" class="btn block">@tag</a>
-            }
-        </div>
     }
 
 </article>

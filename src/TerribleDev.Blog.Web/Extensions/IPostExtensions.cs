@@ -9,7 +9,7 @@ namespace TerribleDev.Blog.Web
 {
     public static class IPostExtensions
     {
-        public static SyndicationItem ToSyndicationItem(this IPost x)
+        public static SyndicationItem ToSyndicationItem(this Post x)
         {
             Uri.TryCreate(x.CanonicalUrl, UriKind.Absolute, out var url);
             var syn = new SyndicationItem()
@@ -22,7 +22,7 @@ namespace TerribleDev.Blog.Web
             syn.AddLink(new SyndicationLink(url));
             return syn;
         }
-        public static ISet<string> ToNormalizedTagList(this IPost x)
+        public static ISet<string> ToNormalizedTagList(this Post x)
         {
             if(x.tags == null)
             {
