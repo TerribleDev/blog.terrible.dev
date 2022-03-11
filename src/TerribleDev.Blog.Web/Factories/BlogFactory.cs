@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Collections.Concurrent;
 using Schema.NET;
 using System.Text.RegularExpressions;
+using TerribleDev.Blog.Web.Factories;
 
 namespace TerribleDev.Blog.Web
 {
@@ -45,7 +46,7 @@ namespace TerribleDev.Blog.Web
             return serializer.Deserialize<PostSettings>(ymlText);
 
         }
-        public (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain)
+        public (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, Boolean hasCode) ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain)
         {
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
@@ -56,11 +57,12 @@ namespace TerribleDev.Blog.Web
                                 .Use<PictureInline>()
                                 .UseEmojiAndSmiley()
                                 .Build();
-            var postContent = Markdown.ToHtml(markdownText, pipeline);
-            var postContentPlain = String.Join("", Markdown.ToPlainText(markdownText, pipeline).Split("<!-- more -->"));
+            var (replacedText, hasCode) = CodeFactory.ReplaceFencedCode(markdownText).Result;
+            var postContent = Markdown.ToHtml(replacedText, pipeline);
+            var postContentPlain = String.Join("", Markdown.ToPlainText(replacedText, pipeline).Split("<!-- more -->"));
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
-            return (postContent, postContentPlain, summary, postSummaryPlain, postImages);
+            return (postContent, postContentPlain, summary, postSummaryPlain, postImages, hasCode);
         }
         public IPost ParsePost(string postText, string fileName, string domain)
         {
@@ -89,7 +91,7 @@ namespace TerribleDev.Blog.Web
                 isLanding = postSettings.isLanding,
                 Content = new Lazy<IPostContent>(() =>
                 {
-                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
+                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
                     var ld = new Schema.NET.BlogPosting()
                     {
                         Headline = postSettings.title,
@@ -131,6 +133,7 @@ namespace TerribleDev.Blog.Web
                         JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                         JsonLDBreadcrumb = breadcrumb,
                         JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                        HasCode = hasCode
                     };
                 }),
             };
@@ -149,7 +152,7 @@ namespace TerribleDev.Blog.Web
                 isLanding = postSettings.isLanding,
                 Content = new Lazy<IPostContent>(() =>
                 {
-                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
+                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
                     var breadcrumb = new Schema.NET.BreadcrumbList()
                     {
                         ItemListElement = new List<IListItem>() // Required
@@ -179,6 +182,7 @@ namespace TerribleDev.Blog.Web
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                         JsonLDBreadcrumb = breadcrumb,
                         JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                        HasCode = hasCode
                     };
                 }),
             };

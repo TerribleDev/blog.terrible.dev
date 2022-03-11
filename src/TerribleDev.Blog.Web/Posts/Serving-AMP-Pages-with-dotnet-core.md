@@ -176,7 +176,7 @@ AMP, [does allow for using JS](https://amp.dev/documentation/components/amp-scri
 
 On pages that render AMP, you'll need to be able to generate 2 meta tags. The first is a canonical tag that tells google what the canonical URL is of the page. The second is one, to tell google where your amp pages are for a URL. This is data you typically want to pass to the Model of the view you are rendering. Adding these meta to the head of the layout through a section.
 
-```cshtml
+```cs
 @section Head {
     <link rel="canonical" href="@Model.Post.CanonicalUrl" />
     <link rel="amphtml" href="@Model.Post.AMPUrl">

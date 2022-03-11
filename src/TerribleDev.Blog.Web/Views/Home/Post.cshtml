@@ -2,6 +2,7 @@
 @model PostViewModel
 @{
     ViewData["Title"] = Model.Post.Title;
+    var amp = ViewData["amp"] as bool? ?? false;
 }
 
 <cache vary-by-route="postUrl,amp">
