@@ -17,7 +17,7 @@ namespace TerribleDev.Blog.Web.Factories
             var result = await Task.WhenAll(matches.Select(async match =>
             {
                 var code = match.Value;
-                var codeContent = await new HttpClient().PostAsync("https://tp-prism-as-a-service.herokuapp.com/", new StringContent(code));
+                var codeContent = await new HttpClient().PostAsync("https://prismasaservice.azurewebsites.net/api/HttpTrigger", new StringContent(code));
                 return (code, await codeContent.Content.ReadAsStringAsync());
             }));
             foreach(var (match, newValue) in result)
