@@ -14,6 +14,9 @@
     <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     <link rel="manifest" href="~/manifest.json" asp-append-version="true">
     <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
+    <environment names="Production">
+        <partial name="Gtm" />
+    </environment>
     <title>@ViewData["Title"] | @config.Title</title>
     @if(amp) 
     {
@@ -85,12 +88,6 @@
         </environment>
         <environment names="Production">
             <script asp-append-version="true" src="~/js/site.min.js" async></script>
-        </environment>
-    }
-    else
-    {
-        <environment names="Production">
-            <partial name="Gtm" />
         </environment>
     }
 
