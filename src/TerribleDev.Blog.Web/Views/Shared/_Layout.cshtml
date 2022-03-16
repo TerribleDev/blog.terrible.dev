@@ -64,7 +64,7 @@
             <partial name="Gtm" />
         </environment>
     }
-    @RenderSection("Head", false)
+    @await RenderSectionAsync("Head", false)
 </head>
 <body>
   <a class="skip-main" href="#main">Skip to main content</a>
@@ -88,7 +88,7 @@
     </div>
     @if(!amp)
     {
-        @RenderSection("Scripts", required: false)
+        @await RenderSectionAsync("Scripts", required: false)
         <environment names="Development">
             <script asp-append-version="true" src="~/js/swi.js" async></script>
         </environment>
