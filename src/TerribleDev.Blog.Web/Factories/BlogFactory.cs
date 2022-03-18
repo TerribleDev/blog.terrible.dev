@@ -20,14 +20,16 @@ namespace TerribleDev.Blog.Web
 {
     public class BlogFactory
     {
+        private CodeFactory _codeFactory = new CodeFactory();
         public async Task<IEnumerable<IPost>> GetAllPostsAsync(string domain)
         {
             // why didn't I use f# I'd have a pipe operator by now
             var posts = GetPosts();
+
             return await Task.WhenAll(posts.Select(async (post) =>
             {
                 var (text, fileInfo) = await GetFileText(post);
-                return ParsePost(text, fileInfo.Name, domain);
+                return await ParsePost(text, fileInfo.Name, domain);
             }));
         }
 
@@ -46,7 +48,7 @@ namespace TerribleDev.Blog.Web
             return serializer.Deserialize<PostSettings>(ymlText);
 
         }
-        public (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, Boolean hasCode) ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain)
+        public async Task<(string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, Boolean hasCode)> ResolveContentForPost(string markdownText, string fileName, string resolvedUrl, string domain)
         {
             List<string> postImages = new List<string>();
             var pipeline = new MarkdownPipelineBuilder()
@@ -57,14 +59,14 @@ namespace TerribleDev.Blog.Web
                                 .Use<PictureInline>()
                                 .UseEmojiAndSmiley()
                                 .Build();
-            var (replacedText, hasCode) = CodeFactory.ReplaceFencedCode(markdownText).Result;
+            var (replacedText, hasCode) = await _codeFactory.ReplaceFencedCode(markdownText);
             var postContent = Markdown.ToHtml(replacedText, pipeline);
             var postContentPlain = String.Join("", Markdown.ToPlainText(replacedText, pipeline).Split("<!-- more -->"));
             var summary = postContent.Split("<!-- more -->")[0];
             var postSummaryPlain = postContentPlain.Split("<!-- more -->")[0];
             return (postContent, postContentPlain, summary, postSummaryPlain, postImages, hasCode);
         }
-        public IPost ParsePost(string postText, string fileName, string domain)
+        public async Task<IPost> ParsePost(string postText, string fileName, string domain)
         {
             var splitFile = postText.Split("---");
             var ymlRaw = splitFile[0];
@@ -73,11 +75,57 @@ namespace TerribleDev.Blog.Web
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var canonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/";
             var ampUrl = $"https://blog.terrible.dev/{resolvedUrl}/amp/";
-            return postSettings.isLanding ? BuildLandingPage(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl) : BuildPost(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl);
+            return postSettings.isLanding ? await BuildLandingPage(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl) : await BuildPost(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl);
         }
 
-        private Post BuildPost(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        private async Task<Post> BuildPost(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
         {
+
+            (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = await ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
+            var ld = new Schema.NET.BlogPosting()
+            {
+                Headline = postSettings.title,
+                DatePublished = postSettings.date,
+                DateModified = postSettings.updated ?? postSettings.date,
+                WordCount = postContentPlain.Split(' ').Length,
+                ArticleBody = new Schema.NET.OneOrMany<string>(new HtmlString(postContentPlain).Value),
+                Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev", Url = new Uri("https://blog.terrible.dev/about") },
+                Url = new Uri(canonicalUrl)
+            };
+            var breadcrumb = new Schema.NET.BreadcrumbList()
+            {
+                ItemListElement = new List<IListItem>() // Required
+                        {
+                            new ListItem() // Required
+                            {
+                                Position = 1, // Required
+                                Url = new Uri("https://blog.terrible.dev/") // Required
+                            },
+                            new ListItem()
+                            {
+                                Position = 2,
+                                Name = postSettings.title,
+                            },
+                        },
+            };
+            // regex remove picture and source tags but not the child elements
+            var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
+            var content = new PostContent()
+            {
+                AmpContent = new HtmlString(postContentClean),
+                Content = new HtmlString(postContent),
+                Images = postImages,
+                ContentPlain = postContentPlain,
+                Summary = new HtmlString(summary),
+                SummaryPlain = postSummaryPlain,
+                SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
+                JsonLD = ld,
+                JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                JsonLDBreadcrumb = breadcrumb,
+                JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                HasCode = hasCode
+            };
+
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -89,19 +137,12 @@ namespace TerribleDev.Blog.Web
                 AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
-                Content = new Lazy<IPostContent>(() =>
-                {
-                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
-                    var ld = new Schema.NET.BlogPosting()
-                    {
-                        Headline = postSettings.title,
-                        DatePublished = postSettings.date,
-                        DateModified = postSettings.updated ?? postSettings.date,
-                        WordCount = postContentPlain.Split(' ').Length,
-                        ArticleBody = new Schema.NET.OneOrMany<string>(new HtmlString(postContentPlain).Value),
-                        Author = new Schema.NET.Person() { Name = "Tommy Parnell", AdditionalName = "TerribleDev", Url = new Uri("https://blog.terrible.dev/about") },
-                        Url = new Uri(canonicalUrl)
-                    };
+                Content = content
+            };
+        }
+        private async Task<LandingPage> BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        {
+            (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = await ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
                     var breadcrumb = new Schema.NET.BreadcrumbList()
                     {
                         ItemListElement = new List<IListItem>() // Required
@@ -120,7 +161,7 @@ namespace TerribleDev.Blog.Web
                     };
                     // regex remove picture and source tags but not the child elements
                     var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
-                    return new PostContent()
+                    var content = new PostContent()
                     {
                         AmpContent = new HtmlString(postContentClean),
                         Content = new HtmlString(postContent),
@@ -129,17 +170,10 @@ namespace TerribleDev.Blog.Web
                         Summary = new HtmlString(summary),
                         SummaryPlain = postSummaryPlain,
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
-                        JsonLD = ld,
-                        JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                         JsonLDBreadcrumb = breadcrumb,
                         JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                         HasCode = hasCode
                     };
-                }),
-            };
-        }
-        private LandingPage BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
-        {
             return new LandingPage()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -150,41 +184,7 @@ namespace TerribleDev.Blog.Web
                 AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
-                Content = new Lazy<IPostContent>(() =>
-                {
-                    (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
-                    var breadcrumb = new Schema.NET.BreadcrumbList()
-                    {
-                        ItemListElement = new List<IListItem>() // Required
-                        {
-                            new ListItem() // Required
-                            {
-                                Position = 1, // Required
-                                Url = new Uri("https://blog.terrible.dev/") // Required
-                            },
-                            new ListItem()
-                            {
-                                Position = 2,
-                                Name = postSettings.title,
-                            },
-                        },
-                    };
-                    // regex remove picture and source tags but not the child elements
-                    var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
-                    return new PostContent()
-                    {
-                        AmpContent = new HtmlString(postContentClean),
-                        Content = new HtmlString(postContent),
-                        Images = postImages,
-                        ContentPlain = postContentPlain,
-                        Summary = new HtmlString(summary),
-                        SummaryPlain = postSummaryPlain,
-                        SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
-                        JsonLDBreadcrumb = breadcrumb,
-                        JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
-                        HasCode = hasCode
-                    };
-                }),
+                Content = content
             };
         }
     }

@@ -61,7 +61,7 @@
         <script async src="https://cdn.ampproject.org/v0.js"></script>
         <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     }
-    @await RenderSectionAsync("Head", false)
+    @RenderSection("Head", false)
 </head>
 <body>
   <a class="skip-main" href="#main">Skip to main content</a>
@@ -85,7 +85,7 @@
     </div>
     @if(!amp)
     {
-        @await RenderSectionAsync("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
         <environment names="Development">
             <script asp-append-version="true" src="~/js/swi.js" async></script>
         </environment>

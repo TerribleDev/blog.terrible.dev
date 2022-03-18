@@ -30,7 +30,7 @@ namespace TerribleDev.Blog.Web.Factories
                     var castedPost = post as Post;
                     urlToPosts.Add(post.UrlWithoutPath, castedPost);
                     syndicationPosts.Add(castedPost.ToSyndicationItem());
-                    blogPostsLD.Add(post.Content.Value.JsonLD);
+                    blogPostsLD.Add(post.Content.JsonLD);
                     foreach (var tag in castedPost.ToNormalizedTagList())
                     {
                         if (tagsToPost.TryGetValue(tag, out var list))

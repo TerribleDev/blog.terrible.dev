@@ -17,7 +17,7 @@ namespace TerribleDev.Blog.Web.Models
         public DateTime PublishDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public IList<string> tags { get; set; }
-        public Lazy<IPostContent> Content { get; set; }
+        public IPostContent Content { get; set; }
 
         public bool isLanding { get; set; } = false;
     }

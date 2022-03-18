@@ -6,38 +6,38 @@
 }
 
 <cache vary-by-route="postUrl,amp">
-    @await Html.PartialAsync("SharedPost", Model.Post)
+    <partial name="SharedPost" for="Post" />
 </cache>
 
 @section Head {
-    <meta name="description" content="@Model.Post.Content.Value.SummaryPlainShort" />
+    <meta name="description" content="@Model.Post.Content.SummaryPlainShort" />
     <meta property="og:type" content="blog">
     <meta property="og:title" content="@Model.Post.Title">
     <meta property="og:url" content="@Model.Post.CanonicalUrl">
     <meta property="og:site_name" content="@config.Title">
-    <meta property="og:description" content="@Model.Post.Content.Value.SummaryPlainShort">
+    <meta property="og:description" content="@Model.Post.Content.SummaryPlainShort">
     <meta property="og:updated_time" content="@Model.Post.PublishDate.ToString("O")">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="@Model.Post.Title">
-    <meta name="twitter:description" content="@Model.Post.Content.Value.SummaryPlainShort">
+    <meta name="twitter:description" content="@Model.Post.Content.SummaryPlainShort">
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
     <link rel="canonical" href="@Model.Post.CanonicalUrl" />
     <link rel="amphtml" href="@Model.Post.AMPUrl">
-    @foreach(var image in Model.Post.Content.Value.Images.Take(6))
+    @foreach(var image in Model.Post.Content.Images.Take(6))
     {
         <meta property="og:image" content="@image">
     }
-    @if(Model.Post.Content.Value.Images.Count > 0)
+    @if(Model.Post.Content.Images.Count > 0)
     {
-        <meta name="twitter:image" content="@(Model.Post.Content.Value.Images[0])">
+        <meta name="twitter:image" content="@(Model.Post.Content.Images[0])">
     }
     <meta property="og:image" content="https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640" />
     <script type="application/ld+json">
-        @Html.Raw(Model.Post.Content.Value.JsonLDString)
+        @Html.Raw(Model.Post.Content.JsonLDString)
     </script>
     <script type="application/ld+json">
-        @Html.Raw(Model.Post.Content.Value.JsonLDBreadcrumbString)
+        @Html.Raw(Model.Post.Content.JsonLDBreadcrumbString)
     </script>
 }
 

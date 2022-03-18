@@ -32,7 +32,7 @@ namespace TerribleDev.Blog.Web.Controllers
             .PostsAsLists
             .Where(p => 
             queries.Any(query => p.Title.Contains(query, System.StringComparison.InvariantCultureIgnoreCase) )
-            || queries.Any(query =>  p.Content.Value.ContentPlain.Contains(query, System.StringComparison.InvariantCultureIgnoreCase))).ToList();
+            || queries.Any(query =>  p.Content.ContentPlain.Contains(query, System.StringComparison.InvariantCultureIgnoreCase))).ToList();
             return View(new SearchViewModel { SearchTerm = q, Posts = posts });
         }
     }

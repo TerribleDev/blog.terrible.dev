@@ -7,11 +7,11 @@
     <time class="headlineSubtext" itemprop="datePublished" content="@Model.PublishDate.ToString()">@Model.PublishDate.ToString("D")</time>
     @if(amp)
     {
-        @Model.Content.Value.AmpContent
+        @Model.Content.AmpContent
     }
     else
     {
-        @Model.Content.Value.Content
+        @Model.Content.Content
     }
 
 </article>

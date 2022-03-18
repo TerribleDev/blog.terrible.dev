@@ -49,7 +49,7 @@ namespace TerribleDev.Blog.Web
                     foreach(var post in postCache.PostsAsLists) 
                     {
                         // if we are in production turn off lazy loading
-                        var value = post.Content.Value;
+                        var value = post.Content;
                     }
                 }
                 return postCache;

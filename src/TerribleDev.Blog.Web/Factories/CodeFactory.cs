@@ -8,7 +8,8 @@ namespace TerribleDev.Blog.Web.Factories
 {
     public class CodeFactory
     {
-        public async static Task<(string result, bool hasCode)> ReplaceFencedCode(string markdown)
+        private HttpClient httpClient = new HttpClient();
+        public async Task<(string result, bool hasCode)> ReplaceFencedCode(string markdown)
         {
             
             // regex grab all text between backticks
@@ -17,7 +18,11 @@ namespace TerribleDev.Blog.Web.Factories
             var result = await Task.WhenAll(matches.Select(async match =>
             {
                 var code = match.Value;
-                var codeContent = await new HttpClient().PostAsync("https://prismasaservice.azurewebsites.net/api/HttpTrigger", new StringContent(code));
+                var codeContent = await httpClient.PostAsync("https://prismasaservice.azurewebsites.net/api/HttpTrigger", new StringContent(code));
+                if(!codeContent.IsSuccessStatusCode)
+                {
+                    Console.Error.WriteLine("Error posting code to prisma");
+                }
                 return (code, await codeContent.Content.ReadAsStringAsync());
             }));
             foreach(var (match, newValue) in result)
