@@ -40,7 +40,7 @@ namespace TerribleDev.Blog.Web.MarkExtension
         {
 
 
-            renderer.Write(string.IsNullOrWhiteSpace(type) ? $"<img src=\"" : $"<source type=\"{type}\" srcset=\"");
+            renderer.Write(string.IsNullOrWhiteSpace(type) ? $"<img loading=\"lazy\" src=\"" : $"<source type=\"{type}\" srcset=\"");
             var escapeUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url : link.Url;
 
             renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");

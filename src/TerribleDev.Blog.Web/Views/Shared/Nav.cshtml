@@ -6,13 +6,13 @@
   <div class="navContent">
       @if(amp == true)
       {
-          <img src="/content/tommyAvatar4.jpg" alt="An image of TerribleDev" class="round navHero" />
+          <img src="/content/tommyAvatar4.jpg" loading="lazy" alt="An image of TerribleDev" class="round navHero" />
       }
       else
       {
         <picture class="navHero">
-          <source srcset="" type="image/webp" alt="An image of TerribleDev" data-src="/content/tommyAvatar4.jpg.webp" class="lazy round" />
-          <img src="" alt="An image of TerribleDev" data-src="/content/tommyAvatar4.jpg" class="lazy round" />
+          <source srcset="/content/tommyAvatar4.jpg.webp" loading="lazy" type="image/webp" alt="An image of TerribleDev" class="round" />
+          <img src="/content/tommyAvatar4.jpg" loading="lazy" alt="An image of TerribleDev" class="round" />
       </picture>
       }
       <span>Tommy "Terrible Dev" Parnell</span>
