@@ -90,3 +90,9 @@ The end result is the top bar of safari changes as you scroll between blocks. Th
 <iframe width="662" height="1176" src="https://www.youtube.com/embed/iLksuqZP4L8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!-- ![video](https://youtu.be/iLksuqZP4L8) -->
+
+You can see a simpler example on [replit](https://replit.com/@TerribleDev/ScrollableTheme)
+
+
+
+<iframe frameborder="0" width="100%" height="500px" src="https://replit.com/@TerribleDev/ScrollableTheme?embed=true#script.js"></iframe>
