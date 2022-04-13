@@ -125,7 +125,9 @@ namespace TerribleDev.Blog.Web
                 JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                 HasCode = hasCode
             };
-
+            var thumbNailUrl = string.IsNullOrWhiteSpace(postSettings.thumbnailImage) ?
+             postImages?.FirstOrDefault() ?? "https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640"  : 
+             $"{canonicalUrl}/{postSettings.thumbnailImage}";
             return new Post()
             {
                 PublishDate = postSettings.date.ToUniversalTime(),
@@ -137,7 +139,9 @@ namespace TerribleDev.Blog.Web
                 AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
-                Content = content
+                Content = content,
+                isAmp = postSettings.isAmp,
+                ThumbnailImage = thumbNailUrl,
             };
         }
         private async Task<LandingPage> BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
@@ -184,7 +188,8 @@ namespace TerribleDev.Blog.Web
                 AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
-                Content = content
+                Content = content,
+                isAmp = postSettings.isAmp
             };
         }
     }

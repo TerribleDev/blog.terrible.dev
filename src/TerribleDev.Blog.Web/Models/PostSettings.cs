@@ -17,5 +17,7 @@ namespace TerribleDev.Blog.Web.Models
         public string layout { get; set; }
 
         public bool isLanding { get; set; } = false;
+
+        public bool isAmp { get; set; } = true;
     }
 }

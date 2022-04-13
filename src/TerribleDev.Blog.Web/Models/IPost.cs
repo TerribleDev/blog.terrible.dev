@@ -18,6 +18,8 @@ namespace TerribleDev.Blog.Web.Models
         DateTime? UpdatedDate { get; set; }
         IPostContent Content { get; set; }
         bool isLanding { get; set; }
+        bool isAmp { get; set; }
+        string ThumbnailImage { get; }
     }
 
 }

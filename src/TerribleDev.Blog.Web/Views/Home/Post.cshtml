@@ -23,16 +23,16 @@
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
     <link rel="canonical" href="@Model.Post.CanonicalUrl" />
-    <link rel="amphtml" href="@Model.Post.AMPUrl">
-    @foreach(var image in Model.Post.Content.Images.Take(6))
+    @if(Model.Post.isAmp) 
     {
-        <meta property="og:image" content="@image">
+        <link rel="amphtml" href="@Model.Post.AMPUrl">
     }
-    @if(Model.Post.Content.Images.Count > 0)
+    @if(!string.IsNullOrEmpty(Model.Post.ThumbnailImage))
     {
-        <meta name="twitter:image" content="@(Model.Post.Content.Images[0])">
+        <meta name="twitter:image" content="@(Model.Post.ThumbnailImage)">
+        <meta property="og:image" content="@(Model.Post.ThumbnailImage)" />
     }
-    <meta property="og:image" content="https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640" />
+    
     <script type="application/ld+json">
         @Html.Raw(Model.Post.Content.JsonLDString)
     </script>

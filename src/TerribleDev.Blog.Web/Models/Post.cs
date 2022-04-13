@@ -20,5 +20,8 @@ namespace TerribleDev.Blog.Web.Models
         public IPostContent Content { get; set; }
 
         public bool isLanding { get; set; } = false;
+        public bool isAmp { get; set; } = true;
+
+        public string ThumbnailImage { get; set; }
     }
 }
