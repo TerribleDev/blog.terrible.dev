@@ -88,13 +88,13 @@ In our case, the button didn't provide any support for uploaded files. We went f
 
 Heroku requires a Procfile to launch apps.
 
-```
+```shell
 web: vendor/bin/heroku-php-nginx -C nginx_app.conf web
 worker: ./craft queue/listen --verbose
 release: ./bin/release.sh
 ```
 `release.sh` will run a db migration
-```sh
+```shell
 if /usr/bin/env php /app/craft install/check
 then
     /usr/bin/env php /app/craft up --interactive=0
@@ -103,7 +103,7 @@ fi
 
 A `nginx_app.conf` nginx config for heroku's php buildpack.
 
-```conf
+```nginx
 if ($http_x_forwarded_proto != "https") {
   return 301 https://$host$request_uri;
 }
