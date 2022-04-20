@@ -8,11 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: master
     - uses: actions/setup-node@v3
       with:
         node-version: '14'
-    - name: 'Install Caprover'
-      run: |
-        npm install -g caprover
     - name: 'Deploy'
-      run: caprover deploy -h '${{ secrets.CAPROVER_SERVER}}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b branchName -a blog
+      run: npx caprover deploy -h '${{ secrets.CAPROVER_SERVER}}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b branchName -a blog
