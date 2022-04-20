@@ -9,9 +9,5 @@ jobs:
     steps:
     - name: 'Checkout Github Action' 
       uses: actions/checkout@master
-    - name: 'Deploy to Caprover' 
-      uses: AlexxNB/caprover-action@v1
-      with:
-        server: '${{ secrets.CAPROVER_SERVER}}'
-        password: '${{ secrets.CAPROVER_PASSWORD }}'
-        appname: 'blog'
+    - name: 'Deploy'
+      run: caprover deploy -h '${{ secrets.CAPROVER_SERVER}}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b branchName -a blog
