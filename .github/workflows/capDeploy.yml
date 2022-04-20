@@ -14,4 +14,4 @@ jobs:
       with:
         node-version: '14'
     - name: 'Deploy'
-      run: npx caprover deploy -h '${{ secrets.CAPROVER_SERVER}}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b branchName -a blog
+      run: npx caprover deploy -h '${{ secrets.CAPROVER_SERVER}}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b master -a blog
