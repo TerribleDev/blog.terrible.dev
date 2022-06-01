@@ -12,6 +12,7 @@ using HardHat;
 using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
 using Microsoft.Extensions.Hosting;
+using WebMarkupMin.AspNetCore6;
 
 namespace TerribleDev.Blog.Web
 {
@@ -68,6 +69,12 @@ namespace TerribleDev.Blog.Web
             })
             .AddMemoryCache()
             .AddOutputCaching();
+            services.AddWebMarkupMin(a => {
+                a.AllowMinificationInDevelopmentEnvironment = true;
+                a.DisablePoweredByHttpHeaders = true;
+            })
+            .AddHtmlMinification()
+            .AddXmlMinification();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,6 +133,7 @@ namespace TerribleDev.Blog.Web
                     UpgradeInsecureRequests = true
                 });
             app.UseOutputCaching();
+            app.UseWebMarkupMin();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
