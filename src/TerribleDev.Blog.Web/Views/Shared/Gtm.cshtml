@@ -3,8 +3,7 @@
     Layout = null;
     var amp = ViewData["amp"] as bool? ?? false;
 }
-
- @if(!amp)
+@if(!amp)
 {
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -12,10 +11,12 @@
         gtag('js', new Date());
         gtag('config', 'UA-48128396-1');
         document.addEventListener('DOMContentLoaded', function () {
-            var script = document.createElement('script');
-            script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-48128396-1';
-            script.async = true
-            document.body.appendChild(script);
+            setTimeout(() => {
+                var script = document.createElement('script');
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-48128396-1';
+                script.async = true
+                document.body.appendChild(script);
+            }, 4000)
         });
     </script>
 }
