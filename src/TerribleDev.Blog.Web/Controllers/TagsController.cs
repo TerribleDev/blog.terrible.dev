@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TerribleDev.Blog.Web.Filters;
 using TerribleDev.Blog.Web.Models;
 
 namespace TerribleDev.Blog.Web.Controllers
 {
+    [Http2PushFilter]
     public class TagsController : Controller
     {
         private readonly PostCache postCache;

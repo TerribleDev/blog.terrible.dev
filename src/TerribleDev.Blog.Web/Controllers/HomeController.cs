@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using TerribleDev.Blog.Web.Models;
 using System.IO;
 using Microsoft.AspNetCore.Html;
+using TerribleDev.Blog.Web.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace TerribleDev.Blog.Web.Controllers
 {
+    [Http2PushFilter]
     public class HomeController : Controller
     {
         private readonly PostCache postCache;

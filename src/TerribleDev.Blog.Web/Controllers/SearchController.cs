@@ -2,10 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using TerribleDev.Blog.Web.Filters;
 using TerribleDev.Blog.Web.Models;
 
 namespace TerribleDev.Blog.Web.Controllers
 {
+    [Http2PushFilter]
     public class SearchController : Controller
     {
         private readonly BlogConfiguration configuration;

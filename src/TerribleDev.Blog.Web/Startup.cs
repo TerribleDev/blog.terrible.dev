@@ -13,6 +13,7 @@ using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
 using Microsoft.Extensions.Hosting;
 using WebMarkupMin.AspNetCore6;
+using Microsoft.Extensions.Logging;
 
 namespace TerribleDev.Blog.Web
 {
@@ -43,6 +44,8 @@ namespace TerribleDev.Blog.Web
             {
                 services.AddSingleton(blogConfiguration);
             }
+            // enable logging
+            services.AddLogging();
             services.AddSingleton((i) => {
                 var posts = new BlogFactory().GetAllPostsAsync(Env.IsDevelopment() ? "https://localhost:5001": "https://blog.terrible.dev").Result;
                 var postCache = BlogCacheFactory.ProjectPostCache(posts);
@@ -67,8 +70,7 @@ namespace TerribleDev.Blog.Web
                 a.EnableForHttps = true;
 
             })
-            .AddMemoryCache()
-            .AddOutputCaching();
+            .AddMemoryCache();
             services.AddWebMarkupMin(a => {
                 a.AllowMinificationInDevelopmentEnvironment = true;
                 a.DisablePoweredByHttpHeaders = true;
@@ -132,7 +134,10 @@ namespace TerribleDev.Blog.Web
                     // },
                     UpgradeInsecureRequests = true
                 });
-            app.UseOutputCaching();
+            if(env.IsProduction()) 
+            {
+                app.UseOutputCaching();
+            }
             app.UseWebMarkupMin();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
