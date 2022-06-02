@@ -134,10 +134,7 @@ namespace TerribleDev.Blog.Web
                     // },
                     UpgradeInsecureRequests = true
                 });
-            if(env.IsProduction()) 
-            {
-                app.UseOutputCaching();
-            }
+            app.UseOutputCaching();
             app.UseWebMarkupMin();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
