@@ -77,7 +77,6 @@ namespace TerribleDev.Blog.Web.Factories
                     Image = new Schema.NET.ImageObject() { Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/content/tommyAvatar4.jpg")) },
                     Url = new Schema.NET.OneOrMany<Uri>(new Uri("https://blog.terrible.dev/about")),
                     SameAs = new Schema.NET.OneOrMany<Uri>(new Uri("https://twitter.com/terribledev")),
-                    BlogPost = new Schema.NET.OneOrMany<Schema.NET.IBlogPosting>(blogPostsLD),
                 };
             var website = new Schema.NET.WebSite()
             {
