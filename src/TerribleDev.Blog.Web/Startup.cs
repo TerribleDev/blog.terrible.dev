@@ -71,6 +71,10 @@ namespace TerribleDev.Blog.Web
 
             })
             .AddMemoryCache();
+            if(Env.IsProduction())
+            {
+                services.AddOutputCaching();
+            }
             services.AddWebMarkupMin(a => {
                 a.AllowMinificationInDevelopmentEnvironment = true;
                 a.DisablePoweredByHttpHeaders = true;
@@ -134,7 +138,10 @@ namespace TerribleDev.Blog.Web
                     // },
                     UpgradeInsecureRequests = true
                 });
-            app.UseOutputCaching();
+            if(Env.IsProduction())
+            {
+                app.UseOutputCaching();
+            }
             app.UseWebMarkupMin();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
