@@ -11,6 +11,7 @@ namespace TerribleDev.Blog.Web.Factories
 {
     public static class BlogCacheFactory
     {
+        public static int PAGE_LIMIT = 10;
 
         public static PostCache ProjectPostCache(IEnumerable<IPost> rawPosts)
         {
@@ -50,7 +51,7 @@ namespace TerribleDev.Blog.Web.Factories
                     {
                         var highestPageKey = postsByPage.Keys.Max();
                         var highestPage = postsByPage[highestPageKey];
-                        if (highestPage.Count < 10)
+                        if (highestPage.Count < BlogCacheFactory.PAGE_LIMIT)
                         {
                             highestPage.Add(castedPost);
 

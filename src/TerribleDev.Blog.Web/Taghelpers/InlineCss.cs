@@ -34,7 +34,7 @@ namespace TerribleDev.Blog.Web.Taghelpers
             var paths = Href.Split(',');
 
             // Get the value from the cache, or compute the value and add it to the cache
-            var fileContent = await Cache.GetOrCreateAsync("InlineStyleTagHelper-" + paths, async entry =>
+            var fileContent = await Cache.GetOrCreateAsync("InlineStyleTagHelper-" + Href, async entry =>
             {
                 var fileProvider = HostingEnvironment.WebRootFileProvider;
                 var result = paths.Select(async path => {
