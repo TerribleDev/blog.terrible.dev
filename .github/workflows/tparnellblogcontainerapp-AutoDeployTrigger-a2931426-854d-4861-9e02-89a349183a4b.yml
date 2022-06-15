@@ -1,0 +1,60 @@
+name: Trigger auto deployment for tparnellblogcontainerapp
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - '**'
+    - '.github/workflows/tparnellblogcontainerapp-AutoDeployTrigger-a2931426-854d-4861-9e02-89a349183a4b.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: terribledevreg.azurecr.io
+          username: ${{ secrets.TPARNELLBLOGCONTAINERAPP_REGISTRY_USERNAME }}
+          password: ${{ secrets.TPARNELLBLOGCONTAINERAPP_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: terribledevreg.azurecr.io/tparnellblogcontainerapp:${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.TPARNELLBLOGCONTAINERAPP_AZURE_CREDENTIALS }}
+
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n tparnellblogcontainerapp -g ContainerGroup --server terribledevreg.azurecr.io --username  ${{ secrets.TPARNELLBLOGCONTAINERAPP_REGISTRY_USERNAME }} --password ${{ secrets.TPARNELLBLOGCONTAINERAPP_REGISTRY_PASSWORD }}
+            az containerapp update -n tparnellblogcontainerapp -g ContainerGroup --image terribledevreg.azurecr.io/tparnellblogcontainerapp:${{ github.sha }}
