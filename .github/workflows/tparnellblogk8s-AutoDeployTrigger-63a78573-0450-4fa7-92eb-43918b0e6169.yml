@@ -1,0 +1,60 @@
+name: Trigger auto deployment for tparnellblogk8s
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - '**'
+    - '.github/workflows/tparnellblogk8s-AutoDeployTrigger-63a78573-0450-4fa7-92eb-43918b0e6169.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: terribledevreg.azurecr.io
+          username: ${{ secrets.TPARNELLBLOGK8S_REGISTRY_USERNAME }}
+          password: ${{ secrets.TPARNELLBLOGK8S_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: terribledevreg.azurecr.io/tparnellblogk8s:${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.TPARNELLBLOGK8S_AZURE_CREDENTIALS }}
+
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n tparnellblogk8s -g containerapp --server terribledevreg.azurecr.io --username  ${{ secrets.TPARNELLBLOGK8S_REGISTRY_USERNAME }} --password ${{ secrets.TPARNELLBLOGK8S_REGISTRY_PASSWORD }}
+            az containerapp update -n tparnellblogk8s -g containerapp --image terribledevreg.azurecr.io/tparnellblogk8s:${{ github.sha }}
