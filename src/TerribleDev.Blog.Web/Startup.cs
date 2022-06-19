@@ -14,6 +14,7 @@ using TerribleDev.Blog.Web.Factories;
 using Microsoft.Extensions.Hosting;
 using WebMarkupMin.AspNetCore6;
 using Microsoft.Extensions.Logging;
+using TerribleDev.Blog.Web.Filters;
 
 namespace TerribleDev.Blog.Web
 {
@@ -58,7 +59,9 @@ namespace TerribleDev.Blog.Web
                 }
                 return postCache;
             });
-            var controllerBuilder = services.AddControllersWithViews();
+            var controllerBuilder = services.AddControllersWithViews(a => {
+                a.Filters.Add(new StaticETag());
+            });
 #if DEBUG
             if (Env.IsDevelopment())
             {

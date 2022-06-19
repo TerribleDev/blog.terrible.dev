@@ -20,5 +20,6 @@ namespace TerribleDev.Blog.Web.Models
         public BreadcrumbList JsonLDBreadcrumb { get; set; }
         public string JsonLDBreadcrumbString { get; set; }
         public bool HasCode { get; set; }
+        public string MarkdownMD5 { get; set; }
     }
 }

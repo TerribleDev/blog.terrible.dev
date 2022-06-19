@@ -15,6 +15,8 @@ using System.Collections.Concurrent;
 using Schema.NET;
 using System.Text.RegularExpressions;
 using TerribleDev.Blog.Web.Factories;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace TerribleDev.Blog.Web
 {
@@ -123,7 +125,8 @@ namespace TerribleDev.Blog.Web
                 JsonLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
                 JsonLDBreadcrumb = breadcrumb,
                 JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
-                HasCode = hasCode
+                HasCode = hasCode,
+                MarkdownMD5 = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(markdownText)).ToHexString()
             };
             var thumbNailUrl = string.IsNullOrWhiteSpace(postSettings.thumbnailImage) ?
              postImages?.FirstOrDefault() ?? "https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640"  : 
@@ -176,7 +179,8 @@ namespace TerribleDev.Blog.Web
                         SummaryPlainShort = (postContentPlain.Length <= 147 ? postContentPlain : postContentPlain.Substring(0, 146)) + "...",
                         JsonLDBreadcrumb = breadcrumb,
                         JsonLDBreadcrumbString = breadcrumb.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
-                        HasCode = hasCode
+                        HasCode = hasCode,
+                        MarkdownMD5 = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(markdownText)).ToHexString()
                     };
             return new LandingPage()
             {
