@@ -16,6 +16,7 @@ namespace TerribleDev.Blog.Web.Filters
             var etag = context.HttpContext.Request.Headers["If-None-Match"];
             if(etag == staticEtag)
             {
+                Console.WriteLine("ETAG HIT");
                 context.Result = new StatusCodeResult(304);
             }
             else
@@ -27,6 +28,7 @@ namespace TerribleDev.Blog.Web.Filters
         {
             if(context.HttpContext.Response.StatusCode >= 200 && context.HttpContext.Response.StatusCode < 300 && context.HttpContext.Response.Headers.ETag.Count == 0)
             {
+                Console.WriteLine("ETAG MISS");
                 context.HttpContext.Response.Headers.Add("ETag", staticEtag);
             }
         }
