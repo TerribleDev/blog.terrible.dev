@@ -9,7 +9,7 @@ namespace TerribleDev.Blog.Web.Filters
 {
     public class StaticETag: ActionFilterAttribute
     {
-        public static string staticEtag = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString())).ToHexString().Substring(0,8);
+        public static string staticEtag = "\"" + MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString())).ToHexString().Substring(0,8) + "\"";
         public static ConcurrentDictionary<string, string> cache = new ConcurrentDictionary<string, string>();
         public override void OnActionExecuted(ActionExecutedContext context)
         {
