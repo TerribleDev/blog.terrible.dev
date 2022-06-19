@@ -141,6 +141,16 @@ namespace TerribleDev.Blog.Web
                     // },
                     UpgradeInsecureRequests = true
                 });
+            app.Use(async (context, next) => {
+                var etag = context.Request.Headers.IfNoneMatch.ToString();
+                if(etag != null && string.Equals(etag, StaticETag.staticEtag, StringComparison.Ordinal))
+                {
+                    context.Response.StatusCode = 304;
+                    await context.Response.CompleteAsync();
+                    return;
+                }
+                await next();
+            });
             if(Env.IsProduction())
             {
                 app.UseOutputCaching();
