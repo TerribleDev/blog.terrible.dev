@@ -3,7 +3,9 @@
 //Install stage sets up the offline page in the cache and opens a new cache
 
 self.addEventListener('install', function (event) {
-    event.waitUntil(preLoad());
+    setTimeout(function() {
+        event.waitUntil(preLoad());
+    }, 5000);
 });
 
 var preLoad = function () {

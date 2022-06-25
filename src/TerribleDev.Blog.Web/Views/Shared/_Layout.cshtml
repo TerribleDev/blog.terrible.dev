@@ -8,18 +8,13 @@
 <html lang="en"  @htmlTag>
 <head>
     <meta charset="utf-8" />
-    <meta name="author" content="Tommy &quot;TerribleDev&quot; Parnell" />
-    <meta name="theme-color" content="#4A4A4A" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     @if(!amp)
     {
         <environment names="Production">
             <partial name="Gtm" />
         </environment>
     }
-    <link rel="manifest" href="~/manifest.json" asp-append-version="true">
-    <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
+
     <title>@ViewData["Title"] | @config.Title</title>
     @if(amp) 
     {
@@ -43,6 +38,12 @@
         <script async src="https://cdn.ampproject.org/v0.js"></script>
         <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     }
+    <meta name="theme-color" content="#4A4A4A" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    <link rel="manifest" href="~/manifest.json" asp-append-version="true">
+    <meta name="author" content="Tommy &quot;TerribleDev&quot; Parnell" />
+    <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
     @RenderSection("Head", false)
 </head>
 <body>
