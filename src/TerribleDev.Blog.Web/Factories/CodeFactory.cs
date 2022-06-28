@@ -9,8 +9,13 @@ namespace TerribleDev.Blog.Web.Factories
     public class CodeFactory
     {
         private HttpClient httpClient = new HttpClient();
+        private static Boolean IsDisabled = !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DISABLE_PRISMA"));
         public async Task<(string result, bool hasCode)> ReplaceFencedCode(string markdown)
         {
+            if(CodeFactory.IsDisabled)
+            {
+                return (markdown, false);
+            }
             
             // regex grab all text between backticks
             var regex = new Regex(@"```(.*?)```", RegexOptions.Singleline);
