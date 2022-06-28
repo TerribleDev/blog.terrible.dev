@@ -24,10 +24,22 @@
     else 
     {
         <environment names="Development">
-            <inline-style href="css/site.css,css/site.mobile.css,css/site.desktop.css"></inline-style>
+            @* <inline-style href="css/site.css,css/site.mobile.css,css/site.desktop.css"></inline-style> *@
+            <desktop>
+                <inline-style href="css/site.css,css/site.desktop.css"></inline-style>
+            </desktop>
+            <mobile>
+                <inline-style href="css/site.css,css/site.mobile.css"></inline-style>
+            </mobile>
         </environment>
         <environment names="Production">
-            <inline-style href="css/site.min.css,css/site.mobile.min.css,css/site.desktop.min.css"></inline-style>
+            <desktop>
+                <inline-style href="css/site.min.css,css/site.desktop.min.css"></inline-style>
+            </desktop>
+            <mobile>
+                <inline-style href="css/site.min.css,css/site.mobile.min.css"></inline-style>
+            </mobile>
+            @* <inline-style href="css/site.min.css,css/site.mobile.min.css,css/site.desktop.min.css"></inline-style> *@
         </environment>
     }
 
@@ -43,7 +55,7 @@
     <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     <link rel="manifest" href="~/manifest.json" asp-append-version="true">
     <meta name="author" content="Tommy &quot;TerribleDev&quot; Parnell" />
-    <link asp-append-version="true" rel="icon" href="~/favicon.ico" />
+    <link asp-append-version="true" rel="icon" href="~/favicon.ico" push />
     @RenderSection("Head", false)
 </head>
 <body>
