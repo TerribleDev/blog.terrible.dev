@@ -18,13 +18,13 @@ namespace TerribleDev.Blog.Web.Controllers
             this.postCache = postCache;
         }
         [Route("/all-tags")]
-        [OutputCache(Duration = 31536000, VaryByHeader = "User-Agent")]
+        [OutputCache(Duration = 31536000)]
         public IActionResult AllTags()
         {
             return View(postCache.TagsToPosts);
         }
         [Route("/tags/{tagName}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "tagName", VaryByHeader = "User-Agent")]
+        [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
         public IActionResult TagPluralRedirect(string tagName)
         {
             if(string.IsNullOrEmpty(tagName))
@@ -34,7 +34,7 @@ namespace TerribleDev.Blog.Web.Controllers
             return Redirect($"/tag/{tagName}/");
         }
         [Route("/tag/{tagName}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "tagName", VaryByHeader = "User-Agent")]
+        [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
         public IActionResult GetTag(string tagName)
         {
             if(!postCache.TagsToPosts.TryGetValue(tagName.ToLower(), out var models))

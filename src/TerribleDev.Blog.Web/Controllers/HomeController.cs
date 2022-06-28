@@ -27,8 +27,8 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/index.html", Order = 2)]
         [Route("/")]
         [Route("/page/{pageNumber:required:int:min(1)}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber", VaryByHeader = "User-Agent")]
-        // [ResponseCache(Duration = 900)]
+        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
+        [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)
         {
             if(!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
@@ -47,7 +47,7 @@ namespace TerribleDev.Blog.Web.Controllers
         }
         [Route("/offline")]
         [Route("/offline.html")]
-        // [ResponseCache(Duration = 3600)]
+        [ResponseCache(Duration = 3600)]
         public IActionResult Offline()
         {
             return View();
@@ -60,8 +60,8 @@ namespace TerribleDev.Blog.Web.Controllers
         }
 
         [Route("{postUrl}/{amp?}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "postUrl,amp", VaryByHeader = "User-Agent")]
-        // [ResponseCache(Duration = 900)]
+        [OutputCache(Duration = 31536000, VaryByParam = "postUrl,amp")]
+        [ResponseCache(Duration = 900)]
         public IActionResult Post(string postUrl, string amp = "")
         {
             if(!String.IsNullOrEmpty(amp) && amp != "amp")

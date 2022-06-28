@@ -24,22 +24,22 @@
     else 
     {
         <environment names="Development">
-            @* <inline-style href="css/site.css,css/site.mobile.css,css/site.desktop.css"></inline-style> *@
-            <desktop>
+            <inline-style href="css/site.css,css/site.mobile.css,css/site.desktop.css"></inline-style>
+            @* <desktop>
                 <inline-style href="css/site.css,css/site.desktop.css"></inline-style>
             </desktop>
             <mobile>
                 <inline-style href="css/site.css,css/site.mobile.css"></inline-style>
-            </mobile>
+            </mobile> *@
         </environment>
         <environment names="Production">
-            <desktop>
+            @* <desktop>
                 <inline-style href="css/site.min.css,css/site.desktop.min.css"></inline-style>
             </desktop>
             <mobile>
                 <inline-style href="css/site.min.css,css/site.mobile.min.css"></inline-style>
-            </mobile>
-            @* <inline-style href="css/site.min.css,css/site.mobile.min.css,css/site.desktop.min.css"></inline-style> *@
+            </mobile> *@
+            <inline-style href="css/site.min.css,css/site.mobile.min.css,css/site.desktop.min.css"></inline-style>
         </environment>
     }
 
