@@ -27,7 +27,10 @@ namespace TerribleDev.Blog.Web.MarkExtension
             {
                 return false;
             }
-
+            if(linkInline.Url.EndsWith(".gif"))
+            {
+                return false;
+            }
 
             renderer.Write("<picture>");
             WriteImageTag(renderer, linkInline, ".webp", "image/webp");
