@@ -66,9 +66,9 @@ Hopefully you have done the above. Now in index.ts you can make a very basic pro
 
 import { Command } from 'commander'
 import { spinnerError, stopSpinner } from './spinner';
-const program = new Command('Our New CLI');
+const program = new Command();
+program.description('Our New CLI');
 program.version('0.0.1');
-program.addHelpCommand()
 
 async function main() {
     await program.parseAsync();
@@ -119,7 +119,7 @@ export const spinnerInfo = (message: string) => {
 
 ### Writing a command
 
-So I like to seperate my commands out into sub-commands. In this case we're making `widgets` a sub-command. Make a new file, I call it widgets.ts. I create a new `Command` called `widgets`. Commands can have commands making them sub-commands. So we can make a sub-command called `list` and `get`. **List** will list all the widgets we have, and **get** will retrive a widget by id. I added some promise to emulate some delay so we can see the spinner in action.
+So I like to separate my commands out into sub-commands. In this case we're making `widgets` a sub-command. Make a new file, I call it widgets.ts. I create a new `Command` called `widgets`. Commands can have commands making them sub-commands. So we can make a sub-command called `list` and `get`. **List** will list all the widgets we have, and **get** will retrive a widget by id. I added some promise to emulate some delay so we can see the spinner in action.
 
     
 ```ts
@@ -137,7 +137,7 @@ widgets.command("list").action(async () => {
 })
 
 widgets.command("get")
-.argument("widget id <id>", "the id of the widget")
+.argument("<id>", "the id of the widget")
 .option("-f, --format <format>", "the format of the widget") // an optional flag, this will be in options.f
 .action(async (id, options) => {
     updateSpinnerText("Getting widget " + id);
@@ -155,9 +155,9 @@ Now lets register this command into our program. (see the last line)
 import { Command } from 'commander'
 import { spinnerError, stopSpinner } from './spinner';
 import { widgets } from './widgets';
-const program = new Command('Our New CLI');
+const program = new Command();
+program.description('Our New CLI');
 program.version('0.0.1');
-program.addHelpCommand()
 program.addCommand(widgets);
 ```
 
