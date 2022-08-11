@@ -11,27 +11,27 @@ if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) 
     });
 }
 
-var toggleNav = function () {
-    var nav = document.getElementById('navBar');
-    if (!nav) {
-        return;
-    }
-    var hidden = nav.classList.contains('hide');
-    if (hidden) {
-        nav.classList.remove('hide');
-    }
-    else {
-        nav.classList.add('hide');
-    }
-}
-function attachNavToggle(elementId) {
-    var menuButton = document.getElementById(elementId);
-    if (menuButton) {
-        menuButton.addEventListener('click', function () {
-            toggleNav();
-        });
-    }
-}
-attachNavToggle('menuBtn');
-attachNavToggle('closeNav');
+// var toggleNav = function () {
+//     var nav = document.getElementById('navBar');
+//     if (!nav) {
+//         return;
+//     }
+//     var hidden = nav.classList.contains('hide');
+//     if (hidden) {
+//         nav.classList.remove('hide');
+//     }
+//     else {
+//         nav.classList.add('hide');
+//     }
+// }
+// function attachNavToggle(elementId) {
+//     var menuButton = document.getElementById(elementId);
+//     if (menuButton) {
+//         menuButton.addEventListener('click', function () {
+//             toggleNav();
+//         });
+//     }
+// }
+// attachNavToggle('menuBtn');
+// attachNavToggle('closeNav');
 
