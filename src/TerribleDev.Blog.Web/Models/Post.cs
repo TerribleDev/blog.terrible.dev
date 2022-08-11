@@ -9,7 +9,6 @@ namespace TerribleDev.Blog.Web.Models
     [DebuggerDisplay("{Title}")]
     public class Post : IPost
     {
-        public string AMPUrl { get; set; }
         public string CanonicalUrl { get; set; }
         public string UrlWithoutPath { get; set; }
         public string RelativeUrl { get; set; }
@@ -20,7 +19,6 @@ namespace TerribleDev.Blog.Web.Models
         public IPostContent Content { get; set; }
 
         public bool isLanding { get; set; } = false;
-        public bool isAmp { get; set; } = true;
 
         public string ThumbnailImage { get; set; }
     }

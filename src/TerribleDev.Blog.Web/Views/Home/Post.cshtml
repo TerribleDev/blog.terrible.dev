@@ -2,7 +2,6 @@
 @model PostViewModel
 @{
     ViewData["Title"] = Model.Post.Title;
-    var amp = ViewData["amp"] as bool? ?? false;
 }
 
 <cache vary-by-route="postUrl,amp">
@@ -24,10 +23,7 @@
     <meta name="twitter:site" content="@@TerribleDev">
     <meta name="twitter:creator" content="@@TerribleDev">
     <link rel="canonical" href="@Model.Post.CanonicalUrl" />
-    @if(Model.Post.isAmp) 
-    {
-        <link rel="amphtml" href="@Model.Post.AMPUrl">
-    }
+
     @if(!string.IsNullOrEmpty(Model.Post.ThumbnailImage))
     {
         <meta name="twitter:image" content="@(Model.Post.ThumbnailImage)">

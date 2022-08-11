@@ -76,11 +76,10 @@ namespace TerribleDev.Blog.Web
             var postSettings = ParseYaml(ymlRaw);
             var resolvedUrl = !string.IsNullOrWhiteSpace(postSettings.permalink) ? postSettings.permalink : fileName.Split('.')[0].Replace(' ', '-').WithoutSpecialCharacters();
             var canonicalUrl = $"https://blog.terrible.dev/{resolvedUrl}/";
-            var ampUrl = $"https://blog.terrible.dev/{resolvedUrl}/amp/";
-            return postSettings.isLanding ? await BuildLandingPage(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl) : await BuildPost(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl, ampUrl);
+            return postSettings.isLanding ? await BuildLandingPage(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl) : await BuildPost(fileName, domain, markdownText, postSettings, resolvedUrl, canonicalUrl);
         }
 
-        private async Task<Post> BuildPost(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        private async Task<Post> BuildPost(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl)
         {
 
             (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = await ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
@@ -114,7 +113,6 @@ namespace TerribleDev.Blog.Web
             var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
             var content = new PostContent()
             {
-                AmpContent = new HtmlString(postContentClean),
                 Content = new HtmlString(postContent),
                 Images = postImages,
                 ContentPlain = postContentPlain,
@@ -139,15 +137,13 @@ namespace TerribleDev.Blog.Web
                 Title = postSettings.title,
                 RelativeUrl = $"/{resolvedUrl}/",
                 CanonicalUrl = canonicalUrl,
-                AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
                 Content = content,
-                isAmp = postSettings.isAmp,
                 ThumbnailImage = thumbNailUrl,
             };
         }
-        private async Task<LandingPage> BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl, string ampUrl)
+        private async Task<LandingPage> BuildLandingPage(string fileName, string domain, string markdownText, PostSettings postSettings, string resolvedUrl, string canonicalUrl)
         {
             (string postContent, string postContentPlain, string summary, string postSummaryPlain, IList<string> postImages, bool hasCode) = await ResolveContentForPost(markdownText, fileName, resolvedUrl, domain);
                     var breadcrumb = new Schema.NET.BreadcrumbList()
@@ -167,10 +163,8 @@ namespace TerribleDev.Blog.Web
                         },
                     };
                     // regex remove picture and source tags but not the child elements
-                    var postContentClean = Regex.Replace(postContent, "<picture.*?>|</picture>|<source.*?>|</source>", "", RegexOptions.Singleline);
                     var content = new PostContent()
                     {
-                        AmpContent = new HtmlString(postContentClean),
                         Content = new HtmlString(postContent),
                         Images = postImages,
                         ContentPlain = postContentPlain,
@@ -189,11 +183,9 @@ namespace TerribleDev.Blog.Web
                 Title = postSettings.title,
                 RelativeUrl = $"/{resolvedUrl}/",
                 CanonicalUrl = canonicalUrl,
-                AMPUrl = ampUrl,
                 UrlWithoutPath = resolvedUrl,
                 isLanding = postSettings.isLanding,
                 Content = content,
-                isAmp = postSettings.isAmp
             };
         }
     }

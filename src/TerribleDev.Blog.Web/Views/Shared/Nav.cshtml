@@ -1,25 +1,10 @@
-﻿@{
-    var amp = ViewData["amp"] as bool?;
-}
-
+﻿
 <nav class="navBar hide" id="navBar">
   <div class="navContent">
-      @if(amp == true)
-      {
-          <img src="/content/tommyAvatar4.jpg" loading="lazy" alt="An image of TerribleDev" class="round navHero" />
-      }
-      else
-      {
-        <picture class="navHero">
+    <picture class="navHero">
           <source srcset="/content/tommyAvatar4.jpg.webp" loading="lazy" type="image/webp" alt="An image of TerribleDev" class="round" />
           <img src="/content/tommyAvatar4.jpg" loading="lazy" alt="An image of TerribleDev" class="round" />
-      </picture>
-        @* <desktop>
-            <picture class="navHero">
-                <img src="/content/tommyAvatar4.jpg.webp" loading="lazy" alt="An image of TerribleDev" class="round" push  />
-            </picture>
-        </desktop> *@
-      }
+    </picture>
       <span>Tommy "Terrible Dev" Parnell</span>
       <ul class="sidebarBtns">
           <li><a href="/" class="link-unstyled">Home</a></li>

@@ -7,7 +7,6 @@ namespace TerribleDev.Blog.Web.Models
 {
     public interface IPostContent
     {
-        public HtmlString AmpContent { get; set; }
         HtmlString Content { get; set; }
         HtmlString Summary { get; set; }
         string ContentPlain { get; set; }

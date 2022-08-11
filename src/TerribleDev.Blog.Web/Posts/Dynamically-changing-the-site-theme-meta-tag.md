@@ -1,6 +1,5 @@
 title: Dynamically changing the site-theme meta tag
 date: 2022-04-12 11:05
-isAmp: false
 thumbnailImage: 1.jpg
 tags:
 - javascript

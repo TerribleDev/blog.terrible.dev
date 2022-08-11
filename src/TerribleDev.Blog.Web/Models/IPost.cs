@@ -9,7 +9,6 @@ namespace TerribleDev.Blog.Web.Models
 {
     public interface IPost
     {
-        string AMPUrl { get; set; }
         string CanonicalUrl { get; set; }
         string UrlWithoutPath { get; set; }
         string RelativeUrl { get; set; }
@@ -18,7 +17,6 @@ namespace TerribleDev.Blog.Web.Models
         DateTime? UpdatedDate { get; set; }
         IPostContent Content { get; set; }
         bool isLanding { get; set; }
-        bool isAmp { get; set; }
         string ThumbnailImage { get; }
     }
 

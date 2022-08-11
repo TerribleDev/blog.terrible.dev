@@ -66,7 +66,6 @@ namespace TerribleDev.Blog.Web.Controllers
             };
             sitemap.Urls.AddRange(postCache.TagsToPosts.Keys.Select(i => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = $"https://blog.terrible.dev/search?q={i}" }));
             sitemap.Urls.AddRange(sitewideLinks);
-            sitemap.Urls.AddRange(postCache.PostsAsLists.Where(i => i.isAmp).Select(a => new SiteMapItem() { LastModified = DateTime.UtcNow, Location = a.AMPUrl }).ToList());
             ser.Serialize(this.Response.Body, sitemap);
         }
     }

@@ -9,7 +9,6 @@ namespace TerribleDev.Blog.Web.Models
     [DebuggerDisplay("{Title}")]
     public class LandingPage : IPost
     {
-        public string AMPUrl { get; set; }
         public string CanonicalUrl { get; set; }
         public string UrlWithoutPath { get; set; }
         public string RelativeUrl { get; set; }
@@ -19,7 +18,6 @@ namespace TerribleDev.Blog.Web.Models
         public IPostContent Content { get; set; }
 
         public bool isLanding { get; set; } = false;
-        public bool isAmp { get; set; } = true;
         public string ThumbnailImage { get => "https://www.gravatar.com/avatar/333e3cea32cd17ff2007d131df336061?s=640"; }
     }
 }

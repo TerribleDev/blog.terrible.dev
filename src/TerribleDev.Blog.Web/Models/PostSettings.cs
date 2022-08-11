@@ -18,6 +18,5 @@ namespace TerribleDev.Blog.Web.Models
 
         public bool isLanding { get; set; } = false;
 
-        public bool isAmp { get; set; } = true;
     }
 }
