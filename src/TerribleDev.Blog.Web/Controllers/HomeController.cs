@@ -27,15 +27,14 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/index.html", Order = 2)]
         [Route("/")]
         [Route("/page/{pageNumber:required:int:min(1)}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber,gtm")]
+        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
         [ResponseCache(Duration = 900)]
-        public IActionResult Index(int pageNumber = 1, [FromQuery] bool gtm = true)
+        public IActionResult Index(int pageNumber = 1)
         {
             if(!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
             {
                 return Redirect($"/404/?from=/page/{pageNumber}/");
             }
-            this.ViewData["gtm"] = gtm;
             return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1), 
             BlogLD = postCache.BlogLD, 
             SiteLD = postCache.SiteLD,
