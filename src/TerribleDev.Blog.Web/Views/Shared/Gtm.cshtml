@@ -1,14 +1,20 @@
-﻿    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-48128396-1');
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(() => {
-                var script = document.createElement('script');
-                script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-48128396-1';
-                script.async = true
-                document.body.appendChild(script);
-            }, 4000)
-        });
-    </script>
+﻿    @{
+        var useGtm = this.ViewData["gtm"] as bool? ?? true;
+    }
+    @if(useGtm)
+    {
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'UA-48128396-1');
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(() => {
+                    var script = document.createElement('script');
+                    script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-48128396-1';
+                    script.async = true
+                    document.body.appendChild(script);
+                }, 4000)
+            });
+        </script>
+    }
