@@ -31,4 +31,36 @@
   .main-content-wrap {
     max-width: calc(100vw - 4rem);
   }
+  #navBar {
+    display: none;
+  }
+
+  #menuLabel {
+    background: var(--nav-bar-background);
+    position: fixed;
+    bottom: 6rem;
+    right: 4rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 4px #000;
+    z-index: 1000;
+    line-height: 0;
+  }
+  #menuBtn {
+    cursor: pointer;
+    fill: var(--primary-background);
+  }
+  #menu-toggle:checked + #menuLabel {
+    background: var(--primary-background);
+  }
+  #menu-toggle:checked + #menuLabel > #menuBtn {
+    fill: var(--body-text-color);
+  }
+  #menu-toggle:checked ~ #navBar {
+    display: flex;
+  }
 }
