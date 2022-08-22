@@ -140,6 +140,12 @@ a:visited {
   margin: auto;
 }
 
+#menuBtn {
+  cursor: pointer;
+  margin-left: 1rem;
+  fill: var(--headline);
+}
+
 .sidebarBtns {
   padding: 0;
   list-style: none;
@@ -226,7 +232,4 @@ a.skip-main:focus, a.skip-main:active {
   margin: 0 auto;
   font-size: 1.2em;
   display: inline-block;
-}
-#menu-toggle {
-  display: none;
 }
