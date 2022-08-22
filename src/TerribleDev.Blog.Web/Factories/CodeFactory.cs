@@ -27,6 +27,7 @@ namespace TerribleDev.Blog.Web.Factories
                 if(!codeContent.IsSuccessStatusCode)
                 {
                     Console.Error.WriteLine("Error posting code to prisma");
+                    Console.Error.WriteLine("status code: " + codeContent.StatusCode);
                 }
                 return (code, await codeContent.Content.ReadAsStringAsync());
             }));

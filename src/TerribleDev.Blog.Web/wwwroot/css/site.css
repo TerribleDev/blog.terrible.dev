@@ -1,31 +1,18 @@
 ﻿:root {
-  --headline: #4a4a4a;
-  --body-text-color: #5d686f;
-  --block-quote-left-border: #d1dced;
-  --code-block-background-color: #f5f5f5;
-  --primary-background: #FFFFFF;
-  --link-color: #00558d;
-  --link-visited: var(--link-color);
-  /* --link-visited: #6c6c6c; */
-  --border-color: #738691;
-  --horizontal-rule: #dfe2e7;
-  --nav-bar-background: var(--headline);
-  --nav-bar-text-color: var(--primary-background);
+  --hln: #4a4a4a;
+  --bdy-txt-clr: #5d686f;
+  --blk-qt-lb: #d1dced;
+  --code-blk-bg-clr: #f5f5f5;
+  --pmry-bknd: #FFFFFF;
+  --lnk-clr: #00558d;
+  --lnk-vistd: var(--lnk-clr);
+  /* --lnk-vistd: #6c6c6c; */
+  --bc: #738691;
+  --hr: #dfe2e7;
+  --nb-bkgd: var(--hln);
+  --nb-txt-color: var(--pmry-bknd);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --headline: #f0f0f0;
-    --body-text-color: #ffffff;
-    --block-quote-left-border: #d1dced;
-    --code-block-background-color: #4a4a4a;
-    --primary-background: #323131;
-    --link-color: #3faff9;
-    /* --link-visited: #d8dbde; */
-    --border-color: #bdcad2;
-    --horizontal-rule: #626468;
-  }
-}
 
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -37,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--headline);
+  color: var(--hln);
   line-height: 1.45;
   letter-spacing: -0.01em;
   line-height: 1.25em;
@@ -51,8 +38,8 @@ body {
   text-rendering: optimizeLegibility;
   letter-spacing: -0.01em;
   line-height: 1.9rem;
-  background-color: var(--primary-background);
-  color: var(--body-text-color);
+  background-color: var(--pmry-bknd);
+  color: var(--bdy-txt-clr);
   font-size: 1.125rem;
   margin: 0;
 }
@@ -87,7 +74,7 @@ body {
 }
 
 blockquote {
-  border-left: 2px solid var(--block-quote-left-border);
+  border-left: 2px solid var(--blk-qt-lb);
   padding: 0.4em 1.2em;
 }
 
@@ -97,7 +84,7 @@ pre {
   font-family: "Courier New", Courier, monospace;
   font-weight: 600;
   border-radius: 3px;
-  background: var(--code-block-background-color);
+  background: var(--code-blk-bg-clr);
   padding: 0 0.4em;
   overflow-x: scroll;
   letter-spacing: .02em;
@@ -109,16 +96,16 @@ pre > code {
  }
 
 a {
-  color: var(--link-color);
+  color: var(--lnk-clr);
   font-weight: 400;
 }
 
 a:visited {
-  color: var(--link-visited);
+  color: var(--lnk-vistd);
 }
 
 .btmRule {
-  border-bottom: 1px solid var(--horizontal-rule);
+  border-bottom: 1px solid var(--hr);
   padding-bottom: 3rem;
 }
 
@@ -126,8 +113,8 @@ a:visited {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--nav-bar-background);
-  color: var(--nav-bar-text-color);
+  background: var(--nb-bkgd);
+  color: var(--nb-txt-color);
   padding-top: 20px;
   height: 100vh;
   z-index: 40;
@@ -141,9 +128,9 @@ a:visited {
 .header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--horizontal-rule);
-  color: var(--headline);
-  background-color: var(--primary-background);
+  border-bottom: 1px solid var(--hr);
+  color: var(--hln);
+  background-color: var(--pmry-bknd);
   z-index: 20;
   padding: 0;
   margin: 0;
@@ -180,21 +167,21 @@ a:visited {
 .btn {
   width: auto;
   height: auto;
-  background: var(--primary-background);
+  background: var(--pmry-bknd);
   border-radius: 3px;
   margin: 0;
   cursor: pointer;
-  color: var(--body-text-color);
-  border: 1px solid var(--body-text-color);
+  color: var(--bdy-txt-clr);
+  border: 1px solid var(--bdy-txt-clr);
   padding: 0.3em 0.2em;
   text-decoration: none;
   font-size: 1.1rem;
   text-transform: uppercase;
 }
 .btn:visited {
-  background: var(--primary-background);
-  color: var(--border-color);
-  border: 1px solid var(--border-color);
+  background: var(--pmry-bknd);
+  color: var(--bc);
+  border: 1px solid var(--bc);
 }
 
 .btn.block {

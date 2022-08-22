@@ -36,7 +36,7 @@
   }
 
   #menuLabel {
-    background: var(--nav-bar-background);
+    background: var(--nb-bkgd);
     position: fixed;
     bottom: 6rem;
     right: 4rem;
@@ -52,13 +52,13 @@
   }
   #menuBtn {
     cursor: pointer;
-    fill: var(--primary-background);
+    fill: var(--pmry-bknd);
   }
   #menu-toggle:checked + #menuLabel {
-    background: var(--primary-background);
+    background: var(--pmry-bknd);
   }
   #menu-toggle:checked + #menuLabel > #menuBtn {
-    fill: var(--body-text-color);
+    fill: var(--bdy-txt-clr);
   }
   #menu-toggle:checked ~ #navBar {
     display: flex;

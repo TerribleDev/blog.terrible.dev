@@ -1,0 +1,14 @@
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hln: #f0f0f0;
+    --bdy-txt-clr: #ffffff;
+    --blk-qt-lb: #d1dced;
+    --code-blk-bg-clr: #4a4a4a;
+    --pmry-bknd: #323131;
+    --lnk-clr: #3faff9;
+    /* --lnk-vistd: #d8dbde; */
+    --bc: #bdcad2;
+    --hr: #626468;
+  }
+} 
