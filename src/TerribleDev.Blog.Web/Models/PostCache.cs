@@ -8,6 +8,7 @@ namespace TerribleDev.Blog.Web.Models
         public IList<IPost> PostsAsLists { get; set;}
         public IDictionary<string, IList<Post>> TagsToPosts { get; set; }
         public IDictionary<string, IPost> UrlToPost { get; set; }
+        public IDictionary<string, IPost> CaseInsensitiveUrlToPost { get; set; }
         public IDictionary<int, IList<Post>> PostsByPage { get; set; }
         public IList<SyndicationItem> PostsAsSyndication { get; set; }
 

@@ -18,6 +18,7 @@ namespace TerribleDev.Blog.Web.Factories
             var orderedPosts = rawPosts.OrderByDescending(a => a.PublishDate);
             var posts = new List<IPost>(orderedPosts);
             var urlToPosts = new Dictionary<string, IPost>();
+            var caseInsensitiveUrlToPost = new Dictionary<string, IPost>(StringComparer.OrdinalIgnoreCase);
             var tagsToPost = new Dictionary<string, IList<Post>>();
             var postsByPage = new Dictionary<int, IList<Post>>();
             var syndicationPosts = new List<SyndicationItem>();
@@ -30,6 +31,7 @@ namespace TerribleDev.Blog.Web.Factories
                 {
                     var castedPost = post as Post;
                     urlToPosts.Add(post.UrlWithoutPath, castedPost);
+                    caseInsensitiveUrlToPost.Add(post.UrlWithoutPath.ToLower(), castedPost);
                     syndicationPosts.Add(castedPost.ToSyndicationItem());
                     blogPostsLD.Add(post.Content.JsonLD);
                     foreach (var tag in castedPost.ToNormalizedTagList())
@@ -122,8 +124,8 @@ namespace TerribleDev.Blog.Web.Factories
                 BlogLD = ld,
                 SiteLD = website,
                 BlogLDString = ld.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
-                SiteLDString = website.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true")
-
+                SiteLDString = website.ToHtmlEscapedString().Replace("https://schema.org", "https://schema.org/true"),
+                CaseInsensitiveUrlToPost = caseInsensitiveUrlToPost
             };
         }
     }

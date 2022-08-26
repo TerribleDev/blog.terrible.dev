@@ -73,9 +73,15 @@ namespace TerribleDev.Blog.Web.Controllers
             {
                 return this.RedirectPermanent($"/{postUrl}");
             }
+            // case sensitive lookup
             if(postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
                 return View("Post",  model: new PostViewModel() { Post = currentPost });
+            }
+            // case insensitive lookup on post
+            if(postCache.CaseInsensitiveUrlToPost.TryGetValue(postUrl, out var caseInsensitivePost))
+            {
+                return View("Post",  model: new PostViewModel() { Post = caseInsensitivePost });
             }
             if(postCache.LandingPagesUrl.TryGetValue(postUrl, out var landingPage))
             {
