@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <!-- <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <RuntimeIdentifiers>linux-musl-x64</RuntimeIdentifiers> -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <RuntimeIdentifiers>linux-musl-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
