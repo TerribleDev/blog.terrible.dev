@@ -9,16 +9,19 @@ using System.IO;
 using Microsoft.AspNetCore.Html;
 using TerribleDev.Blog.Web.Filters;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace TerribleDev.Blog.Web.Controllers
 {
     [Http2PushFilter]
     public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> logger;
         private readonly PostCache postCache;
 
-        public HomeController(PostCache postCache)
+        public HomeController(PostCache postCache, ILogger<HomeController> logger)
         {
+            this.logger = logger;
             this.postCache = postCache;
         }
 
@@ -27,18 +30,26 @@ namespace TerribleDev.Blog.Web.Controllers
         [Route("/index.html", Order = 2)]
         [Route("/")]
         [Route("/page/{pageNumber:required:int:min(1)}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "pageNumber")]
+        [OutputCache(Duration = 31536000, VaryByRouteValueNames = new string[] { "pageNumber" })]
         [ResponseCache(Duration = 900)]
         public IActionResult Index(int pageNumber = 1)
         {
-            if(!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
+            this.logger.LogWarning("Viewing page", pageNumber);
+            if (!postCache.PostsByPage.TryGetValue(pageNumber, out var result))
             {
                 return Redirect($"/404/?from=/page/{pageNumber}/");
             }
-            return View(new HomeViewModel() { Posts = result, Page = pageNumber, HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1), HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1), 
-            BlogLD = postCache.BlogLD, 
-            SiteLD = postCache.SiteLD,
-            BlogLDString = postCache.BlogLDString, SiteLDString = postCache.SiteLDString });
+            return View(new HomeViewModel()
+            {
+                Posts = result,
+                Page = pageNumber,
+                HasNext = postCache.PostsByPage.ContainsKey(pageNumber + 1),
+                HasPrevious = postCache.PostsByPage.ContainsKey(pageNumber - 1),
+                BlogLD = postCache.BlogLD,
+                SiteLD = postCache.SiteLD,
+                BlogLDString = postCache.BlogLDString,
+                SiteLDString = postCache.SiteLDString
+            });
         }
         [Route("/theme/{postName?}")]
         public IActionResult Theme(string postName)
@@ -60,34 +71,34 @@ namespace TerribleDev.Blog.Web.Controllers
         }
 
         [Route("{postUrl}/{amp?}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "postUrl,amp")]
+        [OutputCache(Duration = 31536000, VaryByRouteValueNames = new string[] { "postUrl", "amp" })]
         [ResponseCache(Duration = 900)]
         public IActionResult Post(string postUrl, string amp = "")
         {
-            if(!String.IsNullOrEmpty(amp) && amp != "amp")
+            if (!String.IsNullOrEmpty(amp) && amp != "amp")
             {
                 return Redirect($"/404/?from=/{postUrl}/{amp}/");
             }
             var isAmp = amp == "amp";
-            if(isAmp)
+            if (isAmp)
             {
                 return this.RedirectPermanent($"/{postUrl}");
             }
             // case sensitive lookup
-            if(postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
+            if (postCache.UrlToPost.TryGetValue(postUrl, out var currentPost))
             {
-                return View("Post",  model: new PostViewModel() { Post = currentPost });
+                return View("Post", model: new PostViewModel() { Post = currentPost });
             }
             // case insensitive lookup on post
-            if(postCache.CaseInsensitiveUrlToPost.TryGetValue(postUrl, out var caseInsensitivePost))
+            if (postCache.CaseInsensitiveUrlToPost.TryGetValue(postUrl, out var caseInsensitivePost))
             {
-                return View("Post",  model: new PostViewModel() { Post = caseInsensitivePost });
+                return View("Post", model: new PostViewModel() { Post = caseInsensitivePost });
             }
-            if(postCache.LandingPagesUrl.TryGetValue(postUrl, out var landingPage))
+            if (postCache.LandingPagesUrl.TryGetValue(postUrl, out var landingPage))
             {
-                return View("Post",  model: new PostViewModel() { Post = landingPage });
+                return View("Post", model: new PostViewModel() { Post = landingPage });
             }
-            
+
             this.StatusCode(404);
             return View(nameof(FourOhFour));
         }

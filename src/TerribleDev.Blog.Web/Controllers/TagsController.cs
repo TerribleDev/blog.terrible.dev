@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using TerribleDev.Blog.Web.Filters;
 using TerribleDev.Blog.Web.Models;
 
@@ -24,7 +25,7 @@ namespace TerribleDev.Blog.Web.Controllers
             return View(postCache.TagsToPosts);
         }
         [Route("/tags/{tagName}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
+        [OutputCache(Duration = 31536000, VaryByRouteValueNames = new string[]{"tagName"})]
         public IActionResult TagPluralRedirect(string tagName)
         {
             if(string.IsNullOrEmpty(tagName))
@@ -34,7 +35,7 @@ namespace TerribleDev.Blog.Web.Controllers
             return Redirect($"/tag/{tagName}/");
         }
         [Route("/tag/{tagName}")]
-        [OutputCache(Duration = 31536000, VaryByParam = "tagName")]
+        [OutputCache(Duration = 31536000, VaryByRouteValueNames = new string[] {"tagName"})]
         public IActionResult GetTag(string tagName)
         {
             if(!postCache.TagsToPosts.TryGetValue(tagName.ToLower(), out var models))

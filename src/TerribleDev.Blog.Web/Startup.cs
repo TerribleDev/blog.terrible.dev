@@ -12,7 +12,7 @@ using HardHat;
 using TerribleDev.Blog.Web.Models;
 using TerribleDev.Blog.Web.Factories;
 using Microsoft.Extensions.Hosting;
-using WebMarkupMin.AspNetCore6;
+using WebMarkupMin.AspNetCore7;
 using Microsoft.Extensions.Logging;
 using TerribleDev.Blog.Web.Filters;
 
@@ -68,16 +68,23 @@ namespace TerribleDev.Blog.Web
                 controllerBuilder.AddRazorRuntimeCompilation();
             }
 #endif
-            services.AddResponseCompression(a =>
+            services
+            .AddResponseCompression(a =>
             {
                 a.EnableForHttps = true;
 
             })
+            .AddResponseCaching()
             .AddMemoryCache();
-            if(Env.IsProduction())
-            {
-                services.AddOutputCaching();
-            }
+            // if(Env.IsProduction())
+            // {
+                
+            // }
+            services.AddOutputCache(a =>{
+                a.AddBasePolicy(b => {
+                    b.Cache();
+                });
+            });
             services.AddWebMarkupMin(a => {
                 a.AllowMinificationInDevelopmentEnvironment = true;
                 a.DisablePoweredByHttpHeaders = true;
@@ -90,19 +97,15 @@ namespace TerribleDev.Blog.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Console.WriteLine("ETag Detected As: " + StaticETag.staticEtag);
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-
-            }
 
             app.UseHttpsRedirection();
+            if (env.IsProduction())
+            {
+                app.UseOutputCache();
+                app.UseResponseCaching();
+            }
             app.UseResponseCompression();
-            var cacheTime = env.IsDevelopment() ? 0 : 31536000;
+            var cacheTime = env.IsDevelopment() ? 1 : 31536000;
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>
@@ -120,6 +123,16 @@ namespace TerribleDev.Blog.Web
                         "public,max-age=" + cacheTime;
                 }
             });
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+
+            }
+
             app.UseRewriter(new Microsoft.AspNetCore.Rewrite.RewriteOptions().AddRedirect("(.*[^/|.xml|.html])$", "$1/", 301));
             app.UseIENoOpen();
             app.UseNoMimeSniff();
@@ -142,20 +155,6 @@ namespace TerribleDev.Blog.Web
                     // },
                     UpgradeInsecureRequests = true
                 });
-            app.Use(async (context, next) => {
-                var etag = context.Request.Headers.IfNoneMatch.ToString();
-                if(etag != null && string.Equals(etag, StaticETag.staticEtag, StringComparison.Ordinal))
-                {
-                    context.Response.StatusCode = 304;
-                    await context.Response.CompleteAsync();
-                    return;
-                }
-                await next();
-            });
-            if(Env.IsProduction())
-            {
-                app.UseOutputCaching();
-            }
             app.UseWebMarkupMin();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
