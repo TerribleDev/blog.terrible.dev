@@ -11,7 +11,7 @@ if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) 
     });
 }
 
-var toggleNav = function () {
+function toggleNav () {
     var nav = document.getElementById('navBar');
     if (!nav) {
         return;
@@ -24,14 +24,3 @@ var toggleNav = function () {
         nav.classList.add('hide');
     }
 }
-function attachNavToggle(elementId) {
-    var menuButton = document.getElementById(elementId);
-    if (menuButton) {
-        menuButton.addEventListener('click', function () {
-            toggleNav();
-        });
-    }
-}
-attachNavToggle('menuBtn');
-attachNavToggle('closeNav');
-
