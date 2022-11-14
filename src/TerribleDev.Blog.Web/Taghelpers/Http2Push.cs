@@ -16,6 +16,7 @@ namespace TerribleDev.Blog.Web.Taghelpers
     public record PushUrl(string Url, string asProperty);
     [HtmlTargetElement("link", Attributes = "[rel=stylesheet],href,push")]
     [HtmlTargetElement("img", Attributes = "src,push")]
+    [HtmlTargetElement("script", Attributes = "src,push")]
     public class HttpPush : LinkTagHelper
     {
         [HtmlAttributeNotBound]
@@ -28,9 +29,11 @@ namespace TerribleDev.Blog.Web.Taghelpers
         }
 
         private (string Url, string AsProperty) GetTagInfo(string tag) =>
-        tag switch {
+        tag switch 
+        {
             "link" => ("href", "link"),
             "img" => ("src", "image"),
+            "script" => ("src", "script"),
             _ => (null, null)
         };
 
@@ -41,7 +44,6 @@ namespace TerribleDev.Blog.Web.Taghelpers
                 return;
             }
             var (urlAttribute, asProperty) = GetTagInfo(output.TagName);
-            // var urlAttribute = context.TagName == "link" ? "href" : "src";
             var url = base.TryResolveUrl(output.Attributes[urlAttribute].Value.ToString(), out string resolvedUrl) ? resolvedUrl : output.Attributes[urlAttribute].Value.ToString();
             var linkList = ViewContext.HttpContext.Items.TryGetValue(Key, out var links) ? links as List<PushUrl> : null;
             

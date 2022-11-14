@@ -54,10 +54,10 @@
     </div>
         @RenderSection("Scripts", required: false)
         <environment names="Development">
-            <script asp-append-version="true" src="~/js/swi.js" async></script>
+            <script push asp-append-version="true" src="~/js/swi.js" async></script>
         </environment>
         <environment names="Production">
-            <script asp-append-version="true" src="~/js/site.min.js" async></script>
+            <script push asp-append-version="true" src="~/js/site.min.js" async></script>
         </environment>
 </body>
 </html>
