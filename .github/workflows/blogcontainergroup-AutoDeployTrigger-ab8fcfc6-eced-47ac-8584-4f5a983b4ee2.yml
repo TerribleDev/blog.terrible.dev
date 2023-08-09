@@ -1,0 +1,42 @@
+name: Trigger auto deployment for blogcontainergroup
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - '**'
+    - '.github/workflows/blogcontainergroup-AutoDeployTrigger-ab8fcfc6-eced-47ac-8584-4f5a983b4ee2.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.BLOGCONTAINERGROUP_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: terribledevreg.azurecr.io
+          registryUsername: ${{ secrets.BLOGCONTAINERGROUP_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.BLOGCONTAINERGROUP_REGISTRY_PASSWORD }}
+          containerAppName: blogcontainergroup
+          resourceGroup: ContainerGroup
+          imageToBuild: terribledevreg.azurecr.io/blogcontainergroup:${{ github.sha }}
+          
+
+     
+
