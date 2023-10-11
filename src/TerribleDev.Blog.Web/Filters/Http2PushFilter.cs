@@ -8,8 +8,13 @@ namespace TerribleDev.Blog.Web.Filters
 {
     public class Http2PushFilter : ActionFilterAttribute
     {
-        public override void OnResultExecuted(ResultExecutedContext context)
+        private static bool IsHttp2PushDisabled = String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DISABLE_HTTP2_PUSH"));
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
+            if(IsHttp2PushDisabled)
+            {
+                return;
+            }
             var logger = context.HttpContext.RequestServices.GetService(typeof(ILogger<Http2PushFilter>)) as ILogger<Http2PushFilter>;
             logger.LogDebug("Http2PushFilter.OnActionExecuted");
             if(!context.HttpContext.Items.TryGetValue(HttpPush.Key, out var links)) 
@@ -33,6 +38,7 @@ namespace TerribleDev.Blog.Web.Filters
             }
             logger.LogDebug("Http2PushFilter.OnActionExecuted: " + headerBuilder.ToString());
             context.HttpContext.Response.Headers.Add("Link", headerBuilder.ToString());
+            base.OnActionExecuted(context);
         }
     }
 }
